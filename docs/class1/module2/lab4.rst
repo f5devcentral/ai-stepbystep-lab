@@ -1,5 +1,5 @@
-Lab 1.2 - Running your first model
-==================================
+Lab 2.4 - RAG
+=============
 
 .. attention::
    This section is coming soon.

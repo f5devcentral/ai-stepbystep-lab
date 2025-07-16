@@ -1,5 +1,5 @@
-Lab 1.1 - Installing Ollama
-===========================
+Lab 3.1 - Installing n8n
+========================
 
 Minimun Requirements
 --------------------

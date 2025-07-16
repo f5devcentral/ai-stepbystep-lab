@@ -1,5 +1,5 @@
-Lab 1.1 - Installing Ollama
-===========================
+Lab 4.1 - Integrating AI Gateway
+================================
 
 Minimun Requirements
 --------------------

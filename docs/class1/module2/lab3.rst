@@ -1,5 +1,5 @@
-Lab 1.2 - Running your first model
-==================================
+Lab 2.3 - MCP
+=============
 
 .. attention::
    This section is coming soon.

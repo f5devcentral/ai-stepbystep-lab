@@ -13,10 +13,10 @@ import f5_sphinx_theme
 # ------------
 #
 # REQUIRED: Your class/lab name
-classname = "F5 Agility Template"
+classname = "AI Step-by-Step Lab"
 
 # OPTIONAL: The URL to the GitHub Repository for this class
-github_repo = "https://github.com/f5devcentral/f5-agility-labs-template"
+github_repo = "https://github.com/f5devcentral/ai-stepbystep-lab"
 
 #
 # END CONFIG
@@ -178,7 +178,7 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-html4_writer = True
+#html4_writer = True
 html_theme = "f5_sphinx_theme"
 html_theme_path = f5_sphinx_theme.get_html_theme_path()
 html_sidebars = {"**": ["searchbox.html", "localtoc.html", "globaltoc.html"]}

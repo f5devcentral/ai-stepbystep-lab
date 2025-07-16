@@ -1,7 +1,7 @@
-Class 1: Getting Started
+Class 1: AI Step-by Step
 ========================
 
-This class has one module and two labs. We're simply doing this to show the
+This class has X modules and Y labs. We're simply doing this to show the
 standard structure of a class/module/lab.
 
 .. note:: It could be simplier to throw all the content in one file but that

@@ -1,5 +1,5 @@
-Lab 1.1 - Installing Ollama
-===========================
+Lab 2.1 - Installing & Configuring Open WebUI
+=============================================
 
 Minimun Requirements
 --------------------

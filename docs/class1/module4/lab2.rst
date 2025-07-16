@@ -1,5 +1,5 @@
-Lab 1.2 - Running your first model
-==================================
+Lab 4.2 - Prompt Injection
+==========================
 
 .. attention::
    This section is coming soon.

@@ -1,5 +1,5 @@
-Lab 1.2 - Running your first model
-==================================
+Lab 1.3 - Customizing a model
+=============================
 
 .. attention::
    This section is coming soon.
