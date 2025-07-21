@@ -1,236 +1,105 @@
 Lab 1.1 - Installing Ollama
 ===========================
 
-Minimun Requirements
+Ollama is a powerful framework that simplifies running and managing large language
+models (LLMs) locally or in the cloud. Ollama streamlines the deployment and interaction
+with models like LLaMA, Mistral, and others through a lightweight command-line interface
+and API. With Ollama, you can quickly spin up language models on your machine, send prompts,
+and receive responses—all without relying on external cloud-based services. This makes it
+ideal for offline experimentation, privacy-sensitive applications, and edge AI development.
+In this lab, you'll explore how to install Ollama and download and run pre-trained models.
+
+Minimum Requirements
 --------------------
 
-No matter what you're daily driver is you'll need `Docker` and `Git`.
+To run Ollama, you can do so on any modern system, but the more resources you have the better.
+Gaming systems with solid GPUs will be necessary with any models of size, but you can work with
+small models on any system without a beast of a system.
 
-.. note:: We recommend some sort of Linux distro. All of this can be done with
-   Windows but you'll need to overcome several hurdles.
+.. note:: This OS in this lab is Ubuntu. All of this can be recreated with MAC or Windows but
+   you'll need to overcome several hurdles. Docker is already installed but the instructions are
+   below for your reference.
 
-.. attention:: The examples below assume Linux as the build machine.
-
-- For Linux use apt (or whatever package tool) to download and install:
-
-  Git
-
-  .. code-block:: bash
-
-     sudo apt update
-     sudo apt install git
-
-  Docker
+Docker
 
   .. code-block:: bash
 
-     sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-     sudo apt update
-     sudo apt install docker-ce docker-ce-cli containerd.io
+     apt update
+     apt install -y ca-certificates curl gnupg lsb-release
+     mkdir -p /etc/apt/keyrings
+     curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+        | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+     echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+        https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" \
+        | tee /etc/apt/sources.list.d/docker.list > /dev/null
+     apt update
+     apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-- For Windows download the following and install:
 
-  - `Git for Windows <https://git-scm.com/download/win>`_
-  - `Docker Desktop for Windows <https://hub.docker.com/editions/community/docker-ce-desktop-windows/>`_
+Install Ollama
+--------------
 
-Configure Git
--------------
+The benefit of using Docker is the install aspect is a bit of a misnomer. Docker is the engine that
+is going to simply run the pre-configured install of Ollama in a container. That said, our Ollama
+server has an NVIDIA T4 GPU so we need to configure docker to use it before proceeding.
 
-Now that Git's installed we need to configure it for basic use. From your
-terminal of choice run the following git commands:
+1. Configure Docker for GPU use
 
 .. code-block:: bash
 
-   git config --global user.name "vtog"
-   git config --global user.email "v.tognaci@f5.com"
-   git config --global core.editor vim
+    root@ip-10-1-1-5:/# nvidia-ctk runtime configure --runtime=docker
+    INFO[0000] Loading config from /etc/docker/daemon.json
+    INFO[0000] Wrote updated config to /etc/docker/daemon.json
+    INFO[0000] It is recommended that docker daemon be restarted.
+    root@ip-10-1-1-5:/# sudo systemctl restart docker
 
-.. attention:: Be sure to use your user name, email, and editor of choice.
+.. note:: The NVIDIA toolkit was already pre-configured in the AWS instance we're using.
 
-It's recommended to setup ssh auth with you're github account. For details on
-how to configure this see the following,
-`Connecting to GitHub with SSH <https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh>`_
+2. Create a local file resource for Docker so we don't have to re-load models when the container restarts
 
-#. From linux this can easily be accomlished with the following:
+.. code-block:: bash
 
-   .. code-block:: bash
+    root@ip-10-1-1-5:/# sudo docker volume create model_data
+    model_data
 
-      ssh-keygen
+3. Run the Ollama container, making sure to reference the volume we created
 
-#. If you used the default `ssh-keygen` variables, simply copy the contents of
-   "id_rsa.pub". You can view the file with the following:
+.. code-block:: bash
 
-   .. code-block:: bash
+    root@ip-10-1-1-5:/root# docker run -d -v model_data:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+    Unable to find image 'ollama/ollama:latest' locally
+    latest: Pulling from ollama/ollama
+    b08e2ff4391e: Pull complete
+    9d52186ca5a2: Pull complete
+    d0343d5f73e9: Pull complete
+    5343bc64fdab: Pull complete
+    Digest: sha256:f478761c18fea69b1624e095bce0f8aab06825d09ccabcd0f88828db0df185ce
+    Status: Downloaded newer image for ollama/ollama:latest
+    bf7f9f4c88acac99d7930d695768183f1a1f930960181c17b1a360508addcadb
 
-      cat ~/.ssh/id_rsa.pub
+4. Check to see if the container is running
 
-#. On github go to your account settings, click "SSH and GPG keys", and click
-   "New SSH key".
+.. code-block:: bash
 
-   - Give the new key a "Title"
-   - Copy the contents of id_rsa.pub in the "Key" field
+    root@ip-10-1-1-5:/root# docker ps
+    CONTAINER ID   IMAGE           COMMAND               CREATED         STATUS         PORTS                                             NAMES
+    bf7f9f4c88ac   ollama/ollama   "/bin/ollama serve"   2 minutes ago   Up 2 minutes   0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp   ollama
 
-Clone Your Repo
----------------
+5. Check to see if Ollama is available by using the curl command
 
-Now that Git's installed and configured we need to clone the repo from GitHub
+.. code-block:: bash
 
-.. attention:: We recommend cloning opposed to forking.
-
-.. important:: We're using the "template" repo in all our examples. Be sure to
-   use the proper repo for the class you're working on. If you don't know which
-   one that is reach out to the `*AgilityLabsRTD` doc team.
-
-#. Open a terminal
-#. Clone the repo you plan to contribute to.
-
-   .. code-block:: bash
-
-      git clone git@github.com:f5devcentral/f5-agility-labs-template.git
-
-#. When using the git clone as shown above it will clone the repo's default
-   branch. If a specific branch is required you have two options depending on
-   where you are in the process.
-
-   - Before cloning: use the "-b" switch and specify the branch of choice
-
-     .. code-block:: bash
-
-        git clone -b develop git@github.com:f5devcentral/f5-agility-labs-template.git
-
-   - After cloning: use `fetch` and `checkout` the branch of choice
-
-     .. code-block:: bash
-
-         git fetch
-         git checkout develop
-
-Fork Your Repo (NOT Recommended)
---------------------------------
-
-.. important:: We recommend the cloning process outlined in the previous
-   section. This section is to document how to fork/clone. But more importantly
-   keep your fork/clone in sync.
-
-#. From GitHub Fork the Agility repo you plan to contribute to.
-#. Clone the repo to your build PC.
-
-   .. code-block:: bash
-
-      git clone git@github.com:f5devcentral/f5-agility-labs-template.git
-
-#. See previous section on "branch" selection/changing.
-
-.. important:: You need to know how to keep your fork in sync with the upstream
-   Agility project.
-
-#. Stay in sync with the upstream repo.
-
-   .. code-block:: bash
-
-      git remote add upstream <agility repo clone link>
-
-#. Rebase your branch
-
-   .. code-block:: bash
-
-      git pull --rebase upstream <branch>
-
-#. Update your Local Fork
-
-   .. code-block:: bash
-
-      git push --force
-
-Build The Doc
--------------
-
-The repo should have several scripts to build the doc. The most important of
-which is `containthedocs-build.sh`
-
-#. From the currenlty open terminal move into the cloned repo directory
-
-   .. code-block:: bash
-
-      cd f5-agility-labs-template
-
-#. Build your html from rst
-
-   .. code-block:: bash
-
-      ./containthedocs-build.sh
-
-#. You now should have a new directory with your lab html files
-
-   .. code-block:: bash
-
-      ls -la docs/_build
-
-   You should see the following output
-
-   .. code-block:: bash
-
-      ❯ ls -la docs/_build
-      total 16
-      drwxr-xr-x 4 root  root  4096 Feb 22 13:14 .
-      drwxr-xr-x 6 vince vince 4096 Feb 22 13:14 ..
-      drwxr-xr-x 3 root  root  4096 Feb 22 13:14 doctrees
-      drwxr-xr-x 6 root  root  4096 Feb 22 13:14 html
-
-View your doc locally with Python
----------------------------------
-
-For your convenience a script to invoke a simple python web server is provided.
-
-.. attention:: Assuming Python3 is installed.
-
-#. From the repo directory run the `server` script in the "scripts" directory.
-   This will start the http server on the local IP and port 8000
-
-   .. code-block:: bash
-
-      ./scripts/server
-
-#. With your local browser type in the following URL
-
-   .. code-block:: bash
-
-      http://<IP_ADDR>:8000/html/
-
-#. When finished hit CTRL-C
-
-View your doc locally with Nginx
---------------------------------
-
-#. Install nginx
-
-   .. code-block:: bash
-
-      sudo apt install nginx
-
-#. Create a softlink to the rst repo documents.
-
-   .. code-block:: bash
-
-      cd /var/www/html
-      sudo ln -s ~/f5-agility-labs-template/docs/_build/html/ template
-
-   .. note:: In my example the cloned repo is in the home directory.
-
-#. With your local browser type in the following URL
-
-   .. code-block:: bash
-
-      http://<IP_ADDR>/template/
+    root@ip-10-1-1-5:/root# curl http://127.0.0.1:11434
+    Ollama is running
 
 Recap
 -----
 You now have the following:
 
-- A working build environment
-- A cloned repo
-- A place to view changes
+- Docker configured to take advantage of the system GPU
+- A Docker container running the Ollama server
+- A local file repository for Docker to store the models we'll install so they survive container restarts
 
-Next we'll explore basic RST examples.
+Next we'll install a couple models.
