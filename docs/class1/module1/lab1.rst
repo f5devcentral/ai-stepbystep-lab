@@ -49,22 +49,46 @@ server has an NVIDIA T4 GPU so we need to configure docker to use it before proc
 
 .. code-block:: bash
 
+    nvidia-ctk runtime configure --runtime=docker
+
+The output should resemble this:
+
+.. code-block:: bash
+
     root@ip-10-1-1-5:/# nvidia-ctk runtime configure --runtime=docker
     INFO[0000] Loading config from /etc/docker/daemon.json
     INFO[0000] Wrote updated config to /etc/docker/daemon.json
     INFO[0000] It is recommended that docker daemon be restarted.
-    root@ip-10-1-1-5:/# sudo systemctl restart docker
 
-.. note:: The NVIDIA toolkit was already pre-configured in the AWS instance we're using.
+Go ahead and restart docker
+
+.. code-block:: bash
+
+    systemctl restart docker
+
+.. note:: The NVIDIA toolkit was already pre-installed in the AWS instance we're using. You'll need to
+    manage this step if you build your own environment.
 
 2. Create a local file resource for Docker so we don't have to re-load models when the container restarts
 
 .. code-block:: bash
 
-    root@ip-10-1-1-5:/# sudo docker volume create model_data
+    docker volume create model_data
+
+The output should resemble this:
+
+.. code-block:: bash
+
+    root@ip-10-1-1-5:/# docker volume create model_data
     model_data
 
 3. Run the Ollama container, making sure to reference the volume we created
+
+.. code-block:: bash
+
+    docker run -d -v model_data:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+
+The output should resemble this:
 
 .. code-block:: bash
 
@@ -83,11 +107,23 @@ server has an NVIDIA T4 GPU so we need to configure docker to use it before proc
 
 .. code-block:: bash
 
+    docker ps
+
+The output should resemble this:
+
+.. code-block:: bash
+
     root@ip-10-1-1-5:/root# docker ps
     CONTAINER ID   IMAGE           COMMAND               CREATED         STATUS         PORTS                                             NAMES
     bf7f9f4c88ac   ollama/ollama   "/bin/ollama serve"   2 minutes ago   Up 2 minutes   0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp   ollama
 
 5. Check to see if Ollama is available by using the curl command
+
+.. code-block:: bash
+
+    curl http://127.0.0.1:11434
+
+The output should resemble this:
 
 .. code-block:: bash
 
