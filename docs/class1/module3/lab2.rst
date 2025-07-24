@@ -1,7 +1,61 @@
 Lab 3.2 - n8n Hello World
 =========================
 
-.. attention::
-   This section is coming soon.
+This lab relies on the Ollama instance you built in module1, so please ensure that your Ollama container is running on 10.1.1.5 before continuing.
 
-   This is work in progress.
+Goals
+======
+
+By the end of this short lab, you will have created your first AI agent. It doesn't do a whole lot, except to proxy the conversation between n8n's native chat interface and your LLM (Ollama), but it will clearly display the power that an agent provides and it will set you up for easy AI-powered automation.
+
+Steps
+=====
+
+#. Now, it's time to open your browser to ``http://192.168.1.233:5678`` (replace with your host machine's IP address) and create an owner account for the instance:
+
+   .. image:: images/1_owner_account.png
+
+#. Click past the customization screen:
+
+   .. image:: images/2_customize_screen.png
+
+#. Request your free community license activation key:
+
+   .. image:: images/3_send_license.png
+
+#. Click usage and plan to enter your license key that should be in your email:
+
+   .. image:: images/4_usage_plan.png
+
+#. Click the Enter activation key button and paste your key from your email:
+
+   .. image:: images/5_plan_screen.png
+   .. image:: images/6_key_pasted.png
+
+#. Create a new workflow by clicking the + button in the top left of the screen and select Workflow from the drop-down:
+
+   .. image:: images/7_new_workflow.png
+
+#. Trigger your flow with a chat message. Click the big + in the center of the canvas and select On chat message:
+
+   .. image:: images/8_add_trigger.png
+
+#. Create your agent! Click the + icon that is attached to your trigger and select AI > AI Agent from the side menu. When your agent definition screen comes up, take a look around, but change nothing and head back to your canvas:
+
+   .. image:: images/9_click_ai.png
+   .. image:: images/10_select_agent.png
+   .. image:: images/11_agent_define.png
+
+#. Enable your agent with Ollama. Click the add chat model button, then select Ollama Chat Model from the side menu. When the Ollama definition screen comes up, click in the box and create new credentials. All you need to do for Ollama credentials is to set the actual IP of your host machine. Do not use ``127.0.0.1``, either. Once complete, close out of the definition screen:
+
+   .. image:: images/12_connect_model.png
+   .. image:: images/13_create_cred.png
+   .. image:: images/14_add_ip.png
+   .. image:: images/15_close_out.png
+
+#. TEST IT OUT!! Type "Hello World" in the chat box and watch in amazement as you proxy your first chat conversation through an agent:
+
+   .. image:: images/16_type_hello.png
+   .. image:: images/17_mic_drop.png
+
+#. Homework: Now that you've done the lab, explore the memory and tool options in your agent. The memory allows you to insert your chat data in any of a number of databases. The tools are connectors to various other resources and web utilities like ticketing services and chats. Check out the various triggers besides chat interface, as well. There are incredible ways to trigger these flows, too. Please imagine the possibilities for automating a million things in your workday with simple agentic flows.
