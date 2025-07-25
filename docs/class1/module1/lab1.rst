@@ -41,6 +41,13 @@ Docker
 Install Ollama
 --------------
 
+In your deployment, click on the **Components** tab, and under **Systems**, click **Access** on the
+LLM Server and select **WEB SHELL** as shown in the image below. This will launch the shell which
+you will use for the remainder of the labs in this module.
+
+.. image:: images/00_llmserver_webshell_interface.png
+
+
 The benefit of using Docker is the install aspect is a bit of a misnomer. Docker is the engine that
 is going to simply run the pre-configured install of Ollama in a container. That said, our Ollama
 server has an NVIDIA T4 GPU so we need to configure docker to use it before proceeding.
@@ -129,6 +136,63 @@ The output should resemble this:
 
     root@ip-10-1-1-5:/root# curl http://127.0.0.1:11434
     Ollama is running
+
+Alternate Path -- Use Docker Compose
+------------------------------------
+
+Docker Compose is a tool for defining and running multi-container Docker applications
+using a YAML configuration file, whereas individual Docker commands manage containers
+one at a time through the command line. With Docker Compose, you can declaratively
+specify your entire application stack - including services, networks, volumes, and
+their relationships - in a single file that can be version controlled and easily shared
+with your team.
+
+The main advantages of using Docker Compose over individual Docker commands include
+simplified management of complex applications (especially those with multiple
+interconnected services), reproducible deployments across different environments, and the
+ability to start, stop, and rebuild your entire application stack with simple commands like
+docker-compose up and docker-compose down. It's particularly valuable when you need to
+coordinate multiple containers, manage dependencies between services, or ensure consistent
+configuration across development, testing, and production environments.
+
+.. note:: For this Ollama setup we obviously don't have multiple containers, but it's still
+    helpful to use the yaml declarations to avoid all the command line entry. Your setup is
+    already working and you can move on. The declaration below creates the
+    model_data volume and the ollama container when you run **docker compose up -d** in the folder
+    where the compose.yaml file is stored.
+
+.. code-block:: docker
+
+    services:
+      ollama:
+        image: ollama/ollama
+        container_name: ollama
+        ports:
+          - "0.0.0.0:11434:11434"
+        volumes:
+          - model_data:/root/.ollama
+        restart: unless-stopped
+
+    volumes:
+      model_data:
+
+When run, the output should resemble this:
+
+.. code-block:: bash
+
+    root@ip-10-1-1-5:/root/ollama# docker compose up -d
+    [+] Running 3/3
+     ✔ Network ollama_default      Created                                                                                                                           0.0s
+     ✔ Volume "ollama_model_data"  Created                                                                                                                           0.0s
+     ✔ Container ollama            Started                                                                                                                           0.3s
+
+    root@ip-10-1-1-5:/root/ollama# docker ps
+    CONTAINER ID   IMAGE           COMMAND               CREATED          STATUS          PORTS                      NAMES
+    4946cc3abe94   ollama/ollama   "/bin/ollama serve"   18 seconds ago   Up 18 seconds   0.0.0.0:11434->11434/tcp   ollama
+
+    root@ip-10-1-1-5:/root/ollama# docker volume ls
+    DRIVER    VOLUME NAME
+    local     ollama_model_data
 
 Recap
 -----

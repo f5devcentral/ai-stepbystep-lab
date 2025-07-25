@@ -208,20 +208,20 @@ an interactive shell, and with curl via the API.
     **eval_duration**          Time spent generating the output tokens (in nanoseconds).
     ========================== =============================================================================================================================
 
-5. Let's pull a couple more models before moving on. I'm using deepseek-r1:1.5b and llama3.2:3b. You
-can do the same or pick something else, but keep them small.
+5. Let's pull a few more models before moving on. I'm using deepseek-r1:1.5b and :7b, and also
+llama3.2:3b. You can do the same or pick something else, but keep them at 7b parameters or less.
 
 .. code-block:: bash
 
     docker exec ollama ollama pull deepseek-r1:1.5b
     docker exec ollama ollama pull llama3.2:3b
+    docker exec ollama ollama pull deepseek-r1:7b
 
 The output should resemble this:
 
 .. code-block:: bash
 
-    root@ip-10-1-1-5:/# docker exec ollama ollama pull deepseek-r1:1.5b
-    docker exec ollama ollama pull llama3.2:3b
+    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama pull deepseek-r1:1.5b
     pulling manifest
     pulling aabd4debf0c8: 100% ▕██████████████████▏ 1.1 GB
     pulling c5ad996bda6e: 100% ▕██████████████████▏  556 B
@@ -231,6 +231,7 @@ The output should resemble this:
     verifying sha256 digest
     writing manifest
     success
+    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama pull llama3.2:3b
     pulling manifest
     pulling dde5aa3fc5ff: 100% ▕██████████████████▏ 2.0 GB
     pulling 966de95ca8a6: 100% ▕██████████████████▏ 1.4 KB
@@ -238,6 +239,16 @@ The output should resemble this:
     pulling a70ff7e570d9: 100% ▕██████████████████▏ 6.0 KB
     pulling 56bb8bd477a5: 100% ▕██████████████████▏   96 B
     pulling 34bb5ab01051: 100% ▕██████████████████▏  561 B
+    verifying sha256 digest
+    writing manifest
+    success
+    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama pull deepseek-r1:7b
+    pulling manifest
+    pulling 96c415656d37: 100% ▕██████████████████▏ 4.7 GB
+    pulling c5ad996bda6e: 100% ▕██████████████████▏  556 B
+    pulling 6e4c38e1172f: 100% ▕██████████████████▏ 1.1 KB
+    pulling f4d24e9138dd: 100% ▕██████████████████▏  148 B
+    pulling 40fb844194b2: 100% ▕██████████████████▏  487 B
     verifying sha256 digest
     writing manifest
     success
@@ -252,11 +263,12 @@ The output should resemble this:
 
 .. code-block:: bash
 
-    root@ip-10-1-1-5:/root# docker exec ollama ollama list
+    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama list
     NAME                ID              SIZE      MODIFIED
-    llama3.2:3b         a80c4f17acd5    2.0 GB    16 seconds ago
-    deepseek-r1:1.5b    e0979632db5a    1.1 GB    About a minute ago
-    tinyllama:latest    2644915ede35    637 MB    46 minutes ago
+    deepseek-r1:7b      755ced02ce7b    4.7 GB    2 minutes ago
+    llama3.2:3b         a80c4f17acd5    2.0 GB    4 minutes ago
+    deepseek-r1:1.5b    e0979632db5a    1.1 GB    5 minutes ago
+    tinyllama:latest    2644915ede35    637 MB    8 minutes ago
 
 Recap
 -----
