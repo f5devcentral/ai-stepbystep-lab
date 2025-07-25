@@ -11,8 +11,8 @@ By the end of this short lab, you will have created your first AI agent. It does
 Steps
 =====
 
-#. Now, it's time to open your browser to ``http://192.168.1.233:5678`` (replace with your host machine's IP address) and create an owner account for the instance:
-
+#. Now, it's time to open your deployment's n8n Interface Access Method and create an owner account for the instance:
+   .. image:: images/0_n8n_Interface.png
    .. image:: images/1_owner_account.png
 
 #. Click past the customization screen:
