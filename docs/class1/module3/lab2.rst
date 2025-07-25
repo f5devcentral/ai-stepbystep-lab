@@ -12,37 +12,37 @@ Steps
 =====
 
 #. Now, it's time to open your deployment's n8n Interface Access Method and create an owner account for the instance:
-   .. image:: images/0_n8n_Interface.png
-   .. image:: images/1_owner_account.png
+   .. image:: images/00_n8n_Interface.png
+   .. image:: images/01_owner_account.png
 
 #. Click past the customization screen:
 
-   .. image:: images/2_customize_screen.png
+   .. image:: images/02_customize_screen.png
 
 #. Request your free community license activation key:
 
-   .. image:: images/3_send_license.png
+   .. image:: images/03_send_license.png
 
 #. Click usage and plan to enter your license key that should be in your email:
 
-   .. image:: images/4_usage_plan.png
+   .. image:: images/04_usage_plan.png
 
 #. Click the Enter activation key button and paste your key from your email:
 
-   .. image:: images/5_plan_screen.png
-   .. image:: images/6_key_pasted.png
+   .. image:: images/05_plan_screen.png
+   .. image:: images/06_key_pasted.png
 
 #. Create a new workflow by clicking the + button in the top left of the screen and select Workflow from the drop-down:
 
-   .. image:: images/7_new_workflow.png
+   .. image:: images/07_new_workflow.png
 
 #. Trigger your flow with a chat message. Click the big + in the center of the canvas and select On chat message:
 
-   .. image:: images/8_add_trigger.png
+   .. image:: images/08_add_trigger.png
 
 #. Create your agent! Click the + icon that is attached to your trigger and select AI > AI Agent from the side menu. When your agent definition screen comes up, take a look around, but change nothing and head back to your canvas:
 
-   .. image:: images/9_click_ai.png
+   .. image:: images/09_click_ai.png
    .. image:: images/10_select_agent.png
    .. image:: images/11_agent_define.png
 
