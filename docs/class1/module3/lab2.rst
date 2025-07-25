@@ -12,6 +12,7 @@ Steps
 =====
 
 #. Now, it's time to open your deployment's n8n Interface Access Method and create an owner account for the instance:
+
    .. image:: images/00_n8n_Interface.png
    .. image:: images/01_owner_account.png
 
