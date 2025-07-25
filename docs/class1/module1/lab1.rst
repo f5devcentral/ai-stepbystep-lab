@@ -20,6 +20,11 @@ small models on any system without a beast of a system.
    you'll need to overcome several hurdles. Docker is already installed but the instructions are
    below for your reference.
 
+**Perform these steps from the LLM Server (Web Shell recommended for ease of use)**
+
+.. image:: ../images/udf-llmserver.png
+   :align: left
+
 Docker
 
   .. code-block:: bash
@@ -67,16 +72,19 @@ The output should resemble this:
     INFO[0000] Wrote updated config to /etc/docker/daemon.json
     INFO[0000] It is recommended that docker daemon be restarted.
 
-Go ahead and restart docker
+.. note:: The NVIDIA toolkit was already pre-installed in the AWS instance we're using. You'll need to
+    manage this step if you build your own environment. \ 
+    Find the instructions from NVIDIA here: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+
+2. Go ahead and restart docker
 
 .. code-block:: bash
 
     systemctl restart docker
 
-.. note:: The NVIDIA toolkit was already pre-installed in the AWS instance we're using. You'll need to
-    manage this step if you build your own environment.
 
-2. Create a local file resource for Docker so we don't have to re-load models when the container restarts
+
+3. Create a local file resource for Docker so we don't have to re-load models when the container restarts
 
 .. code-block:: bash
 
@@ -89,7 +97,7 @@ The output should resemble this:
     root@ip-10-1-1-5:/# docker volume create model_data
     model_data
 
-3. Run the Ollama container, making sure to reference the volume we created
+4. Run the Ollama container, making sure to reference the volume we created
 
 .. code-block:: bash
 
@@ -110,7 +118,7 @@ The output should resemble this:
     Status: Downloaded newer image for ollama/ollama:latest
     bf7f9f4c88acac99d7930d695768183f1a1f930960181c17b1a360508addcadb
 
-4. Check to see if the container is running
+5. Check to see if the container is running
 
 .. code-block:: bash
 
@@ -124,7 +132,7 @@ The output should resemble this:
     CONTAINER ID   IMAGE           COMMAND               CREATED         STATUS         PORTS                                             NAMES
     bf7f9f4c88ac   ollama/ollama   "/bin/ollama serve"   2 minutes ago   Up 2 minutes   0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp   ollama
 
-5. Check to see if Ollama is available by using the curl command
+6. Check to see if Ollama is available by using the curl command
 
 .. code-block:: bash
 
@@ -200,6 +208,6 @@ You now have the following:
 
 - Docker configured to take advantage of the system GPU
 - A Docker container running the Ollama server
-- A local file repository for Docker to store the models we'll install so they survive container restarts
+- A Docker volume which is used as the file repository to store the models we'll install so they survive container restarts
 
 Next we'll install a couple models.
