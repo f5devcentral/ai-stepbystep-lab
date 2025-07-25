@@ -1,236 +1,150 @@
 Lab 2.1 - Installing & Configuring Open WebUI
 =============================================
 
-Minimun Requirements
---------------------
+In your deployment, click on the **Components** tab, and under **Systems**, click **Access** on the
+Jumphost and select **WEB SHELL** as shown in the image below.
 
-No matter what you're daily driver is you'll need `Docker` and `Git`.
+.. image:: images/00_jumphost_webshell_interface.png
 
-.. note:: We recommend some sort of Linux distro. All of this can be done with
-   Windows but you'll need to overcome several hurdles.
-
-.. attention:: The examples below assume Linux as the build machine.
-
-- For Linux use apt (or whatever package tool) to download and install:
-
-  Git
-
-  .. code-block:: bash
-
-     sudo apt update
-     sudo apt install git
-
-  Docker
-
-  .. code-block:: bash
-
-     sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-     sudo apt update
-     sudo apt install docker-ce docker-ce-cli containerd.io
-
-- For Windows download the following and install:
-
-  - `Git for Windows <https://git-scm.com/download/win>`_
-  - `Docker Desktop for Windows <https://hub.docker.com/editions/community/docker-ce-desktop-windows/>`_
-
-Configure Git
--------------
-
-Now that Git's installed we need to configure it for basic use. From your
-terminal of choice run the following git commands:
+Create a docker volume for Open WebUI to persist data across container restarts.
 
 .. code-block:: bash
 
-   git config --global user.name "vtog"
-   git config --global user.email "v.tognaci@f5.com"
-   git config --global core.editor vim
+    docker volume create openwebui_data
 
-.. attention:: Be sure to use your user name, email, and editor of choice.
+The output should resemble this:
 
-It's recommended to setup ssh auth with you're github account. For details on
-how to configure this see the following,
-`Connecting to GitHub with SSH <https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh>`_
+.. code-block:: bash
 
-#. From linux this can easily be accomlished with the following:
+    root@ip-10-1-1-4:/# docker volume create openwebui_data
+    openwebui_data
 
-   .. code-block:: bash
+Now start the open-webui container image. It'll pull it down since it's not local. It isn't
+necessary to set the OLLAMA_BASE_URL in the docker command as you can do it in the GUI, but
+it saves a step.
 
-      ssh-keygen
+.. code-block:: bash
 
-#. If you used the default `ssh-keygen` variables, simply copy the contents of
-   "id_rsa.pub". You can view the file with the following:
+    docker run -d -p 0.0.0.0:3000:8080 \
+      -e OLLAMA_BASE_URL=http://10.1.1.5:11434 \
+      -v openwebui_data:/app/backend/data \
+      --name open-webui \
+      --restart always \
+      ghcr.io/open-webui/open-webui:main
 
-   .. code-block:: bash
+The output should resemble this:
 
-      cat ~/.ssh/id_rsa.pub
+.. code-block:: bash
 
-#. On github go to your account settings, click "SSH and GPG keys", and click
-   "New SSH key".
+    root@ip-10-1-1-4:/# docker run -d -p 0.0.0.0:3000:8080 \
+      -e OLLAMA_BASE_URL=http://10.1.1.5:11434 \
+      -v openwebui_data:/app/backend/data \
+      --name open-webui \
+      --restart always \
+      ghcr.io/open-webui/open-webui:main
+    Unable to find image 'ghcr.io/open-webui/open-webui:main' locally
+    main: Pulling from open-webui/open-webui
+    59e22667830b: Pull complete
+    abd846fa1cdb: Pull complete
+    b7b61708209a: Pull complete
+    4085babbc570: Pull complete
+    5f3e67ee2caa: Pull complete
+    4f4fb700ef54: Pull complete
+    61b789e681cb: Pull complete
+    bd138afc061f: Pull complete
+    958261b47794: Pull complete
+    e4cb927d1520: Pull complete
+    110986ba15fd: Pull complete
+    1107fb21b6a6: Pull complete
+    a0d156d51aeb: Pull complete
+    47f2db3d35c9: Pull complete
+    2d6845a877ec: Pull complete
+    Digest: sha256:1addcd1bd7f8adfa635855bc8dfb91efc11632a3ca1ed0c0cc9424b82a5975d6
+    Status: Downloaded newer image for ghcr.io/open-webui/open-webui:main
+    cdb6f8b014622d78ec5442885ec2eaca2bbc454082b01d832cdeb324beda0324
 
-   - Give the new key a "Title"
-   - Copy the contents of id_rsa.pub in the "Key" field
+Now run **docker ps** to make sure the container is running and healthy
 
-Clone Your Repo
----------------
+.. code-block:: bash
 
-Now that Git's installed and configured we need to clone the repo from GitHub
+    docker ps
 
-.. attention:: We recommend cloning opposed to forking.
+The output should resemble this. Make sure you see healthy under the STATUS field before proceeding.
+Mine took about a minute after startup.
 
-.. important:: We're using the "template" repo in all our examples. Be sure to
-   use the proper repo for the class you're working on. If you don't know which
-   one that is reach out to the `*AgilityLabsRTD` doc team.
+.. code-block:: bash
 
-#. Open a terminal
-#. Clone the repo you plan to contribute to.
+root@ip-10-1-1-4:/# docker ps
+CONTAINER ID   IMAGE                                COMMAND           CREATED         STATUS                   PORTS                    NAMES
+cdb6f8b01462   ghcr.io/open-webui/open-webui:main   "bash start.sh"   5 minutes ago   Up 5 minutes (healthy)   0.0.0.0:3000->8080/tcp   open-webui
 
-   .. code-block:: bash
+Now go to your deployment, click on the **Components** tab, and under **Systems**,
+click **Access** on the Jumphost and select **OPEN WEBUI** as shown in the image below.
 
-      git clone git@github.com:f5devcentral/f5-agility-labs-template.git
+.. image:: images/01_openwebui_access.png
 
-#. When using the git clone as shown above it will clone the repo's default
-   branch. If a specific branch is required you have two options depending on
-   where you are in the process.
+You should be presented with a screen similar to this in your browser. Click
+**Get started** at the bottom.
 
-   - Before cloning: use the "-b" switch and specify the branch of choice
+.. image:: images/02_openwebui_getstarted.png
 
-     .. code-block:: bash
+At this next screen, you will need to create an account. You can supply a fake
+properly-formatted email address.
 
-        git clone -b develop git@github.com:f5devcentral/f5-agility-labs-template.git
+.. image:: images/03_openwebui_createaccount.png
 
-   - After cloning: use `fetch` and `checkout` the branch of choice
+Read or ignore the release notes dialog box and either hit the **x** in the upper
+right corner or the **Okay, Let's Go!** button in the bottom right corner.
 
-     .. code-block:: bash
+If your ollama container is still running on the LLM Server (and it should be),
+your browser screen should resemble this:
 
-         git fetch
-         git checkout develop
+.. image:: images/04_openwebui_chatbot_main.png
 
-Fork Your Repo (NOT Recommended)
---------------------------------
+Note the model dropdown in the upper left corner. This should feature all your models from
+Module 1. If there are none, open your web shell for the LLM Server and run **docker ps** to
+make sure ollama is running. If it isn't and you've completed Module 1, you should be able to
+run **docker start ollama** to get it running again. Select a model of your choice and run a
+quick test.
 
-.. important:: We recommend the cloning process outlined in the previous
-   section. This section is to document how to fork/clone. But more importantly
-   keep your fork/clone in sync.
-
-#. From GitHub Fork the Agility repo you plan to contribute to.
-#. Clone the repo to your build PC.
-
-   .. code-block:: bash
-
-      git clone git@github.com:f5devcentral/f5-agility-labs-template.git
-
-#. See previous section on "branch" selection/changing.
-
-.. important:: You need to know how to keep your fork in sync with the upstream
-   Agility project.
-
-#. Stay in sync with the upstream repo.
-
-   .. code-block:: bash
-
-      git remote add upstream <agility repo clone link>
-
-#. Rebase your branch
-
-   .. code-block:: bash
-
-      git pull --rebase upstream <branch>
-
-#. Update your Local Fork
-
-   .. code-block:: bash
-
-      git push --force
-
-Build The Doc
--------------
-
-The repo should have several scripts to build the doc. The most important of
-which is `containthedocs-build.sh`
-
-#. From the currenlty open terminal move into the cloned repo directory
-
-   .. code-block:: bash
-
-      cd f5-agility-labs-template
-
-#. Build your html from rst
-
-   .. code-block:: bash
-
-      ./containthedocs-build.sh
-
-#. You now should have a new directory with your lab html files
-
-   .. code-block:: bash
-
-      ls -la docs/_build
-
-   You should see the following output
-
-   .. code-block:: bash
-
-      ❯ ls -la docs/_build
-      total 16
-      drwxr-xr-x 4 root  root  4096 Feb 22 13:14 .
-      drwxr-xr-x 6 vince vince 4096 Feb 22 13:14 ..
-      drwxr-xr-x 3 root  root  4096 Feb 22 13:14 doctrees
-      drwxr-xr-x 6 root  root  4096 Feb 22 13:14 html
-
-View your doc locally with Python
----------------------------------
-
-For your convenience a script to invoke a simple python web server is provided.
-
-.. attention:: Assuming Python3 is installed.
-
-#. From the repo directory run the `server` script in the "scripts" directory.
-   This will start the http server on the local IP and port 8000
-
-   .. code-block:: bash
-
-      ./scripts/server
-
-#. With your local browser type in the following URL
-
-   .. code-block:: bash
-
-      http://<IP_ADDR>:8000/html/
-
-#. When finished hit CTRL-C
-
-View your doc locally with Nginx
---------------------------------
-
-#. Install nginx
-
-   .. code-block:: bash
-
-      sudo apt install nginx
-
-#. Create a softlink to the rst repo documents.
-
-   .. code-block:: bash
-
-      cd /var/www/html
-      sudo ln -s ~/f5-agility-labs-template/docs/_build/html/ template
-
-   .. note:: In my example the cloned repo is in the home directory.
-
-#. With your local browser type in the following URL
-
-   .. code-block:: bash
-
-      http://<IP_ADDR>/template/
+.. note::
+    We pre-configured Ollama in the docker command, but you can also connect to any OpenAI compatible
+    API endpoints. That is not in scope for this lab (and not recommended), but if you have an OpenAI
+    key and want to test, you can click your name in the lower left corner, click **Settings**, then
+    **Connections**, then click the "+" sign to the right of **Manage Direct Connections** and fill in
+    the details.
+
+Ok, you tested a model interactively and via the API from curl in Module 1, now take them for a test
+drive in a very ChatGPT-like experience! Feel free to pick the model, then prompt and go! Your session
+should resemble this one:
+
+.. image:: images/05_openwebui_chatbot_prompt.png
+
+Now take a step back and see what you've just built. You have your own working generative AI environment!
+And your prompt session history in the left-hand menu, no less. Not too shabby, right?!?
+
+You might have noticed that your initial prompt took a hot minute to get a response. This is due to the
+way ollama is set up in docker by default. When you ran a model in Module 1 via a **docker exec**
+command within the container, it loaded that model into memory, but only for a short while. You can see
+when I drop the model list down that there is a green dot next to tinylama, indicating that the model is
+loaded, and hovering over the green dot shows the tool tip that it will unload in 4 minutes.
+
+.. image:: images/06_openwebui_chatbot_models.png
+
+.. note::
+    Also out of scope for this lab, but powerful, is the ability to assign models and set specific system
+    prompts. This makes for a great family tool for keeping costs down to shared API usage, but also for
+    settings access and authorization permissions based on users and groups that you can define.
+
+Feel free to hang out here before moving on and test the different models with a similar prompt to see
+how effective they are at answering your queries. The smaller models tend to hallucinate a lot and to
+not follow prompt instructions very precisely, or at all.
 
 Recap
 -----
 You now have the following:
 
-- A working build environment
-- A cloned repo
-- A place to view changes
+- A full-featured web-based front-end for working with Ollama models.
 
-Next we'll explore basic RST examples.
+
+Next we'll crawl back to the command line for the exciting and powerful Fabric framework.
