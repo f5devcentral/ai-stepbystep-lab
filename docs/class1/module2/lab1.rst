@@ -74,9 +74,9 @@ Mine took about a minute after startup.
 
 .. code-block:: bash
 
-root@ip-10-1-1-4:/# docker ps
-CONTAINER ID   IMAGE                                COMMAND           CREATED         STATUS                   PORTS                    NAMES
-cdb6f8b01462   ghcr.io/open-webui/open-webui:main   "bash start.sh"   5 minutes ago   Up 5 minutes (healthy)   0.0.0.0:3000->8080/tcp   open-webui
+    root@ip-10-1-1-4:/# docker ps
+    CONTAINER ID   IMAGE                                COMMAND           CREATED         STATUS                   PORTS                    NAMES
+    cdb6f8b01462   ghcr.io/open-webui/open-webui:main   "bash start.sh"   5 minutes ago   Up 5 minutes (healthy)   0.0.0.0:3000->8080/tcp   open-webui
 
 Now go to your deployment, click on the **Components** tab, and under **Systems**,
 click **Access** on the Jumphost and select **OPEN WEBUI** as shown in the image below.

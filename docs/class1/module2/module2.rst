@@ -14,15 +14,6 @@ OpenAI-compatible APIs. It provides a ChatGPT-like conversational interface that
 entirely on your own infrastructure, giving you full control over your data and
 conversations while supporting multiple users, authentication, and administrative features.
 
-Some of its most popular features include multi-model support (allowing you to switch between
-different language models within the same interface), conversation history and organization,
-custom system prompts and personas, file upload capabilities for document analysis, real-time
-collaborative features, plugin support for extending functionality, and comprehensive user
-management with role-based access controls. The tool also supports features like conversation
-sharing, model downloading and management, custom themes, and integration with external APIs,
-making it a powerful alternative to cloud-based AI chat services for organizations and
-individuals who prioritize privacy, customization, and local control over their AI interactions.
-
 Practical Usage
 ~~~~~~~~~~~~~~~
 
@@ -45,17 +36,6 @@ intelligence by integrating AI into everyday workflows through a collection of m
 purpose-built AI "patterns." Rather than being just another AI chat interface, Fabric focuses on
 creating standardized, reusable prompts and workflows that solve specific problems across domains
 like security analysis, content creation, code review, research, and personal productivity.
-
-The framework's most popular features include its extensive library of pre-built patterns
-(specialized prompts for tasks like threat modeling, summarizing content, extracting insights, and
-analyzing code), a command-line interface that makes AI integration seamless within existing
-workflows, the ability to chain patterns together for complex multi-step processes, and support for
-multiple AI providers including OpenAI, Anthropic, and local models through Ollama. Fabric also
-emphasizes modularity and customization, allowing users to create their own patterns, modify existing
-ones, and build sophisticated AI-powered pipelines that can be version-controlled and shared across
-teams. This approach makes it particularly valuable for security professionals, researchers, and
-knowledge workers who want to systematically apply AI to recurring analytical and creative tasks
-without starting from scratch each time.
 
 Lab Architecture
 ----------------
