@@ -27,25 +27,6 @@ you will use for the remainder of the labs in this module.
 
 .. image:: images/00_llmserver_webshell_interface.png
 
-
-**Docker Installation (For reference. The lab environment already has Docker installed.)**
-
-  .. code-block:: bash
-
-     apt update
-     apt install -y ca-certificates curl gnupg lsb-release
-     mkdir -p /etc/apt/keyrings
-     curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-        | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-     echo \
-        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-        https://download.docker.com/linux/ubuntu \
-        $(lsb_release -cs) stable" \
-        | tee /etc/apt/sources.list.d/docker.list > /dev/null
-     apt update
-     apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-
 Install Ollama
 --------------
 
@@ -67,10 +48,6 @@ The output should resemble this:
     INFO[0000] Loading config from /etc/docker/daemon.json
     INFO[0000] Wrote updated config to /etc/docker/daemon.json
     INFO[0000] It is recommended that docker daemon be restarted.
-
-.. note:: The NVIDIA toolkit was already pre-installed in the AWS instance we're using. You'll need to
-    manage this step if you build your own environment. \ 
-    Find the instructions from NVIDIA here: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
 
 2. Go ahead and restart docker
 

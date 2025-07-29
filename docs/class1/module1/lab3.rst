@@ -278,5 +278,4 @@ In this lab, you:
 
 - Customized a couple models based on llama3.2:3b and ran a simple test against it
 
-This completes Module 1 working directly with models. Next we'll
-take a look at client interfaces and frameworks.
+This completes Module 1 working directly with models. Click Next to move on to Module 2.
