@@ -6,7 +6,7 @@ Jumphost and select **WEB SHELL** as shown in the image below.
 
 .. image:: images/00_jumphost_webshell_interface.png
 
-Create a docker volume for Open WebUI to persist data across container restarts.
+1. Create a docker volume for Open WebUI to persist data across container restarts.
 
 .. code-block:: bash
 
@@ -19,8 +19,8 @@ The output should resemble this:
     root@ip-10-1-1-4:/# docker volume create openwebui_data
     openwebui_data
 
-Now start the open-webui container image. It'll pull it down since it's not local. It isn't
-necessary to set the OLLAMA_BASE_URL in the docker command as you can do it in the GUI, but
+2. Now start the open-webui container image. It'll pull it down since it's not local. It isn't
+necessary to set the ``OLLAMA_BASE_URL`` in the docker command as you can do it in the GUI, but
 it saves a step.
 
 .. code-block:: bash
@@ -63,7 +63,7 @@ The output should resemble this:
     Status: Downloaded newer image for ghcr.io/open-webui/open-webui:main
     cdb6f8b014622d78ec5442885ec2eaca2bbc454082b01d832cdeb324beda0324
 
-Now run **docker ps** to make sure the container is running and healthy
+3. Now run ``docker ps`` to make sure the container is running and healthy.
 
 .. code-block:: bash
 
@@ -78,43 +78,53 @@ Mine took about a minute after startup.
     CONTAINER ID   IMAGE                                COMMAND           CREATED         STATUS                   PORTS                    NAMES
     cdb6f8b01462   ghcr.io/open-webui/open-webui:main   "bash start.sh"   5 minutes ago   Up 5 minutes (healthy)   0.0.0.0:3000->8080/tcp   open-webui
 
-Now go to your deployment, click on the **Components** tab, and under **Systems**,
+4. Now go to your deployment, click on the **Components** tab, and under **Systems**,
 click **Access** on the Jumphost and select **OPEN WEBUI** as shown in the image below.
 
 .. image:: images/01_openwebui_access.png
 
-You should be presented with a screen similar to this in your browser. Click
+5. You should be presented with a screen similar to this in your browser. Click
 **Get started** at the bottom.
 
 .. image:: images/02_openwebui_getstarted.png
 
-At this next screen, you will need to create an account. You can supply a fake
+6. At this next screen, you will need to create an account. You can supply a fake
 properly-formatted email address.
 
 .. image:: images/03_openwebui_createaccount.png
 
-Read or ignore the release notes dialog box and either hit the **x** in the upper
+7. Read or ignore the release notes dialog box and either hit the **x** in the upper
 right corner or the **Okay, Let's Go!** button in the bottom right corner.
+
+.. image:: images/03_openwebui_releasenotes.png
 
 If your ollama container is still running on the LLM Server (and it should be),
 your browser screen should resemble this:
 
 .. image:: images/04_openwebui_chatbot_main.png
 
-Note the model dropdown in the upper left corner. This should feature all your models from
-Module 1. If there are none, open your web shell for the LLM Server and run **docker ps** to
-make sure ollama is running. If it isn't and you've completed Module 1, you should be able to
-run **docker start ollama** to get it running again. Select a model of your choice and run a
-quick test.
+8. Note the model dropdown in the upper left corner. This should feature all your models from
+Module 1.
+
+.. image:: images/04_openwebui_modellist.png
+
+.. note::
+    If there are none, open your web shell for the LLM Server and run ``docker ps`` to make sure ollama
+    is running. If it isn't and you've completed Module 1, you should be able to run ``docker start ollama``
+    to get it running again.
+    
+9. Select a model of your choice and run a quick test.
+
+.. image:: images/04_openwebui_testprompt.png
 
 .. note::
     We pre-configured Ollama in the docker command, but you can also connect to any OpenAI compatible
     API endpoints. That is not in scope for this lab (and not recommended), but if you have an OpenAI
-    key and want to test, you can click your name in the lower left corner, click **Settings**, then
+    API key and want to test, you can click your name in the lower left corner, click **Settings**, then
     **Connections**, then click the "+" sign to the right of **Manage Direct Connections** and fill in
     the details.
 
-Ok, you tested a model interactively and via the API from curl in Module 1, now take them for a test
+10. Ok, you tested a model interactively and via the API from curl in Module 1, now take them for a test
 drive in a very ChatGPT-like experience! Feel free to pick the model, then prompt and go! Your session
 should resemble this one:
 
@@ -124,7 +134,7 @@ Now take a step back and see what you've just built. You have your own working g
 And your prompt session history in the left-hand menu, no less. Not too shabby, right?!?
 
 You might have noticed that your initial prompt took a hot minute to get a response. This is due to the
-way ollama is set up in docker by default. When you ran a model in Module 1 via a **docker exec**
+way Ollama is set up in docker by default. When you ran a model in Module 1 via a ``docker exec``
 command within the container, it loaded that model into memory, but only for a short while. You can see
 when I drop the model list down that there is a green dot next to tinylama, indicating that the model is
 loaded, and hovering over the green dot shows the tool tip that it will unload in 4 minutes.
