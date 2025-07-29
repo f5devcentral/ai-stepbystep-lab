@@ -28,7 +28,8 @@ Steps
 
    .. image:: images/00_n8n_Interface.png
 
-#. Enter account details and click **Next**.
+#. Enter account details and click **Next**. Make sure to use a real email address to get your license key, and
+   check your junk folder if you don't get it quickly.
 
    .. image:: images/01_owner_account.png
 
@@ -63,15 +64,15 @@ Steps
    .. image:: images/08_back_to_canvas.png
 
 #. Create your agent! Click the + icon that is attached to your trigger and select AI > AI Agent from the side menu. When your agent definition screen comes up,
-take a look around, but change nothing and head back to your canvas:
+   take a look around, but change nothing and head back to your canvas:
 
    .. image:: images/09_click_ai.png
    .. image:: images/10_select_agent.png
    .. image:: images/11_agent_define.png
 
 #. Enable your agent with Ollama. Click the add chat model button, then select Ollama Chat Model from the side menu. When the Ollama definition screen comes up,
-click in the box and create new credentials. All you need to do for Ollama credentials is to set the actual IP of your host machine by replacing ``localhost`` with
-``10.1.1.5`` Once complete, close out of the definition screen:
+   click in the box and create new credentials. All you need to do for Ollama credentials is to set the actual IP of your host machine by replacing ``localhost`` with
+   ``10.1.1.5`` Once complete, close out of the definition screen:
 
    .. image:: images/12_connect_model.png
    .. image:: images/13_create_cred.png
@@ -83,5 +84,10 @@ click in the box and create new credentials. All you need to do for Ollama crede
    .. image:: images/16_open_chat.png
    .. image:: images/16_type_hello.png
    .. image:: images/17_mic_drop.png
+
+.. note::
+
+    This hello world is a drop replacement for what we did in Open WebUI--a graphical front-end for chatting with an
+    LLM. But there is so much more to both tools to discover!
 
 #. Homework: Now that you've done the lab, explore the memory and tool options in your agent. The memory allows you to insert your chat data in any of a number of databases. The tools are connectors to various other resources and web utilities like ticketing services and chats. Check out the various triggers besides chat interface, as well. There are incredible ways to trigger these flows, too. Please imagine the possibilities for automating a million things in your workday with simple agentic flows.

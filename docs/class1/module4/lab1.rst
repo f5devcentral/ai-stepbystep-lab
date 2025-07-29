@@ -42,7 +42,8 @@ The output should resemble this:
      ✔ Container aigw-processors-demo    Started                                                                                                       0.5s
      ✔ Container aigw                    Started
 
-It might take a couple minutes for the containers to fully load. You can check status with **docker ps**
+It might take a couple minutes for the containers to fully load. You can check status with **docker ps**. If
+ one of the containers never gets there, run **docker compose restart**.
 
 .. code-block:: bash
 
