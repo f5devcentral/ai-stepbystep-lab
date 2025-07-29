@@ -137,7 +137,7 @@ You should see this text output:
 
     [Ollama]
 
-    Enter your Ollama URL (as a reminder, it is usually http://localhost:11434') (leave empty for 'http://localhost:11434' or type 'reset' to remove the value):
+    Enter your Ollama URL (as a reminder, it is usually 'http://localhost:11434') (leave empty for 'http://localhost:11434' or type 'reset' to remove the value):
 
 Enter http://10.1.1.5:11434 and hit return, then skip the Ollama API KEY step, we did not set one up.
 Leave the default of 20m for the HTTP timeout duration. This should bring you back to the main text

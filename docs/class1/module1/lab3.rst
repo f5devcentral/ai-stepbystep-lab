@@ -57,7 +57,7 @@ Step-by-Step Instructions Overview
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note:: This section is for review of the process to create your custom model. I'll provide an example
-afterward, but I encourage you to get creative and define your own.
+    afterward, but I encourage you to get creative and define your own.
 
 **Create your model directory on the host:**
 

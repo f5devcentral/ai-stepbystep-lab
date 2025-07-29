@@ -1,236 +1,87 @@
-Lab 4.1 - Integrating AI Gateway
-================================
+Lab 4.1 - Launch The AI Gateway Demo
+====================================
 
-Minimun Requirements
---------------------
+Installation has already been completed on your behalf, but you need to get it running.
+In your deployment, click on the **Components** tab, and under **Systems**, click **Access** on the
+LLM Server and select **WEB SHELL** as shown in the image below. This will launch the shell which
+you will use for the remainder of the labs in this module.
 
-No matter what you're daily driver is you'll need `Docker` and `Git`.
+.. image:: images/00_llmserver_webshell_interface.png
 
-.. note:: We recommend some sort of Linux distro. All of this can be done with
-   Windows but you'll need to overcome several hurdles.
-
-.. attention:: The examples below assume Linux as the build machine.
-
-- For Linux use apt (or whatever package tool) to download and install:
-
-  Git
-
-  .. code-block:: bash
-
-     sudo apt update
-     sudo apt install git
-
-  Docker
-
-  .. code-block:: bash
-
-     sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-     sudo apt update
-     sudo apt install docker-ce docker-ce-cli containerd.io
-
-- For Windows download the following and install:
-
-  - `Git for Windows <https://git-scm.com/download/win>`_
-  - `Docker Desktop for Windows <https://hub.docker.com/editions/community/docker-ce-desktop-windows/>`_
-
-Configure Git
--------------
-
-Now that Git's installed we need to configure it for basic use. From your
-terminal of choice run the following git commands:
+There is a name conflict with the Ollama server from Module 1 and the one that is embedded in this demo.
+We'll need to shut that one down and remove it before launching the AI Gateway demo.
 
 .. code-block:: bash
 
-   git config --global user.name "vtog"
-   git config --global user.email "v.tognaci@f5.com"
-   git config --global core.editor vim
+    docker stop ollama
+    docker rm ollama
 
-.. attention:: Be sure to use your user name, email, and editor of choice.
+Now, change your directory into the demo project folder.
 
-It's recommended to setup ssh auth with you're github account. For details on
-how to configure this see the following,
-`Connecting to GitHub with SSH <https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh>`_
+.. code-block:: bash
 
-#. From linux this can easily be accomlished with the following:
+    cd /root/f5-ai-gateway-demo
 
-   .. code-block:: bash
+Run the docker compose and wait for it to instantiate.
 
-      ssh-keygen
+.. code-block:: bash
 
-#. If you used the default `ssh-keygen` variables, simply copy the contents of
-   "id_rsa.pub". You can view the file with the following:
+    docker compose up -d
 
-   .. code-block:: bash
+The output should resemble this:
 
-      cat ~/.ssh/id_rsa.pub
+.. code-block:: bash
 
-#. On github go to your account settings, click "SSH and GPG keys", and click
-   "New SSH key".
+    root@ip-10-1-1-5:/root/f5-ai-gateway-demo# docker compose up -d
+    [+] Running 7/7
+     ✔ Network f5-ai-gateway-demo_aigw   Created                                                                                                       0.0s
+     ✔ Container ollama                  Started                                                                                                       0.6s
+     ✔ Container open-webui-unprotected  Started                                                                                                       0.5s
+     ✔ Container aigw-processors-f5      Healthy                                                                                                       8.6s
+     ✔ Container open-webui-protected    Started                                                                                                       0.5s
+     ✔ Container aigw-processors-demo    Started                                                                                                       0.5s
+     ✔ Container aigw                    Started
 
-   - Give the new key a "Title"
-   - Copy the contents of id_rsa.pub in the "Key" field
+It might take a couple minutes for the containers to fully load. You can check status with **docker ps**
 
-Clone Your Repo
----------------
+.. code-block:: bash
 
-Now that Git's installed and configured we need to clone the repo from GitHub
+    docker ps
 
-.. attention:: We recommend cloning opposed to forking.
+The output should resemble this (once healthy):
 
-.. important:: We're using the "template" repo in all our examples. Be sure to
-   use the proper repo for the class you're working on. If you don't know which
-   one that is reach out to the `*AgilityLabsRTD` doc team.
+.. code-block:: bash
 
-#. Open a terminal
-#. Clone the repo you plan to contribute to.
+    root@ip-10-1-1-5:/root/f5-ai-gateway-demo# docker ps
+    CONTAINER ID   IMAGE                                                    COMMAND                  CREATED         STATUS                   PORTS                                                                                  NAMES
+    83c0cd249932   private-registry.f5.com/aigw/aigw:v1.1.0                 "/aigw start /etc/ai…"   6 minutes ago   Up 6 minutes             0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 0.0.0.0:80->4141/tcp, [::]:80->4141/tcp   aigw
+    c705a0e87af1   ghcr.io/open-webui/open-webui                            "bash start.sh"          6 minutes ago   Up 6 minutes (healthy)   0.0.0.0:9091->8080/tcp, [::]:9091->8080/tcp                                            open-webui-unprotected
+    8b827563101a   ghcr.io/open-webui/open-webui                            "bash start.sh"          6 minutes ago   Up 6 minutes (healthy)   0.0.0.0:9090->8080/tcp, [::]:9090->8080/tcp                                            open-webui-protected
+    d4a4e4329175   private-registry.f5.com/aigw/aigw-processors-f5:v1.1.0   "sh -c 'python -m gu…"   6 minutes ago   Up 6 minutes (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp                                            aigw-processors-f5
+    7084ec52de67   megamattzilla/ai-gateway-sdk-demo:user-prompt-v1.0       "uvicorn user-prompt…"   6 minutes ago   Up 6 minutes             0.0.0.0:8042->8000/tcp, [::]:8042->8000/tcp                                            aigw-processors-demo
+    a8ba461994cc   ollama/ollama:latest                                     "/bin/sh /model_file…"   6 minutes ago   Up 6 minutes             0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp                                        ollam
 
-   .. code-block:: bash
+You can do a quick test to the front-end Open WebUI servers to make sure they're up. You don't need the grep,
+but there's a lot of web code otherwise.
 
-      git clone git@github.com:f5devcentral/f5-agility-labs-template.git
+.. code-block:: bash
 
-#. When using the git clone as shown above it will clone the repo's default
-   branch. If a specific branch is required you have two options depending on
-   where you are in the process.
+    curl -s http://localhost:9090 | grep \<title\>
+    curl -s http://localhost:9091 | grep \<title\>
 
-   - Before cloning: use the "-b" switch and specify the branch of choice
+The output should resemble this:
 
-     .. code-block:: bash
+.. code-block:: bash
 
-        git clone -b develop git@github.com:f5devcentral/f5-agility-labs-template.git
-
-   - After cloning: use `fetch` and `checkout` the branch of choice
-
-     .. code-block:: bash
-
-         git fetch
-         git checkout develop
-
-Fork Your Repo (NOT Recommended)
---------------------------------
-
-.. important:: We recommend the cloning process outlined in the previous
-   section. This section is to document how to fork/clone. But more importantly
-   keep your fork/clone in sync.
-
-#. From GitHub Fork the Agility repo you plan to contribute to.
-#. Clone the repo to your build PC.
-
-   .. code-block:: bash
-
-      git clone git@github.com:f5devcentral/f5-agility-labs-template.git
-
-#. See previous section on "branch" selection/changing.
-
-.. important:: You need to know how to keep your fork in sync with the upstream
-   Agility project.
-
-#. Stay in sync with the upstream repo.
-
-   .. code-block:: bash
-
-      git remote add upstream <agility repo clone link>
-
-#. Rebase your branch
-
-   .. code-block:: bash
-
-      git pull --rebase upstream <branch>
-
-#. Update your Local Fork
-
-   .. code-block:: bash
-
-      git push --force
-
-Build The Doc
--------------
-
-The repo should have several scripts to build the doc. The most important of
-which is `containthedocs-build.sh`
-
-#. From the currenlty open terminal move into the cloned repo directory
-
-   .. code-block:: bash
-
-      cd f5-agility-labs-template
-
-#. Build your html from rst
-
-   .. code-block:: bash
-
-      ./containthedocs-build.sh
-
-#. You now should have a new directory with your lab html files
-
-   .. code-block:: bash
-
-      ls -la docs/_build
-
-   You should see the following output
-
-   .. code-block:: bash
-
-      ❯ ls -la docs/_build
-      total 16
-      drwxr-xr-x 4 root  root  4096 Feb 22 13:14 .
-      drwxr-xr-x 6 vince vince 4096 Feb 22 13:14 ..
-      drwxr-xr-x 3 root  root  4096 Feb 22 13:14 doctrees
-      drwxr-xr-x 6 root  root  4096 Feb 22 13:14 html
-
-View your doc locally with Python
----------------------------------
-
-For your convenience a script to invoke a simple python web server is provided.
-
-.. attention:: Assuming Python3 is installed.
-
-#. From the repo directory run the `server` script in the "scripts" directory.
-   This will start the http server on the local IP and port 8000
-
-   .. code-block:: bash
-
-      ./scripts/server
-
-#. With your local browser type in the following URL
-
-   .. code-block:: bash
-
-      http://<IP_ADDR>:8000/html/
-
-#. When finished hit CTRL-C
-
-View your doc locally with Nginx
---------------------------------
-
-#. Install nginx
-
-   .. code-block:: bash
-
-      sudo apt install nginx
-
-#. Create a softlink to the rst repo documents.
-
-   .. code-block:: bash
-
-      cd /var/www/html
-      sudo ln -s ~/f5-agility-labs-template/docs/_build/html/ template
-
-   .. note:: In my example the cloned repo is in the home directory.
-
-#. With your local browser type in the following URL
-
-   .. code-block:: bash
-
-      http://<IP_ADDR>/template/
+    root@ip-10-1-1-5:/# curl -s http://localhost:9090 | grep \<title\>
+                    <title>Open WebUI</title>
+    root@ip-10-1-1-5:/# curl -s http://localhost:9091 | grep \<title\>
+                    <title>Open WebUI</title>
 
 Recap
 -----
 You now have the following:
 
-- A working build environment
-- A cloned repo
-- A place to view changes
+- A working AI Gateway with an Ollama backend and two Open WebUI front-ends, protected and unprotected
 
-Next we'll explore basic RST examples.
+Next we'll run some tests against both front-ends.
