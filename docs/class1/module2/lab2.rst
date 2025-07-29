@@ -75,7 +75,8 @@ Now CD into the /root/fabric directory and build the image.
     cd /root/fabric
     docker build -t fabric .
 
-After the build completes, create and run a new container. This will dump you into the bash shell of the container.
+This will take a few minutes. After the build completes, create and run a new container. This
+will dump you into the bash shell of the container.
 
 .. code-block:: bash
 
@@ -297,116 +298,18 @@ these patterns that can be applied consistently across different contexts, helpi
 more reliable and focused outputs from AI systems. Each pattern typically includes specific
 instructions, formatting requirements, and examples that guide the AI toward producing the desired result.
 
-.. note::
-
-    With the prompts capability within Open WebUI, you can explore the Fabric patterns most useful
-    to you and copy them in directly and keep your workflows there if you don't work in the CLI much.
-
-**Popular Patterns**
-
-+-------------------+-------------------------------------------------------+
-| Pattern Name      | Description                                           |
-+===================+=======================================================+
-| extract_wisdom    | Extracts key insights, lessons, and actionable        |
-|                   | takeaways from any content, organizing them into      |
-|                   | structured categories like ideas, insights, and       |
-|                   | quotes                                                |
-+-------------------+-------------------------------------------------------+
-| summarize         | Creates concise summaries of long-form content,       |
-|                   | capturing the main points and essential information   |
-|                   | while maintaining context and meaning                 |
-+-------------------+-------------------------------------------------------+
-| analyze_claims    | Examines statements or arguments for accuracy,        |
-|                   | logical consistency, and supporting evidence,         |
-|                   | identifying potential biases or weaknesses            |
-+-------------------+-------------------------------------------------------+
-| create_pattern    | Generates new Fabric patterns based on specific       |
-|                   | requirements, following the framework's structure     |
-|                   | and formatting conventions                            |
-+-------------------+-------------------------------------------------------+
-| write_essay       | Produces well-structured essays on given topics,      |
-|                   | including introduction, body paragraphs with          |
-|                   | supporting evidence, and conclusion                   |
-+-------------------+-------------------------------------------------------+
-| explain_code      | Breaks down programming code into understandable      |
-|                   | explanations, covering functionality, logic flow,     |
-|                   | and potential improvements                            |
-+-------------------+-------------------------------------------------------+
-| rate_content      | Evaluates content quality across multiple             |
-|                   | dimensions such as clarity, accuracy, usefulness,     |
-|                   | and engagement, providing scored assessments          |
-+-------------------+-------------------------------------------------------+
-
-
-
-Extracting Wisdom
------------------
-
-Before moving on to the implementation of the pattern, let's take a look at the pattern itself.
-
-.. code-block:: rst
-
-    Identity and Purpose
-    ====================
-
-    You extract surprising, insightful, and interesting information from text content. You are interested in insights related to the purpose and meaning of life, human flourishing, the role of technology in the future of humanity, artificial intelligence and its affect on humans, memes, learning, reading, books, continuous improvement, and similar topics.
-
-    Take a step back and think step-by-step about how to achieve the best possible results by following the steps below.
-
-    Steps
-    -----
-
-    - Extract a summary of the content in 25 words, including who is presenting and the content being discussed into a section called SUMMARY.
-    - Extract 20 to 50 of the most surprising, insightful, and/or interesting ideas from the input in a section called IDEAS:. If there are less than 50 then collect all of them. Make sure you extract at least 20.
-    - Extract 10 to 20 of the best insights from the input and from a combination of the raw input and the IDEAS above into a section called INSIGHTS. These INSIGHTS should be fewer, more refined, more insightful, and more abstracted versions of the best ideas in the content.
-    - Extract 15 to 30 of the most surprising, insightful, and/or interesting quotes from the input into a section called QUOTES:. Use the exact quote text from the input. Include the name of the speaker of the quote at the end.
-    - Extract 15 to 30 of the most practical and useful personal habits of the speakers, or mentioned by the speakers, in the content into a section called HABITS. Examples include but aren't limited to: sleep schedule, reading habits, things they always do, things they always avoid, productivity tips, diet, exercise, etc.
-    - Extract 15 to 30 of the most surprising, insightful, and/or interesting valid facts about the greater world that were mentioned in the content into a section called FACTS:.
-    - Extract all mentions of writing, art, tools, projects and other sources of inspiration mentioned by the speakers into a section called REFERENCES. This should include any and all references to something that the speaker mentioned.
-    - Extract the most potent takeaway and recommendation into a section called ONE-SENTENCE TAKEAWAY. This should be a 15-word sentence that captures the most important essence of the content.
-    - Extract the 15 to 30 of the most surprising, insightful, and/or interesting recommendations that can be collected from the content into a section called RECOMMENDATIONS.
-
-    Output Instructions
-    ^^^^^^^^^^^^^^^^^^^
-
-    - Only output Markdown.
-    - Write the IDEAS bullets as exactly 16 words.
-    - Write the RECOMMENDATIONS bullets as exactly 16 words.
-    - Write the HABITS bullets as exactly 16 words.
-    - Write the FACTS bullets as exactly 16 words.
-    - Write the INSIGHTS bullets as exactly 16 words.
-    - Extract at least 25 IDEAS from the content.
-    - Extract at least 10 INSIGHTS from the content.
-    - Extract at least 20 items for the other output sections.
-    - Do not give warnings or notes; only output the requested sections.
-    - You use bulleted lists for output, not numbered lists.
-    - Do not repeat ideas, insights, quotes, habits, facts, or references.
-    - Do not start items with the same opening words.
-    - Ensure you follow ALL these instructions when creating your output.
-
-    Input
-    ^^^^^
-
-    INPUT:
-
-How fabric works is it starts with this incredibly specific system prompt, and then appends
-your input to the end. Hopefully you can see that the context window for this type of work is
-going to be significantly higher and more complex models that can support that will be necessary.
-
-You can use the extract_wisdom pattern by piping text to fabric. (You can do this directly
-with the yt-dlp command if installed to automatically grab transcripts from YouTube, but that
-requires an API key.) Just copy the contents of `this youtube transcript <../resources/yt-transcript.html>`_
-into your fabric container (I named mine yt-transcript.txt) and then pipe that to fabric like this:
+You can use the `extract_wisdom
+<https://github.com/danielmiessler/Fabric/blob/main/data/patterns/extract_wisdom/system.md>`_ pattern by
+piping text to fabric. (You can do this directly with the yt-dlp command if installed to automatically
+grab transcripts from YouTube, but that requires an API key.) Just copy the contents of `this youtube
+transcript <../resources/yt-transcript.html>`_ into your fabric container (I named mine yt-transcript.txt)
+and then pipe that to fabric like this:
 
 .. code-block:: bash
 
     echo yt-transcript.txt | fabric -sp extract_wisdom --model llama3.2:3b
 
-.. note::
-
-    This is going to take several minutes. Take a quick break!
-
-I got the following output against the llama3.2:3b model in my environment. Your output should
+I got the following output against the llama3.2:3b model in my environment (it took a few minutes). Your output should
 resemble the following, but won't match exactly.
 
 .. code-block:: bash
@@ -490,94 +393,56 @@ Telos is a Greek word generally meaning goal, purpose, fulfillment. Daniel Miess
 
 I created `a mock TELOS <../resources/telos.html>`_ file for the persona of a network
 engineer who is struggling adapting to modern tools and is facing anxiety on being left behind. There
-are several telos-based patterns that you can explore, but in this example, I used the `t_find_blindspots
-pattern <https://github.com/danielmiessler/Fabric/blob/main/data/patterns/t_find_blindspots/system.md>`_.
+are several telos-based patterns that you can explore, but in this example, I used the `t_red_team_thinking
+pattern <https://github.com/danielmiessler/Fabric/blob/main/data/patterns/t_red_team_thinking/system.md>`_.
 
-This one is probably best saved for after you've completed the rest of the lab as it took mine about 20
-minutes to run, but the example of this command ( copied the mock telos from above into a file in the fabric
-container) is below.
+This one took several minutes to run, so be patient! (I copied the mock telos from above into a file in the fabric
+container.)
 
 .. code-block:: bash
 
-    cat telos | fabric -sp t_find_blindspots
+    cat telos | fabric -sp t_red_team_thinking --model deepseek-r1:7b
+
+The output should resemble this:
 
 .. code-block:: bash
 
     <think>
-    Okay, so I need to figure out what the user is asking for here. They provided a TELOS file which
-    includes problems, missions, narratives, goals, challenges, strategies, projects, history, log
-    entries, etc., related to network engineering and cloud/AI transformation. The task is to generate
-    8 bulleted points that point out potential blind spots or flaws in the thinking about this person
-    or entity.
+    Okay, so I need to help this person by analyzing their situation and providing some recommendations based on the TELOS file they provided. Let me try to break it down step by step.
 
-    First, I should understand each part of the TELOS file thoroughly. The problems like traditional
-    networking engineers being left behind by rapid cloud and AI changes indicate a shift towards
-    modern technologies but resistance from older skills. Missions M1 to M3 address bridging expertise
-    with modern tech, creating learning cultures that support growth without burnout, and simplifying
-    skill paths for overwhelmed engineers.
+    First, looking at the problems: P1 is about traditional network engineers being left behind by rapid cloud and AI transformation. That makes sense because as companies move to the cloud and adopt AI technologies, their network expertise needs are changing too. So, there's a gap between what they're learning now and what's required in the future.
 
-    The goals set specific metrics like deploying microservice networks, establishing mentorship
-    programs, and creating a learning roadmap. Challenges include imposter syndrome when dealing with
-    younger developers who grasp new tech faster and limited time due to operational responsibilities
-    and family commitments. Strategies involve teaching fundamentals while learning modern tools and
-    implementing "learning in production" by integrating new concepts into existing scripts.
+    Problem P2 talks about management creating anxiety through pressure for technical growth. I can see how that might happen—when people feel like they have to keep up with new stuff all the time, it can cause stress. It's important to create environments where engineers aren't just trying to grow but actually enjoy learning and don't feel overwhelmed.
 
-    Projects include weekly lunch-and-learn sessions on networking basics, refactoring automation
-    scripts with containers, etc. The history shows progression from automating tasks to migrating
-    legacy systems during the pandemic, leading to attending a conference that highlighted skill gaps.
-    The log entries detail personal learning experiences and how they relate to the mission and goals.
+    Problem P3 is about technology fragmentation making it hard for engineers to choose relevant skills. With so many tools and technologies out there, it's tough to know which ones are worth investing time in. This can lead to confusion and wasted effort on things that aren't even necessary anymore.
 
-    Now, looking at the log, I see that the person is successfully integrating traditional networking
-    knowledge with modern tools like Kubernetes and microservices. They're creating mutual mentorship
-    and showing progress in their learning despite challenges like imposter syndrome and time constraints.
+    Now looking at the missions: M1 aims to bridge traditional networking with modern cloud-native and AI-driven infrastructure. That seems like a good start because it directly addresses P1 by integrating their existing skills into newer technologies. M2 is about creating sustainable learning cultures without causing anxiety, which ties into P2. And M3 simplifies skill progression, helping tackle P3.
 
-    Potential blind spots could be areas where the thinking might overlook or not address certain issues.
-    For example:
+    The narratives give different ways to understand the mission, so that's helpful for communication. The goals are specific and have clear metrics, which is great for tracking progress. Challenges like C1 and C2 are common in this situation—imposter syndrome and time constraints. Strategies S1 and S2 seem tailored to address these challenges.
 
-    1. **Lack of Focus on Cross-Specialty Collaboration**: The person might not emphasize how networking
-    ties into other areas like application architecture, which is crucial in modern systems.
-    2. **Ignoring User Experience (UX) and Usability**: While they're learning about microservices and AI,
-    there's a risk that these advancements might not consider how end-users interact with the systems.
-    3. **Overlooking Feedback Mechanisms**: Without proper feedback from peers or teams, continuous
-    improvement could be hindered, especially in mentorship programs.
-    4. **Underestimating the Complexity of Modern Networking**: Maybe they don't fully grasp how complex
-    modern networks are, leading to oversimplified solutions.
-    5. **Neglecting Accessibility and Inclusivity**: There's a risk that new technologies might not cater
-    to diverse user needs, potentially alienating some groups.
-    6. **Failing to Adapt Leadership Styles**: The person might struggle with leading teams when they're
-    still adjusting to new tools, which could affect mentorship effectiveness.
-    7. **Not Addressing burnout and Fatigue**: Despite efforts to create learning environments, stress from
-    changing roles or projects might not be adequately managed, affecting performance over time.
-    8. **Ignoring Long-Term Investment in Continuous Learning**: The person seems proactive with their
-    studies, but maybe they don't fully realize the long-term need for continuous investment in skills.
+    The projects like PJT1 and PJT2 are practical steps toward the missions. They involve teaching networking fundamentals while learning new tools, which should help bridge the gap. The history shows a progression of skills over time, starting from basic automation with Python to more complex tasks involving Kubernetes and microservices.
 
-    These points could represent areas where the individual or team might fall short, despite having a
-    structured approach to learning and mentorship. They point out potential gaps that could lead to
-    misalignment between traditional expertise and modern requirements.
+    Looking at the log entries, it seems like the person is making steady progress but also facing setbacks. For example, they struggled with some networking concepts initially but found success after persistence. They also had moments where imposter syndrome kicked in, especially when dealing with younger engineers who seemed to grasp things faster.
+
+    From this analysis, I can see that the key areas of focus should be on creating a structured learning path (as per M3), fostering mentorship and peer learning (M2), and bridging traditional skills with modern technologies (M1). The strategies like teaching fundamentals alongside new tools and gradually integrating new concepts into existing scripts seem effective.
+
+    I also notice that the person is actively trying to build projects, which is good for applying what they learn. However, time management issues might be a challenge, especially as they juggle work and personal life. Creating a sustainable culture around learning without burnout will require thoughtful approach—maybe through scheduled learning times, peer support, and clear milestones.
+
+    In terms of recommendations, I should focus on supporting consistent practice, creating safe spaces for experimentation without fear of failure, and gradually building complexity in their projects to avoid overwhelming them. Also, leveraging mentorship and peer learning can help distribute the pressure and make the transition smoother.
     </think>
 
-    Here are 8 bulleted points highlighting potential blind spots or flaws in the thinking about the person
-    or entity:
+    To address the challenges faced by the individual, here are strategic recommendations focusing on structured learning, fostering a positive environment, and gradual skill development:
 
-    1. **Lack of Cross-Specialty Collaboration Focus**: The approach may not emphasize how networking
-    integrates with other areas like application architecture, crucial for modern systems.
-    2. **Ignoring User Experience and Usability**: Progress might overlook how new technologies affect
-    end-user interaction and system intuitiveness.
-    3. **Overlooking Feedback Mechanisms in Mentorship**: Without proper feedback loops, mentorship
-    programs could face stagnation or lack of improvement.
-    4. **Underestimating Modern Networking Complexity**: Solutions might be oversimplified without fully
-    understanding the intricacies of contemporary networking challenges.
-    5. **Neglecting Accessibility and Inclusivity**: New technologies might not cater to diverse user
-    needs, potentially alienating certain groups.
-    6. **Failing to Adapt Leadership Styles**: Struggles with leading teams as they adapt to new tools
-    could impact mentorship effectiveness.
-    7. **Not Managing Burnout and Fatigue**: Stress from changing roles or projects might affect long-term
-    performance despite proactive learning environments.
-    8. **Ignoring Continuous Learning Investment**: While proactive in studies, the need for ongoing
-    investment in skills might not be fully recognized over time.
+    1. **Structured Learning Path**: Implement a clear progression of skills that bridge traditional networking with modern technologies. This should include courses like Kubernetes networking and microservices communication, supported by practical projects.
+    2. **Mentorship and Peer Learning**: Establish a mentorship program to pair experienced engineers with those still learning, creating a supportive environment for knowledge exchange. Encourage peer-to-peer learning through lunch-and-learn sessions and collaborative projects.
+    3. **Sustainable Learning Culture**: Create a work environment that values continuous learning without causing anxiety. This can be achieved by setting realistic goals, providing resources, and recognizing progress to maintain motivation.
+    4. **Gradual Skill Integration**: Introduce new concepts into existing scripts incrementally to avoid overwhelming the learning process. This approach allows for gradual understanding and reduces the risk of burnout.
+    5. **Time Management Strategies**: Implement time management techniques such as scheduled learning blocks and flexible work arrangements to accommodate personal responsibilities without compromising professional growth.
 
-There are so many frameworks for hacking yourself these days and the ability to have your own AI
-coach/therapist is pretty intriguing.
+    By focusing on these areas, the individual can effectively navigate the transition to modern technologies while maintaining a healthy balance between professional and personal life.
+
+There are so many frameworks for hacking yourself these days and the ability to have your own AI coach/therapist
+is pretty intriguing. I'm still exploring all the patterns, and you can create your own as well.
 
 Recap
 -----

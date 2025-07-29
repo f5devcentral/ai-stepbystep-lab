@@ -16,13 +16,7 @@ Common Modelfile directives include:
 - ``TEMPLATE``: Custom prompt templates for consistent request/response structure
 - ``COPY``: Embeds local files for contextual grounding
 
-Examples:
-
-.. code-block:: docker
-
-   FROM mistral
-   SYSTEM You are a friendly assistant that answers in simple, easy-to-understand language.
-   PARAMETER temperature 0.3
+Example:
 
 This example sets up a customized version of the ``mistral`` model with a calm, simple
 tone and more deterministic behavior.
@@ -39,101 +33,14 @@ tone and more deterministic behavior.
 
    Answer:"""
 
-This version creates a grounded model that responds based on a local FAQ file, with a
-structured template to guide prompt formatting.
-
 Using a ``Modelfile`` in this way helps create focused, reliable AI tools for customer
 support, internal automation, or creative writing—without needing full model fine-tuning.
-
-Copying Modelfile into a Named Docker Volume
---------------------------------------------
-
-If you're using a Docker *named volume* (e.g., ``model_data``) for Ollama storage, you'll need
-to copy your custom model files (like a ``Modelfile`` or supporting context files) into the
-volume before you can build the model inside the container. One way to do this is by using a
-temporary helper container.
-
-Step-by-Step Instructions Overview
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. note:: This section is for review of the process to create your custom model. I'll provide an example
-    afterward, but I encourage you to get creative and define your own.
-
-**Create your model directory on the host:**
-
-.. code-block:: bash
-
-   mkdir /tmp/my-custom-models
-   cd /tmp/my-custom-models
-   cat > Modelfile <<EOF
-   FROM tinyllama
-   SYSTEM You are a helpful assistant that answers clearly.
-   PARAMETER temperature 0.3
-   EOF
-
-.. note:: If you want to create multiple models, our project directory might look like this below.
-   Each subdirectory contains the `Modelfile` and any related context files for a specific model.
-
-.. code-block:: text
-
-   my-custom-models/
-   ├── coding-bot/
-   │   └── Modelfile
-   ├── summarizer/
-   │   ├── Modelfile
-   │   └── reference.txt
-   └── support-bot/
-       ├── Modelfile
-       └── faqs.txt
-
-**Use a temporary container to copy files into the volume:**
-
-.. code-block:: bash
-
-   docker run --rm \
-     -v model_data:/root/.ollama \
-     -v /tmp/my-custom-models:/tmp/my-custom-models \
-     alpine sh -c "cp -r /tmp/my-custom-models/* /root/.ollama/models/"
-
-This command:
-- Mounts the Docker volume where Ollama stores model data
-- Mounts your custom models folder
-- Recursively copies each model folder into ``/root/.ollama/models`` inside the volume
-
-**Create the models using ``docker exec``:**
-
-.. code-block:: bash
-
-   docker exec ollama ollama create -f /root/.ollama/models/coding-bot/Modelfile -t coding-bot
-   docker exec ollama ollama create -f /root/.ollama/models/summarizer/Modelfile -t summarizer
-   docker exec ollama ollama create -f /root/.ollama/models/support-bot/Modelfile -t support-bot
-
-.. note:: These are examples that do not have Modelfiles unless you created them. We'll step through
-   a complete example down below.
-
-**Run your custom model:**
-
-Once built, each model can be run independently
-
-.. code-block:: bash
-
-   docker exec ollama ollama run summarizer "Summarize this article: [text]"
-   docker exec ollama ollama run support-bot "How do I reset my password?"
-
-Best Practices
-~~~~~~~~~~~~~~
-
-- Keep model folders well-organized and named clearly
-- Include versioning or metadata inside each ``Modelfile`` if needed
-- Automate the copy/build process with a shell script or `make` task if you're working with many models regularly
 
 Creating a Custom Model
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In this lab, we'll create a couple custom models. Both will format responses to your prompt in the form of dialogue
-between characters. The first between Calvin & Hobbes based on the tinyllama model, and the second between Phineas
-and Ferb based on the deepseek R1 1.5b model.
-
+between characters.
 
 1. Create the Modelfiles in a temporary folder structure on your ollama host.
 
@@ -283,7 +190,8 @@ First up, Calvin & Hobbes
 
     >>> tell me about snowmen
 
-Your responses will vary, LLMs are not digests regurgitating data. My response:
+Your responses will vary, LLMs are not digests regurgitating data. If it stops short, try prompting it again.
+My response:
 
 .. code-block:: bash
 
