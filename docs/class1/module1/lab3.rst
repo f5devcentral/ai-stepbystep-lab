@@ -186,12 +186,10 @@ First up, Calvin & Hobbes
 
     docker exec -it ollama ollama run calvin-hobbes
 
-.. code-block:: bash
+Once at the >>> prompt, I asked the model to "tell me about snowmen"
 
-    >>> tell me about snowmen
-
-Your responses will vary, LLMs are not digests regurgitating data. If it stops short, try prompting it again.
-My response:
+Your responses will vary as LLMs are not digests regurgitating data. If it stops short, try prompting it again.
+The response i got is below:
 
 .. code-block:: bash
 
@@ -211,17 +209,21 @@ My response:
     cooler than your boring old snowman!\nHobbes: *sigh* Just don't burn down the neighborhood
     with your reckless plans.
 
+Make sure to exit the model.
+
+.. code-block:: bash
+
+    /bye
+
 Next up, Phineas & Ferb
 
 .. code-block:: bash
 
     docker exec -it ollama ollama run phineas-ferb
 
-.. code-block:: bash
+Once at the >>> prompt, I repeated "tell me about snowmen" for comparison.
 
-    >>> tell me about snowmen
-
-And my response. Notice the tone and style is different than the calvin-hobbes model.
+The response is below. Notice the tone and style is different than the calvin-hobbes model.
 
 .. code-block:: bash
 
@@ -263,6 +265,12 @@ And my response. Notice the tone and style is different than the calvin-hobbes m
     Phineas: (laughs) Wow, Ferb! You're really showing off your skills now!
 
     (They continue to engage in an epic snowball battle, laughing and having fun together)
+
+Make sure to exit the model.
+
+.. code-block:: bash
+
+    /bye
 
 .. note::
 
