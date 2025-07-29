@@ -12,13 +12,13 @@ Jumphost and select **WEB SHELL** as shown in the image below.
 
 .. image:: images/00_jumphost_webshell_interface.png
 
-Create a directory under the root user for the fabric Dockerfile.
+1. Create a directory under the root user for the fabric Dockerfile.
 
 .. code-block:: bash
 
     mkdir -p /root/fabric
 
-Create the Dockerfile in /root/fabric.
+2. Create the Dockerfile in /root/fabric.
 
 .. code-block:: bash
 
@@ -68,24 +68,28 @@ Create the Dockerfile in /root/fabric.
     CMD ["/bin/bash"]
     EOF
 
-Now CD into the /root/fabric directory and build the image.
+3. Now change directory with the ``cd`` command into the /root/fabric directory and build the image.
 
 .. code-block:: bash
 
     cd /root/fabric
     docker build -t fabric .
 
-This will take a few minutes. After the build completes, create and run a new container. This
+4. This will take a few minutes. After the build completes, **create and run a new container**. This
 will dump you into the bash shell of the container.
 
 .. code-block:: bash
 
     docker run -it --name fabric-shell -v fabric_config:/root/.config/fabric fabric
 
+.. code-block:: bash
+
+    f219740ed8c1:~# <------ The shell prompt has changed. You are now in the shell of the container>
+
 Configure Fabric
 ----------------
 
-Run setup
+1. Run setup
 
 .. code-block:: bash
 
@@ -131,7 +135,11 @@ That should bring you to this text screen:
 
     [Plugin Number] Enter the number of the plugin to setup (leave empty to skip):
 
-We're going to focus on plugin 14 and Tools 21, 24, and 25. Select plugin number 14 and hit enter.
+We're going to focus on plugin 14 and Tools 21, 24, and 25.
+
+2. Select plugin number 14 and hit **Enter**.
+
+
 You should see this text output:
 
 .. code-block:: bash
@@ -140,9 +148,11 @@ You should see this text output:
 
     Enter your Ollama URL (as a reminder, it is usually 'http://localhost:11434') (leave empty for 'http://localhost:11434' or type 'reset' to remove the value):
 
-Enter http://10.1.1.5:11434 and hit return, then skip the Ollama API KEY step, we did not set one up.
-Leave the default of 20m for the HTTP timeout duration. This should bring you back to the main text
-screen and you should see (configured) next to Ollama.
+3. Enter ``http://10.1.1.5:11434`` and hit **Enter**, then skip the Ollama API Key step as we did not set one up.
+
+4. Leave the default of ``20m`` for the HTTP timeout duration.
+
+This should bring you back to the main text screen and you should see (configured) next to Ollama.
 
 .. code-block:: bash
 
@@ -182,7 +192,7 @@ screen and you should see (configured) next to Ollama.
 
     [Plugin Number] Enter the number of the plugin to setup (leave empty to skip):
 
-Next, select 21 and hit enter. For now, choose llama3.2:3b, for me that is number 3 but that
+5. Next, select 21 and hit **Enter**. For now, choose ``llama3.2:3b``. In my instance, that is number 3 but that
 might be different for you. Skip the model context length.
 
 .. code-block:: bash
@@ -203,8 +213,8 @@ might be different for you. Skip the model context length.
 
     Enter model context length (leave empty to skip):
 
-This should bring you back to the main text screen again. Now select 24 for patterns. Accept the defaults and
-the patterns should be cloned for you.
+6. This should bring you back to the main text screen again. Now select 24 for **Patterns**. Accept the defaults and
+the Patterns should be cloned for you.
 
 .. code-block:: bash
 
@@ -235,7 +245,9 @@ the patterns should be cloned for you.
     ✅ Successfully downloaded and installed patterns to /home/fabricuser/.config/fabric/patterns
     📝 Created unique patterns file with 225 pattern
 
-Back at the main screen, select strategies at 25 and accept the defaults. I had to do this twice for it to show configured
+7. Back at the main screen, select **Strategies** at 25 and Accept the defaults.
+
+.. note:: I had to do this twice for it to show configured.
 
 .. code-block:: bash
 
@@ -285,7 +297,7 @@ Back at the main screen, select strategies at 25 and accept the defaults. I had 
 
     [Plugin Number] Enter the number of the plugin to setup (leave empty to skip):
 
-Hit return with no plugin number to exit setup. Fabric is now configured.
+8. Hit **Enter** with no plugin number to Exit setup. Fabric is now configured.
 
 Fabric Patterns
 ---------------
