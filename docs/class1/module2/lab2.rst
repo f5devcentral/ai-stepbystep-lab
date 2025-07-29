@@ -451,7 +451,7 @@ You now have the following:
 - A powerful command-line AI Assistant to optimize your data ingestion and note taking experiences.
 
 
-That complets Module 2 of this lab.
+This completes Module 2. Click Next to move on to Module 3.
 
 
 
