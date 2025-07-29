@@ -8,8 +8,8 @@ you will use for the remainder of the labs in this module.
 
 .. image:: images/00_llmserver_webshell_interface.png
 
-There is a name conflict with the Ollama server from Module 1 and the one that is embedded in this demo,
-so we'll need to shut that one down and remove it before launching the AI Gateway demo.
+There is a name conflict with the Ollama server from Module 1 and the one that is embedded in this demo.
+We'll need to shut that one down and remove it before launching the AI Gateway demo.
 
 .. code-block:: bash
 
