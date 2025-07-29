@@ -5,7 +5,7 @@ Container Lifecycle Management
 ------------------------------
 
 Creating Containers
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 **From an image:**
 
@@ -52,7 +52,7 @@ Restarting Containers
    docker restart -t 30 CONTAINER_ID_OR_NAME
 
 Stopping Containers
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -69,7 +69,7 @@ Stopping Containers
    docker stop $(docker ps -q)
 
 Destroying Containers
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -166,7 +166,7 @@ Named Volumes
    docker volume prune
 
 Temporary Filesystems
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -197,7 +197,7 @@ Listing Containers
    docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 Inspecting Containers
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -217,7 +217,7 @@ Inspecting Containers
    docker logs -t CONTAINER_ID_OR_NAME
 
 Executing Commands
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -277,7 +277,7 @@ Basic Commands
    docker-compose down -v
 
 Service Management
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -297,7 +297,7 @@ Service Management
    docker-compose logs -f SERVICE_NAME
 
 Scaling and Building
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -364,7 +364,7 @@ Networking
 ----------
 
 Network Commands
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -418,7 +418,7 @@ System Cleanup
    docker system df
 
 Specific Cleanup
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -438,7 +438,7 @@ Common Use Cases
 ----------------
 
 Development Environment
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -449,7 +449,7 @@ Development Environment
    docker run -d -p 8080:80 -v $(pwd)/html:/usr/share/nginx/html nginx
 
 Database with Persistent Storage
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -462,7 +462,7 @@ Database with Persistent Storage
      postgres:13
 
 Temporary Testing Container
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -473,7 +473,7 @@ Environment Variables
 ---------------------
 
 Setting Environment Variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -490,7 +490,7 @@ Useful Options
 --------------
 
 Common Run Options
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -506,7 +506,7 @@ Common Run Options
      nginx:latest
 
 Resource Limits
-^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -520,7 +520,7 @@ Resource Limits
    docker run --memory=1g --cpus=2.0 IMAGE
 
 Restart Policies
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 

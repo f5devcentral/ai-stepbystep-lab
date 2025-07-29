@@ -17,10 +17,12 @@ Installing Models
 -----------------
 
 You can experiment with whatever models you choose. In this lab we'll stay at 8 billion
-parameters and below. You can read up on the models on the [Ollama](https://ollama.com/search) website.
+parameters and below. You can read up on the models on the `Ollama`_ website.
 
-1. Install tinyllama. We'll use the **docker exec** command to first specify the container we want to run
-a command in and then issue the command, which is **ollama run tinyllama**. This installs tinyllama in
+.. _Ollama: https://ollama.com/models
+
+1. The first model we'll install is **tinyllama**. We'll use the ``docker exec`` command to first specify the container we want to run
+a command in and then issue the command, which is ``ollama run tinyllama``. This installs tinyllama in
 the container.
 
 
@@ -170,7 +172,7 @@ an interactive shell, and with curl via the API.
                 "stream": false
               }'
 
-    The output should resemble this (cleaned up for brevity:
+    The output should resemble this (cleaned up for readability):
 
     .. code-block:: bash
 

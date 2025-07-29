@@ -13,19 +13,22 @@ Minimum Requirements
 --------------------
 
 To run Ollama, you can do so on any modern system, but the more resources you have the better.
-Gaming systems with solid GPUs will be necessary with any models of size, but you can work with
-small models on any system without a beast of a system.
+Capable GPUs found on gaming PCs would be ideal for larger models, but you can work with
+small models on any system with modest specifications.
 
-.. note:: This OS in this lab is Ubuntu. All of this can be recreated with MAC or Windows but
-   you'll need to overcome several hurdles. Docker is already installed but the instructions are
+.. note:: This OS in this lab is Ubuntu. All of this can be recreated with Mac or Windows with additional steps not covered here. Docker is already installed but the instructions are
    below for your reference.
 
 **Perform these steps from the LLM Server (Web Shell recommended for ease of use)**
 
-.. image:: ../images/udf-llmserver.png
-   :align: left
+In your deployment, click on the **Components** tab, and under **Systems**, click **Access** on the
+LLM Server and select **WEB SHELL** as shown in the image below. This will launch the shell which
+you will use for the remainder of the labs in this module.
 
-Docker
+.. image:: images/00_llmserver_webshell_interface.png
+
+
+**Docker Installation (For reference. The lab environment already has Docker installed.)**
 
   .. code-block:: bash
 
@@ -46,11 +49,6 @@ Docker
 Install Ollama
 --------------
 
-In your deployment, click on the **Components** tab, and under **Systems**, click **Access** on the
-LLM Server and select **WEB SHELL** as shown in the image below. This will launch the shell which
-you will use for the remainder of the labs in this module.
-
-.. image:: images/00_llmserver_webshell_interface.png
 
 
 The benefit of using Docker is the install aspect is a bit of a misnomer. Docker is the engine that
