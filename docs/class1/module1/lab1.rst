@@ -1,20 +1,22 @@
 Lab 1.1 - Installing Ollama
 ===========================
 
-Ollama is a powerful framework that simplifies running and managing large language
-models (LLMs) locally or in the cloud. Ollama streamlines the deployment and interaction
-with models like LLaMA, Mistral, and others through a lightweight command-line interface
-and API. With Ollama, you can quickly spin up language models on your machine, send prompts,
-and receive responses—all without relying on external cloud-based services. This makes it
+`Ollama`_ is a powerful framework that simplifies running and managing large language
+models (LLMs) locally or in the cloud. Ollama streamlines the deployment of models like LLaMA, Mistral, and others then allows
+you to interact with themthrough a lightweight command-line interface
+and API. You can send prompts,
+and receive responses without relying on external cloud-based services. This makes it
 ideal for offline experimentation, privacy-sensitive applications, and edge AI development.
-In this lab, you'll explore how to install Ollama and download and run pre-trained models.
+In this lab, you'll learn how to install Ollama, then download and run pre-trained models.
+
+.. _Ollama: https://ollama.com/
 
 Minimum Requirements
 --------------------
 
-To run Ollama, you can do so on any modern system, but the more resources you have the better.
-Gaming systems with solid GPUs will be necessary with any models of size, but you can work with
-small models on any system without a beast of a system.
+You can run Ollam on any modern system, but the more resources you have the better.
+Systems with capable GPUs (such as those typically found in gaming PCs) will be necessary to run larger sized models, but
+small models can run on most systems regardless of the GPU.
 
 .. note:: This OS in this lab is Ubuntu. All of this can be recreated with MAC or Windows but
    you'll need to overcome several hurdles. Docker is already installed but the instructions are
@@ -25,7 +27,7 @@ small models on any system without a beast of a system.
 .. image:: ../images/udf-llmserver.png
    :align: left
 
-Docker
+**Preparing Docker**
 
   .. code-block:: bash
 
@@ -42,6 +44,11 @@ Docker
      apt update
      apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+You may be prompted to overwrite docker.gpg. If so, type "Y" to continue.
+
+  .. code-block:: bash
+
+     File '/etc/apt/keyrings/docker.gpg' exists. Overwrite? (y/N)
 
 Install Ollama
 --------------
@@ -69,7 +76,7 @@ The output should resemble this:
     manage this step if you build your own environment. \ 
     Find the instructions from NVIDIA here: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
 
-2. Go ahead and restart docker
+2. Go ahead and restart Docker
 
 .. code-block:: bash
 
@@ -96,7 +103,7 @@ The output should resemble this:
 
     docker run -d -v model_data:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
 
-The output should resemble this:
+If the image was not already downloaded, you will see an output similar to this. If the image was already downloaded then ignore the below.
 
 .. code-block:: bash
 

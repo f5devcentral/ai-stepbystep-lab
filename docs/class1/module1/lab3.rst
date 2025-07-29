@@ -56,8 +56,7 @@ temporary helper container.
 Step-by-Step Instructions Overview
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: This section is for review of the process to create your custom model. I'll provide an example
-afterward, but I encourage you to get creative and define your own.
+.. note:: This section is for review of the process to create your custom model. I'll provide an example afterward, but I encourage you to get creative and define your own.
 
 **Create your model directory on the host:**
 
@@ -96,11 +95,12 @@ afterward, but I encourage you to get creative and define your own.
      alpine sh -c "cp -r /tmp/my-custom-models/* /root/.ollama/models/"
 
 This command:
+
 - Mounts the Docker volume where Ollama stores model data
 - Mounts your custom models folder
 - Recursively copies each model folder into ``/root/.ollama/models`` inside the volume
 
-**Create the models using ``docker exec``:**
+**Create the models using** ``docker exec`` :
 
 .. code-block:: bash
 
@@ -135,7 +135,7 @@ between characters. The first between Calvin & Hobbes based on the tinyllama mod
 and Ferb based on the deepseek R1 1.5b model.
 
 
-#. Create the Modelfiles in a temporary folder structure on your ollama host.
+1. Create the Modelfiles in a temporary folder structure on your ollama host.
 
 .. code-block:: bash
 
@@ -166,7 +166,7 @@ and Ferb based on the deepseek R1 1.5b model.
     PARAMETER stop "\n\n"
     EOF
 
-#. Verify your models in /tmp/custom-models
+2. Verify your models in /tmp/custom-models
 
 .. code-block:: bash
 
@@ -196,7 +196,7 @@ The output should resemble:
     4 drwxr-xr-x 4 root root 4096 Jul 23 14:37 ..
     4 -rw-r--r-- 1 root root  487 Jul 23 14:25 Modelfile
 
-#. Load the custom model modelfiles to your model_data docker volume by creating a temporary container
+3. Load the custom model modelfiles to your model_data docker volume by creating a temporary container
 
 .. code-block:: bash
 
@@ -205,7 +205,7 @@ The output should resemble:
       -v /tmp/custom-models:/tmp/custom-models \
       alpine sh -c "cp -r /tmp/custom-models/* /root/.ollama/models/"
 
-#. Verify the modelfiles are now in your model_data docker volume
+4. Verify the modelfiles are now in your model_data docker volume
 
 .. code-block:: bash
 
@@ -224,7 +224,7 @@ The output should resemble:
     4 drwxr-xr-x 3 root root 4096 Jul 23 14:45 manifests
     4 drwxr-xr-x 2 root root 4096 Jul 23 14:47 phineas-ferb
 
-#. Create your custom models
+5. Create your custom models
 
 .. code-block:: bash
 
@@ -253,7 +253,7 @@ The output should resemble:
     writing manifest
     success
 
-#. Verify your new models are in the model list
+6. Verify your new models are in the model list
 
 .. code-block:: bash
 
@@ -271,13 +271,16 @@ The output should resemble:
     deepseek-r1:1.5b        e0979632db5a    1.1 GB    5 minutes ago
     tinyllama:latest        2644915ede35    637 MB    6 minutes ago
 
-#. Give your custom models a test run
+7. Give your custom models a test run
 
 First up, Calvin & Hobbes
 
 .. code-block:: bash
 
     docker exec -it ollama ollama run calvin-hobbes
+
+.. code-block:: bash
+
     >>> tell me about snowmen
 
 Your responses will vary, LLMs are not digests regurgitating data. My response:
@@ -305,6 +308,9 @@ Next up, Phineas & Ferb
 .. code-block:: bash
 
     docker exec -it ollama ollama run phineas-ferb
+
+.. code-block:: bash
+    
     >>> tell me about snowmen
 
 And my response. Notice the tone and style is different than the calvin-hobbes model.

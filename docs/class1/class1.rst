@@ -1,11 +1,11 @@
 Class 1: AI Step-by Step
 ========================
 
-This class has X modules and Y labs. We're simply doing this to show the
-standard structure of a class/module/lab.
+This class takes you through the development of an AI application step by step, incorporating common tools. You'll 
+learn some simple ways that LLMs can be exploited and be introduced to F5 AI Gateway for protection.
 
-.. note:: It could be simplier to throw all the content in one file but that
-   would miss the point of showing how we curently use RST.
+.. note:: This class is comprised of a collection of learnings from F5 DevCentral's AI-stepbystep found at
+   https://github.com/f5devcentral/ai-stepbystep. Visit this repo to learn more about building AI applications.
 
 .. toctree::
    :maxdepth: 1

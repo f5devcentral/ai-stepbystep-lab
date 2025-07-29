@@ -2,24 +2,35 @@ Lab 1.2 - Running your first models
 ===================================
 
 Ollama supports a wide range of open-source language models, from smaller, resource-efficient
-variants to large-scale models with more advanced capabilities. A key difference between these
-models—beyond their size in parameters—is their context window, which defines how much text
-the model can consider at once. Smaller models like llama2:7b or mistral often come with context
+variants to large-scale models with more advanced capabilities.
+
+A key difference between these models—beyond their size in parameters—is their context window,
+which defines how much text the model can consider at once.
+
+Smaller models like llama2:7b or Mistral often come with context
 limits of 4K to 8K tokens, making them fast and lightweight—great for short prompts, embedded
-applications, and edge devices. Larger models such as llama2:13b or mixtral typically support
+applications, and edge devices.
+
+Larger models such as llama2:13b or Mixtral typically support
 longer context windows, up to 32K tokens or more, allowing them to understand and generate more
-coherent responses over longer conversations or documents. When choosing a model in Ollama,
-consider both computational requirements and context needs: smaller models are ideal for speed
-and portability, while larger models shine in complex, memory-rich tasks like summarization,
-code generation, or multi-step reasoning.
+coherent responses over longer conversations or documents.
+
+When choosing a model in Ollama, consider both computational requirements and context needs:
+
+- **Smaller models:** ideal for speed and portability
+- **Larger models:** better for complex, memory-rich tasks like summarization, code generation, or multi-step reasoning
 
 Installing Models
 -----------------
 
 You can experiment with whatever models you choose. In this lab we'll stay at 8 billion
-parameters and below. You can read up on the models on the [Ollama](https://ollama.com/search) website.
+parameters and below. You can read up on the models on the `Ollama`_ website.
 
-1. Install tinyllama. We'll use the **docker exec** command to first specify the container we want to run
+.. _Ollama: https://ollama.com/search
+
+The first model we'll install is **tinyllama**.
+
+1. We'll use the **docker exec** command to first specify the container we want to run
 a command in and then issue the command, which is **ollama run tinyllama**. This installs tinyllama in
 the container.
 
@@ -170,7 +181,7 @@ an interactive shell, and with curl via the API.
                 "stream": false
               }'
 
-    The output should resemble this (cleaned up for brevity:
+    The output should resemble this (cleaned up for readability):
 
     .. code-block:: bash
 
