@@ -75,7 +75,11 @@ Jumphost and select **WEB SHELL** as shown in the image below.
     cd /root/fabric
     docker build -t fabric .
 
-4. This will take a few minutes. After the build completes, **create and run a new container**. This
+.. note::
+
+    This will take several minutes.
+
+4. After the build completes, **create and run a new container**. This
 will dump you into the bash shell of the container.
 
 .. code-block:: bash

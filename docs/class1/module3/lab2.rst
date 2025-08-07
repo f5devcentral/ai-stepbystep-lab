@@ -28,8 +28,18 @@ Steps
 
    .. image:: images/00_n8n_Interface.png
 
-#. Enter account details and click **Next**. Make sure to use a real email address to get your license key, and
-   check your junk folder if you don't get it quickly.
+.. note::
+
+    If you get a 500 error that the target is unreachable, kill the container in the webshell and start it again
+    with the command in step 2 of the previous lab in this module.
+
+#. Enter account details and click **Next**.
+
+    .. warning::
+
+        Make sure to use a real email address to get your license key, and check your junk folder if
+        you don't get it quickly.
+
 
    .. image:: images/01_owner_account.png
 
