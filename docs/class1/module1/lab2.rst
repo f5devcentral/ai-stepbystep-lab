@@ -45,7 +45,7 @@ The output should resemble this:
     writing manifest
     success
 
-2. Let's check to see if our models are indeed installed locally instead of within the container.
+2. Let's make sure your models are installed in the docker volume instead of within the container.
 
 .. code-block:: bash
 

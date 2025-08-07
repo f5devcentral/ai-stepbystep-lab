@@ -44,14 +44,14 @@ Review the Modelfile for the retail assistant below.
 
 You can see how the model has been instructed to only be a retain assistant. Let's see how effective it is!
 
-In your deployment, click on the **Components** tab, and under **Systems**, click **Access** on the
-LLM Server and select first the **OPEN WEBUI PROTECTED** and then **OPEN WEBUI UNPROTECTED** as shown in the
+In your deployment, click on the Components tab, and under Systems, click Access on the
+**LLM Server** and select **AIGW-PROTECTED** and then **AIGW-UNPROTECTED** as shown in the
 images below.
 
 .. image:: images/01_llmserver_protected_interface.png
 .. image:: images/02_llmserver_unprotected_interface.png
 
-You should have two browser windows now with the Open WebUI interface, one unprotected (red) and one protected
+You should have two browser windows now with custom Open WebUI interfaces, one unprotected (red) and one protected
 (green). I've placed them side by side and recommend you do the same.
 
 .. image:: images/03_llmserver_openwebui_windows.png
