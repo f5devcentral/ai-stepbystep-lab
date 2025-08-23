@@ -82,12 +82,13 @@ Steps
 
 #. Enable your agent with Ollama. Click the add chat model button, then select Ollama Chat Model from the side menu. When the Ollama definition screen comes up,
    click in the box and create new credentials. All you need to do for Ollama credentials is to set the actual IP of your host machine by replacing ``localhost`` with
-   ``10.1.1.5`` Once complete, close out of the definition screen:
+   ``10.1.1.5`` Once complete, close out of the definition screen, select ANY model in the available models list and return to canvas:
 
    .. image:: images/12_connect_model.png
    .. image:: images/13_create_cred.png
    .. image:: images/14_add_ip.png
    .. image:: images/15_close_out.png
+   .. image:: images/15b_model_select.png
 
 #. TEST IT OUT!! Click **Open chat**. Type "Hello World" in the chat box and watch in amazement as you proxy your first chat conversation through an agent:
 
