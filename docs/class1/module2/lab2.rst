@@ -26,7 +26,7 @@ Jumphost and select **WEB SHELL** as shown in the image below.
     # Dockerfile for Fabric Framework by Daniel Miessler
     # Simple build for Ubuntu with root user
 
-    FROM golang:1.24-alpine
+    FROM golang:1.25-alpine
 
     # Install all required packages and tools
     RUN apk add --no-cache \
