@@ -153,11 +153,12 @@ should resemble this one:
 Now take a step back and see what you've just built. You have your own working generative AI environment!
 And your prompt session history in the left-hand menu, no less. Not too shabby, right?!?
 
-You might have noticed that your initial prompt took a hot minute to get a response. This is due to the
-way Ollama is set up in docker by default. When you ran a model in Module 1 via a ``docker exec``
-command within the container, it loaded that model into memory, but only for a short while. You can see
-when I drop the model list down that there is a green dot next to tinylama, indicating that the model is
-loaded, and hovering over the green dot shows the tool tip that it will unload in 4 minutes.
+Depending on the model you chose, you might have noticed that your initial prompt took a hot minute to get
+a response. This is due to the way Ollama is set up in docker by default. When you ran a model in Module 1
+via a ``docker exec`` command within the container, it loaded that model into memory, but only for a short
+while after the first five models, which are set to stay loaded forever. You can see when I drop the model
+list down that there is a green dot next to the loaded models. Hovering over the model's green dot shows the
+tool tip that it will unload in 292 years. I think you'll make it through the lab!
 
 .. image:: images/06_openwebui_chatbot_models.png
 

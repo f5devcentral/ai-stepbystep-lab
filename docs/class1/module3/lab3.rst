@@ -49,16 +49,37 @@ understanding which model they should use for which tasks.
             Category: Coding
             Deescription: If the chat message indicates a need to code or asks for help with computer languages and scripting languages like iRules, JSON or node.js, assign this category.
 
-    #. Click the **Add Option** button, select the **Allow Multiple Classes To Be True** option, and then click the toggle to enable it.
     #. Click the **Add Option** button, select the **When No Clear Match** option, then select the **Output on Extra, 'Other' Branch** in the drop down list.
     #. Click the **Add Option** button, select the **System Prompt Template** option, then paste the system prompt below:
 
         .. code-block:: console
 
-            Please classify the text provided by the user into one of the following categories: {categories}, and use
-            the provided formatting instructions below: If they explicitly ask for coding help, do not fail and
-            classify the message as 'Coding'. If they explicitly ask for reasoning help, do not fail and classify
-            the message as 'Reasoning'. Otherwise, send the {{ $json.chatInput }} on to the next agent.
+            Please classify the text provided by the user into one of the following categories, and use the
+            provided formatting instructions below. Don't explain, and only output the json.
+
+            Categories:
+
+            REASONING: Tasks requiring logical analysis, problem-solving, decision-making, or explanations that
+            do not involve writing or modifying code. This includes answering questions, providing advice, analyzing
+            situations, explaining concepts, solving math problems, making comparisons, planning strategies, and
+            general knowledge queries.
+
+            Examples: "What's the best way to approach learning a new language?", "Explain the differences between
+            socialism and capitalism", "I have $5000 to invest. Should I put it in stocks or bonds?", "How can I
+            improve my time management skills?"
+
+            CODING: Tasks that involve writing, debugging, modifying, reviewing, or generating source code in any
+            programming language. This includes creating functions, scripts, or applications, fixing bugs,
+            refactoring code, implementing APIs, database queries, configuration files, regex patterns, and any
+            request where the expected output is executable or structured code.
+
+            Examples: "Write a Python function that calculates the Fibonacci sequence", "Debug this JavaScript code",
+            "Create a SQL query to find all users who registered last month", "Generate a regex pattern to validate
+            email addresses"
+
+            Classification rule: If the user asks to "explain how code/algorithm works" without requesting code
+            output, classify as REASONING. If they ask to "write", "create", "implement", or "generate" code,
+            classify as CODING.
 
 #. Next we'll tackle the classifier's settings. Click the **settings** tab, toggle **Retry on Fail** to enabled, then click **Back to canvas**
 
@@ -92,11 +113,23 @@ understanding which model they should use for which tasks.
 
     .. image:: images/n8n_coding_model.png
 
-#. Now you'll again repeat the previous steps to add the Generalist Agent. Everything should be the same except the model, which you can just drag a line over to the existing deepseek-r1:1.5b. After you add the new Generalist Agent node, your canvas should look like this:
+#. Now you'll again repeat the previous steps to add the Generalist Agent. Everything should be the same except the node names and the model, which should be **llama3.2:3b** in this case. After you add the two nodes, your canvas should look like this:
 
     .. image:: images/n8n_generalist_model.png
 
-#. Test time!! Need to populate a few tests that will work to show off the workflow...TBD!!
+Test time!!
+-----------
+
+Given the prompts below, I was able to successfully transit each of the three classification path,
+but please feel free to test your own and see how explicit you need to be to find success.
+
+* What is the capital of France?
+* If all Bloops are Razzies and all Razzies are Lazzies, are all Bloops definitely Lazzies?
+* Can you write a python function for me that will add two numbers and return the sum?
+
+You can see the workflow actions from the first geography-related prompt below.
+
+    .. image:: images/n8n_generalist_result.png
 
 Challenges
 ----------

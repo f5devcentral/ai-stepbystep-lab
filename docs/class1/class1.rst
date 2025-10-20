@@ -25,9 +25,11 @@ build out and customize in your own lab and extend for your specific needs.
 Resources
 ---------
 
-- :doc:`Docker Cheatsheet <resources/docker-cheatsheet>`
-- :doc:`Ollama Cheatsheet <resources/ollama-cheatsheet>`
+- `Docker Cheatsheet <resources/docker-cheatsheet>`_
+- `Ollama Cheatsheet <resources/ollama-cheatsheet>`_
 
+Labs
+----
 
 .. toctree::
    :maxdepth: 1

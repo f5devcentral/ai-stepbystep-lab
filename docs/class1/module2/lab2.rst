@@ -399,20 +399,16 @@ The output should resemble this:
     root@ip-10-1-1-4:/root/open-webui# docker ps | grep open-webui$
     2fb45a840c35   ghcr.io/open-webui/open-webui:main   "bash start.sh"          4 hours ago    Up 19 minutes (healthy)   0.0.0.0:3000->8080/tcp                        open-webui
 
-.. note::
-
-    If you want to pre-load the llama3.2:3b model into memory on the LLM server while you wait for open WebUI to get
-    healthy, you can save a little wait time in prompting step below. Login to the webshell of the LLM server and type
-    **docker exec ollama ollama run llama3.2:3b** and just leave that tab open.
-
-4. Launch your Open WebUI tab again and login. Select the llama3.2:3b model, then click the diamond pattern
-in your chat block to reveal your tools and select the f5mcp tool.
+4. Launch your Open WebUI tab again and login. Select the **llama3.2:3b** model, then click the diamond pattern
+in your chat block to reveal your tools and select the **F5 MCP Server** tool.
 
 .. image:: images/f5mcp_tools_display.png
 
 .. note::
 
-    For each model you select to work with, you'll need to reattach your tools.
+    For each model you select to work with, you'll need to reattach your tools. Also, if you don't see your tools
+    yet, in the **web shell** in the **/root/open-webui** directory, do a **docker compose down** and then a
+    **docker compse up**, wait for it to be healthy by running **docker ps**, and then check the model tools again.
 
 5. Now prompt for the list of BIG-IP pools. I find on these smaller models I need to be more explicit and
 nudged as much as possible. Here's your chance to experiment on how you can get the model to a) actually use

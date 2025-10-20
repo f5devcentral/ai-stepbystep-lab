@@ -22,18 +22,18 @@ You should see an output similar to this:
     and type **docker compose up -d** and then check **docker ps** again.
 
 Goals
-======
+-----
 
 By the end of this short lab, you will have created your first AI agent. It doesn't do a whole lot, except to proxy the conversation between n8n's native chat
 interface and your LLM served by Ollama, but it will clearly display the power that an agent provides and it will set you up for easy AI-powered automation.
 
 Steps
-=====
+-----
 
 #. Now, it's time to open your deployment's n8n Interface Access Method on the **App Server** and create an owner
 account for the instance:
 
-   .. image:: images/00_appserver_n8n_Interface.png
+   .. image:: images/00_appserver_n8n_interface.png
 
 .. note::
 
