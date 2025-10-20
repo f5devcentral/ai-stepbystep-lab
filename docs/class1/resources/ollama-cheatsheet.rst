@@ -1,3 +1,5 @@
+:orphan:
+
 Ollama Cheat Sheet
 ==================
 
@@ -7,7 +9,7 @@ Installation
 Linux/macOS
 ^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Install Ollama
    curl -fsSL https://ollama.ai/install.sh | sh
@@ -21,7 +23,7 @@ Linux/macOS
 Windows
 ^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Download and install from https://ollama.ai/download
    # Or use winget
@@ -30,7 +32,7 @@ Windows
 Docker
 ^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Run Ollama in Docker
    docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
@@ -44,7 +46,7 @@ Model Management
 Pulling Models
 ^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Pull a model
    ollama pull MODEL_NAME
@@ -69,7 +71,7 @@ Pulling Models
 Listing Models
 ^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # List installed models
    ollama list
@@ -82,7 +84,7 @@ Listing Models
 Removing Models
 ^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Remove a model
    ollama rm MODEL_NAME
@@ -97,7 +99,7 @@ Running Models
 Interactive Chat
 ^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Start interactive chat
    ollama run MODEL_NAME
@@ -113,7 +115,7 @@ Interactive Chat
 Single Prompt
 ^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Single prompt without interactive mode
    echo "Hello, how are you?" | ollama run llama2
@@ -124,7 +126,7 @@ Single Prompt
 Custom Parameters
 ^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Run with custom parameters
    ollama run llama2 --temperature 0.8 --top-p 0.9
@@ -140,7 +142,7 @@ REST API Endpoints
 
 **Generate Completion:**
 
-.. code-block:: bash
+.. code-block:: console
 
    # Basic completion
    curl http://localhost:11434/api/generate -d '{
@@ -157,7 +159,7 @@ REST API Endpoints
 
 **Chat API:**
 
-.. code-block:: bash
+.. code-block:: console
 
    # Chat completion
    curl http://localhost:11434/api/chat -d '{
@@ -172,7 +174,7 @@ REST API Endpoints
 
 **Model Information:**
 
-.. code-block:: bash
+.. code-block:: console
 
    # List models via API
    curl http://localhost:11434/api/tags
@@ -277,7 +279,7 @@ Advanced Modelfile
 Creating Custom Models
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Create model from Modelfile
    ollama create my-model -f Modelfile
@@ -294,7 +296,7 @@ Model Parameters
 Available Parameters
 ^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Temperature (creativity/randomness): 0.0 - 2.0
    PARAMETER temperature 0.8
@@ -317,7 +319,7 @@ Available Parameters
 Runtime Parameters
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Set parameters during run
    ollama run llama2 --temperature 0.5 --top-p 0.8 --top-k 20
@@ -328,7 +330,7 @@ Configuration
 Environment Variables
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Set Ollama home directory
    export OLLAMA_HOME=/custom/path
@@ -345,7 +347,7 @@ Environment Variables
 Service Management
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Start Ollama service
    ollama serve
@@ -362,7 +364,7 @@ Popular Models
 Text Generation Models
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Llama 2 variants
    ollama pull llama2:7b         # 7 billion parameters
@@ -382,7 +384,7 @@ Text Generation Models
 Code Generation Models
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Code-specific models
    ollama pull codellama:7b
@@ -396,7 +398,7 @@ Code Generation Models
 Specialized Models
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Math and reasoning
    ollama pull wizardmath:7b
@@ -413,7 +415,7 @@ Import Custom Models
 From GGUF Files
 ^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Create Modelfile for GGUF import
    echo 'FROM ./model.gguf' > Modelfile
@@ -436,7 +438,7 @@ Troubleshooting
 Common Issues
 ^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Check Ollama status
    ollama list
@@ -456,7 +458,7 @@ Common Issues
 Memory Management
 ^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Check model memory usage
    ollama ps
@@ -473,7 +475,7 @@ Performance Tips
 Optimization
 ^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Use smaller models for faster inference
    ollama pull llama2:7b  # instead of 70b
@@ -488,7 +490,7 @@ Optimization
 Hardware Considerations
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # For CPU-only systems, use smaller models
    ollama pull llama2:7b
@@ -504,7 +506,7 @@ Integration Examples
 Shell Scripts
 ^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    #!/bin/bash
    # Simple Ollama wrapper script
@@ -522,7 +524,7 @@ Shell Scripts
 Command Line Tools
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Create alias for quick access
    alias ask='ollama run llama2'
@@ -565,7 +567,7 @@ Useful Commands Summary
 Quick Reference
 ^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Essential commands
    ollama serve                    # Start Ollama service

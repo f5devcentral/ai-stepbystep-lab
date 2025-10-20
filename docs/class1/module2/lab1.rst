@@ -2,84 +2,101 @@ Lab 2.1 - Installing & Configuring Open WebUI
 =============================================
 
 In your deployment, click on the **Components** tab, and under **Systems**, click **Access** on the
-Jumphost and select **WEB SHELL** as shown in the image below.
+App Server and select **WEB SHELL** as shown in the image below.
 
-.. image:: images/00_jumphost_webshell_interface.png
+.. image:: images/00_appserver_webshell_interface.png
 
-1. Create a docker volume for Open WebUI to persist data across container restarts.
+1. Review the Open WebUI compose file on the **App Server** in the web shell.
 
-.. code-block:: bash
+.. code-block:: console
 
-    docker volume create openwebui_data
-
-The output should resemble this:
-
-.. code-block:: bash
-
-    root@ip-10-1-1-4:/# docker volume create openwebui_data
-    openwebui_data
-
-2. Now start the open-webui container image. It'll pull it down since it's not local. It isn't
-necessary to set the ``OLLAMA_BASE_URL`` in the docker command as you can do it in the GUI, but
-it saves a step.
-
-.. code-block:: bash
-
-    docker run -d -p 0.0.0.0:3000:8080 \
-      -e OLLAMA_BASE_URL=http://10.1.1.5:11434 \
-      -v openwebui_data:/app/backend/data \
-      --name open-webui \
-      --restart always \
-      ghcr.io/open-webui/open-webui:main
+    cd /root/open-webui
+    cat compose.yaml
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
-    root@ip-10-1-1-4:/# docker run -d -p 0.0.0.0:3000:8080 \
-      -e OLLAMA_BASE_URL=http://10.1.1.5:11434 \
-      -v openwebui_data:/app/backend/data \
-      --name open-webui \
-      --restart always \
-      ghcr.io/open-webui/open-webui:main
-    Unable to find image 'ghcr.io/open-webui/open-webui:main' locally
-    main: Pulling from open-webui/open-webui
-    59e22667830b: Pull complete
-    abd846fa1cdb: Pull complete
-    b7b61708209a: Pull complete
-    4085babbc570: Pull complete
-    5f3e67ee2caa: Pull complete
-    4f4fb700ef54: Pull complete
-    61b789e681cb: Pull complete
-    bd138afc061f: Pull complete
-    958261b47794: Pull complete
-    e4cb927d1520: Pull complete
-    110986ba15fd: Pull complete
-    1107fb21b6a6: Pull complete
-    a0d156d51aeb: Pull complete
-    47f2db3d35c9: Pull complete
-    2d6845a877ec: Pull complete
-    Digest: sha256:1addcd1bd7f8adfa635855bc8dfb91efc11632a3ca1ed0c0cc9424b82a5975d6
-    Status: Downloaded newer image for ghcr.io/open-webui/open-webui:main
-    cdb6f8b014622d78ec5442885ec2eaca2bbc454082b01d832cdeb324beda0324
+    root@ip-10-1-1-4:/# cd /root/open-webui
+    root@ip-10-1-1-4:/root/open-webui# cat compose.yaml
+    services:
+      open-webui:
+        image: ghcr.io/open-webui/open-webui:main
+        container_name: open-webui
+        ports:
+          - "0.0.0.0:3000:8080"
+        environment:
+          - OLLAMA_BASE_URL=http://10.1.1.5:11434
+        volumes:
+          - openwebui_data:/app/backend/data
+        networks:
+          - labnet
+        restart: always
 
-3. Now run ``docker ps`` to make sure the container is running and healthy.
+    volumes:
+      openwebui_data:
+        name: openwebui_data
 
-.. code-block:: bash
+    networks:
+      labnet:
+        external: true
+        name: labnet
+
+Note the ollama URL is the IP of our LLM Server where the Ollama we installed and configured in Module 1 is located.
+
+2. Run the Open WebUI compose service. It isn't necessary to set the ``OLLAMA_BASE_URL`` in the docker command as you
+can do it in the GUI, but it saves a step.
+
+.. code-block:: docker
+
+    docker compose up -d
+
+The output should resemble this:
+
+.. code-block:: console
+
+    root@ip-10-1-1-4:/root/open-webui# docker compose up -d
+    [+] Running 16/16
+     ✔ open-webui Pulled                                                                                                                                                                                                     81.3s
+       ✔ 5c32499ab806 Pull complete                                                                                                                                                                                           3.7s
+       ✔ 38b7e0d95f77 Pull complete                                                                                                                                                                                           4.0s
+       ✔ a64c132cd1a4 Pull complete                                                                                                                                                                                           5.3s
+       ✔ d61a97008ede Pull complete                                                                                                                                                                                           5.4s
+       ✔ 00b82f66b7ae Pull complete                                                                                                                                                                                           5.4s
+       ✔ 4f4fb700ef54 Pull complete                                                                                                                                                                                           5.5s
+       ✔ 0dba137e9547 Pull complete                                                                                                                                                                                           5.5s
+       ✔ c1a269532a5f Pull complete                                                                                                                                                                                           5.6s
+       ✔ 9838dc956351 Pull complete                                                                                                                                                                                          24.2s
+       ✔ 4e5a20d7c2d9 Pull complete                                                                                                                                                                                          24.2s
+       ✔ f0362419171e Pull complete                                                                                                                                                                                          76.2s
+       ✔ 2e2ace3a420a Pull complete                                                                                                                                                                                          79.6s
+       ✔ 930613edf9e8 Pull complete                                                                                                                                                                                          79.7s
+       ✔ c536edf69b32 Pull complete                                                                                                                                                                                          79.7s
+       ✔ 5dd5a2ad364d Pull complete                                                                                                                                                                                          80.5s
+    [+] Running 2/2
+     ✔ Volume "openwebui_data"  Created                                                                                                                                                                                       0.0s
+     ✔ Container open-webui     Started
+
+3. Now run **docker ps** to make sure the container is running and healthy.
+
+.. code-block:: console
 
     docker ps
 
-The output should resemble this. Make sure you see healthy under the STATUS field before proceeding.
-Mine took about a minute after startup.
+The output should resemble this.
 
-.. code-block:: bash
+.. code-block:: console
 
-    root@ip-10-1-1-4:/# docker ps
-    CONTAINER ID   IMAGE                                COMMAND           CREATED         STATUS                   PORTS                    NAMES
-    cdb6f8b01462   ghcr.io/open-webui/open-webui:main   "bash start.sh"   5 minutes ago   Up 5 minutes (healthy)   0.0.0.0:3000->8080/tcp   open-webui
+    root@ip-10-1-1-4:/root/open-webui# docker ps
+    CONTAINER ID   IMAGE                                COMMAND           CREATED              STATUS                        PORTS                    NAMES
+    9f5371a4223c   ghcr.io/open-webui/open-webui:main   "bash start.sh"   About a minute ago   Up About a minute (healthy)   0.0.0.0:3000->8080/tcp   open-webui
+
+.. important::
+
+    Make sure you see healthy under the STATUS field and wait at least a minute before proceeding.
 
 4. Now go to your deployment, click on the **Components** tab, and under **Systems**,
-click **Access** on the Jumphost and select **OPEN WEBUI** as shown in the image below.
+click **Access** on the **App Server** and select **OPEN WEBUI** as shown in the image below.
 
 .. image:: images/01_openwebui_access.png
 
@@ -109,9 +126,12 @@ Module 1.
 .. image:: images/04_openwebui_modellist.png
 
 .. note::
-    If there are none, open your web shell for the LLM Server and run ``docker ps`` to make sure ollama
-    is running. If it isn't and you've completed Module 1, you should be able to run ``docker start ollama``
-    to get it running again.
+    If there are none, open your web shell for the **LLM Server** and run **docker ps** to make sure ollama
+    is running. If it isn't and you've completed Module 1, you should be able to run **docker compose up -d**
+    on the LLM server in the /root/ollama directory to get it running again. If it is running but you still can't
+    see any models in the drop down, type **docker compose restart open-webui** in the **App Server** web shell in
+    the /root/open-webui directory and wait a minute until the status is healthy. Reach out to your lab asssistant
+    if none of this helps.
     
 9. Select a model of your choice and run a quick test.
 
@@ -157,4 +177,4 @@ You now have the following:
 - A full-featured web-based front-end for working with Ollama models.
 
 
-Next we'll crawl back to the command line for the exciting and powerful Fabric framework.
+Next we'll enhance our front-end by adding the mcpo MCP proxy tool and test out a couple MCP servers.

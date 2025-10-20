@@ -26,13 +26,13 @@ a command in and then issue the command, which is ``ollama run tinyllama``. This
 the container.
 
 
-.. code-block:: bash
+.. code-block:: console
 
     docker exec ollama ollama run tinyllama
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
     root@ip-10-1-1-5:/root# docker exec ollama ollama run tinyllama
     pulling manifest
@@ -47,22 +47,27 @@ The output should resemble this:
 
 2. Let's make sure your models are installed in the docker volume instead of within the container.
 
-.. code-block:: bash
+.. code-block:: console
 
-    docker volume inspect model_data
+    docker volume inspect ollama_model_data
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
-    root@ip-10-1-1-5:/root# docker volume inspect model_data
+    root@ip-10-1-1-5:/root/ollama# docker volume inspect ollama_model_data
     [
         {
-            "CreatedAt": "2025-07-21T11:46:15Z",
+            "CreatedAt": "2025-10-15T15:12:49Z",
             "Driver": "local",
-            "Labels": null,
-            "Mountpoint": "/var/lib/docker/volumes/model_data/_data",
-            "Name": "model_data",
+            "Labels": {
+                "com.docker.compose.config-hash": "d44db9d608057ef0858cf31d91290e2e5da2d12df2f5e97178c87a812cc7bbf6",
+                "com.docker.compose.project": "ollama",
+                "com.docker.compose.version": "2.38.2",
+                "com.docker.compose.volume": "model_data"
+            },
+            "Mountpoint": "/var/lib/docker/volumes/ollama_model_data/_data",
+            "Name": "ollama_model_data",
             "Options": null,
             "Scope": "local"
         }
@@ -70,160 +75,174 @@ The output should resemble this:
 
 Note the Mountpoint attribute. Now list out that directory.
 
-.. code-block:: bash
+.. code-block:: console
 
-    ls -las /var/lib/docker/volumes/model_data/_data
+    ls -las /var/lib/docker/volumes/ollama_model_data/_data
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
-    root@ip-10-1-1-5:/root# ls -las /var/lib/docker/volumes/model_data/_data
+    root@ip-10-1-1-5:/root/ollama# ls -las /var/lib/docker/volumes/ollama_model_data/_data
     total 20
-    4 drwxr-xr-x 3 root root 4096 Jul 21 11:52 .
-    4 drwx-----x 3 root root 4096 Jul 21 11:46 ..
-    4 -rw------- 1 root root  387 Jul 21 11:52 id_ed25519
-    4 -rw-r--r-- 1 root root   81 Jul 21 11:52 id_ed25519.pub
-    4 drwxr-xr-x 4 root root 4096 Jul 21 12:15 models
+    4 drwxr-xr-x 3 root root 4096 Oct 15 15:13 .
+    4 drwx-----x 3 root root 4096 Oct 15 15:12 ..
+    4 -rw------- 1 root root  387 Oct 15 15:13 id_ed25519
+    4 -rw-r--r-- 1 root root   81 Oct 15 15:13 id_ed25519.pub
+    4 drwxr-xr-x 4 root root 4096 Oct 15 15:32 models
 
 Looking good!
 
 3. Now verify the model is running
 
-.. code-block:: bash
+.. code-block:: console
 
     docker exec ollama ollama ps
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
-    root@ip-10-1-1-5:/root# docker exec ollama ollama ps
-    NAME                ID              SIZE      PROCESSOR    UNTIL
-    tinyllama:latest    2644915ede35    1.0 GB    100% CPU     4 minutes from now
+    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama ps
+    NAME                ID              SIZE      PROCESSOR    CONTEXT    UNTIL
+    tinyllama:latest    2644915ede35    827 MB    100% CPU     4096       About a minute from now
 
 4. Let's run a quick test against the model! We'll do this three different ways, a one-shot prompt,
 an interactive shell, and with curl via the API.
 
-    * The one-shot method
+**The one-shot method**
 
-    .. code-block:: bash
+.. code-block:: console
 
-        echo "Explain post quantum cryptography, briefly, like I'm five" | docker exec -i ollama ollama run tinyllama
+    echo "Explain post quantum cryptography, briefly, like I'm five" | docker exec -i ollama ollama run tinyllama
 
-    The output should resemble:
+The output should resemble something similar to the outputs below. Note that LLMs are not deterministic, so the
+output will not match, but should be generally close.
 
-    .. code-block:: bash
+.. code-block:: console
 
-        root@ip-10-1-1-5:/# echo "Explain post quantum cryptography, briefly, like I'm five" | docker exec -i ollama ollama run tinyllama
-        Post quantum cryptography is a new type of encryption technology that has emerged in recent
-        years to address the limitations and vulnerabilities of classical cryptographic algorithms.
-        This emerging method utilizes quantum computing technology to produce stronger cryptographic
-        keys, which are much harder to crack than classical algorithms like symmetric key encryption
-        (SKE) or public-key cryptography (PKC). Post quantum cryptography is based on the development
-        of quantum computers that can perform quantum computations efficiently, and it offers new
-        possibilities for creating secure and private communications. The concept of post quantum
-        cryptography is designed to address the limitations of classical cryptographic algorithms like
-        symmetric key encryption and public-key cryptography by exploiting the fact that quantum
-        computing technology could potentially enable faster and more efficient algorithms for
-        cryptographic key generation. Post quantum cryptography is an exciting new area of research,
-        and it offers several benefits, including improved security, increased efficiency in
-        cryptographic operations, and greater privacy for end users.
+    root@ip-10-1-1-5:/# echo "Explain post quantum cryptography, briefly, like I'm five" | docker exec -i ollama ollama run tinyllama
+    Post quantum cryptography is a new type of encryption technology that has emerged in recent
+    years to address the limitations and vulnerabilities of classical cryptographic algorithms.
+    This emerging method utilizes quantum computing technology to produce stronger cryptographic
+    keys, which are much harder to crack than classical algorithms like symmetric key encryption
+    (SKE) or public-key cryptography (PKC). Post quantum cryptography is based on the development
+    of quantum computers that can perform quantum computations efficiently, and it offers new
+    possibilities for creating secure and private communications. The concept of post quantum
+    cryptography is designed to address the limitations of classical cryptographic algorithms like
+    symmetric key encryption and public-key cryptography by exploiting the fact that quantum
+    computing technology could potentially enable faster and more efficient algorithms for
+    cryptographic key generation. Post quantum cryptography is an exciting new area of research,
+    and it offers several benefits, including improved security, increased efficiency in
+    cryptographic operations, and greater privacy for end users.
 
-    * The interactive shell
+**The interactive shell**
 
-    .. code-block:: bash
+.. code-block:: console
 
-        docker exec -it ollama ollama run tinyllama
+    docker exec -it ollama ollama run tinyllama
 
-    You should be in the interactive shell now with a **>>>** prompt.
+You should be in the interactive shell now with a **>>>** prompt.
 
-    .. code-block:: bash
+.. code-block:: console
 
-        write a haiku about grass
+    write a haiku about grass
 
-    The output should resemble:
+The output should resemble:
 
-    .. code-block:: bash
+.. code-block:: console
 
-        root@ip-10-1-1-5:/# docker exec -it ollama ollama run tinyllama
-        >>> write a haiku about grass
-        Golden sunrise, golden leaves,
-        Amidst the rolling hills,
-        In gentle harmony, they dance.
+    root@ip-10-1-1-5:/root/ollama# docker exec -it ollama ollama run tinyllama
+    >>> write a haiku about grass
+    green blade, soft and calm
+    in the garden breeze's embrace
+    like a whispered dream come true
 
-    Exit the interactive shell
+Exit the interactive shell
 
-    .. code-block:: bash
+.. code-block:: console
 
-        /bye
+    /bye
 
-    * The API
+**The API**
 
-    We'll use curl in this lab to run a prompt against the Ollama API.
+We'll use curl in this lab to run a prompt against the Ollama API.
 
-    .. code-block:: bash
+.. code-block:: console
 
-        curl http://localhost:11434/api/generate \
-              -H "Content-Type: application/json" \
-              -d '{
-                "model": "tinyllama",
-                "prompt": "Why is grass green?",
-                "stream": false
-              }'
+    curl http://localhost:11434/api/generate \
+          -H "Content-Type: application/json" \
+          -d '{
+            "model": "tinyllama",
+            "prompt": "Why is grass green?",
+            "stream": false
+          }'
 
-    The output should resemble this (cleaned up for readability):
+The output should resemble this (cleaned up for readability):
 
-    .. code-block:: bash
+.. code-block:: console
 
-        {
-          "model": "tinyllama",
-          "created_at": "2025-07-21T12:40:08.26066379Z",
-          "response": "Grass, like most plants, is typically green due to the presence of chlorophyll in its cells...",
-          "done": true,
-          "done_reason": "stop",
-          "context": [...],
-          "total_duration": 2688108078,
-          "load_duration": 14147836,
-          "prompt_eval_count": 39,
-          "prompt_eval_duration": 245846309,
-          "eval_count": 100,
-          "eval_duration": 2427405396
-        }
+    {
+      "model": "tinyllama",
+      "created_at": "2025-10-15T15:43:19.841925387Z",
+      "response": "Grass is often seen as being green because of the photosynthesis process that occurs in its leaves...",
+      "done": true,
+      "done_reason": "stop",
+      "context": [...],
+      "total_duration": 2688108078,
+      "load_duration": 14147836,
+      "prompt_eval_count": 39,
+      "prompt_eval_duration": 245846309,
+      "eval_count": 279,
+      "eval_duration": 2427405396
+    }
 
-    Here's a breakdown of the response data fields:
+Here's a breakdown of the response data fields:
 
-    ========================== =============================================================================================================================
-    Field                      Description
-    ========================== =============================================================================================================================
-    **model**                  The name of the model used for generation (e.g., ``tinyllama``).
-    **created_at**             Timestamp indicating when the response was generated (ISO 8601 format).
-    **response**               The full generated text output from the model, based on the provided prompt.
-    **done**                   A boolean that confirms the generation process is complete.
-    **done_reason**            Explains why generation stopped. Common value: ``"stop"`` (typically means end-of-sentence or EOS token).
-    **context**                An array of token IDs representing the internal context used during generation. Useful for advanced inspection or chaining.
-    **total_duration**         Total time taken to generate the response (in nanoseconds).
-    **load_duration**          Time spent loading the model into memory (in nanoseconds). Only shown on first use or if not cached.
-    **prompt_eval_count**      Number of tokens in the input prompt.
-    **prompt_eval_duration**   Time spent evaluating the prompt tokens (in nanoseconds).
-    **eval_count**             Number of tokens generated in the response.
-    **eval_duration**          Time spent generating the output tokens (in nanoseconds).
-    ========================== =============================================================================================================================
+========================== =============================================================================================================================
+Field                      Description
+========================== =============================================================================================================================
+**model**                  The name of the model used for generation (e.g., ``tinyllama``).
+**created_at**             Timestamp indicating when the response was generated (ISO 8601 format).
+**response**               The full generated text output from the model, based on the provided prompt.
+**done**                   A boolean that confirms the generation process is complete.
+**done_reason**            Explains why generation stopped. Common value: ``"stop"`` (typically means end-of-sentence or EOS token).
+**context**                An array of token IDs representing the internal context used during generation. Useful for advanced inspection or chaining.
+**total_duration**         Total time taken to generate the response (in nanoseconds).
+**load_duration**          Time spent loading the model into memory (in nanoseconds). Only shown on first use or if not cached.
+**prompt_eval_count**      Number of tokens in the input prompt.
+**prompt_eval_duration**   Time spent evaluating the prompt tokens (in nanoseconds).
+**eval_count**             Number of tokens generated in the response.
+**eval_duration**          Time spent generating the output tokens (in nanoseconds).
+========================== =============================================================================================================================
 
-5. Let's pull a few more models before moving on. I'm using deepseek-r1:1.5b and :7b, and also
-llama3.2:3b. You can do the same or pick something else, but keep them at 7b parameters or less.
+5. Let's pull a few more models before moving on that we'll use in later labs. Feel free to pull any other ones you want to look at, but keep them under 8b parameters.
 
-.. code-block:: bash
+.. code-block:: console
 
+    docker exec ollama ollama pull codellama
     docker exec ollama ollama pull deepseek-r1:1.5b
-    docker exec ollama ollama pull llama3.2:3b
     docker exec ollama ollama pull deepseek-r1:7b
+    docker exec ollama ollama pull llama3.2:3b
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
-    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama pull deepseek-r1:1.5b
+    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama pull codellama
+     docker exec ollama ollama pull deepseek-r1:1.5b
+     docker exec ollama ollama pull deepseek-r1:7b
+     docker exec ollama ollama pull llama3.2:3b
+    pulling manifest
+    pulling 3a43f93b78ec: 100% ▕██████████████████▏ 3.8 GB
+    pulling 8c17c2ebb0ea: 100% ▕██████████████████▏ 7.0 KB
+    pulling 590d74a5569b: 100% ▕██████████████████▏ 4.8 KB
+    pulling 2e0493f67d0c: 100% ▕██████████████████▏   59 B
+    pulling 7f6a57943a88: 100% ▕██████████████████▏  120 B
+    pulling 316526ac7323: 100% ▕██████████████████▏  529 B
+    verifying sha256 digest
+    writing manifest
+    success
     pulling manifest
     pulling aabd4debf0c8: 100% ▕██████████████████▏ 1.1 GB
     pulling c5ad996bda6e: 100% ▕██████████████████▏  556 B
@@ -233,7 +252,15 @@ The output should resemble this:
     verifying sha256 digest
     writing manifest
     success
-    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama pull llama3.2:3b
+    pulling manifest
+    pulling 96c415656d37: 100% ▕██████████████████▏ 4.7 GB
+    pulling c5ad996bda6e: 100% ▕██████████████████▏  556 B
+    pulling 6e4c38e1172f: 100% ▕██████████████████▏ 1.1 KB
+    pulling f4d24e9138dd: 100% ▕██████████████████▏  148 B
+    pulling 40fb844194b2: 100% ▕██████████████████▏  487 B
+    verifying sha256 digest
+    writing manifest
+    success
     pulling manifest
     pulling dde5aa3fc5ff: 100% ▕██████████████████▏ 2.0 GB
     pulling 966de95ca8a6: 100% ▕██████████████████▏ 1.4 KB
@@ -244,33 +271,24 @@ The output should resemble this:
     verifying sha256 digest
     writing manifest
     success
-    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama pull deepseek-r1:7b
-    pulling manifest
-    pulling 96c415656d37: 100% ▕██████████████████▏ 4.7 GB
-    pulling c5ad996bda6e: 100% ▕██████████████████▏  556 B
-    pulling 6e4c38e1172f: 100% ▕██████████████████▏ 1.1 KB
-    pulling f4d24e9138dd: 100% ▕██████████████████▏  148 B
-    pulling 40fb844194b2: 100% ▕██████████████████▏  487 B
-    verifying sha256 digest
-    writing manifest
-    success
 
 5. Now let's verify our installed models
 
-.. code-block:: bash
+.. code-block:: console
 
     docker exec ollama ollama list
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
     root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama list
     NAME                ID              SIZE      MODIFIED
-    deepseek-r1:7b      755ced02ce7b    4.7 GB    2 minutes ago
-    llama3.2:3b         a80c4f17acd5    2.0 GB    4 minutes ago
-    deepseek-r1:1.5b    e0979632db5a    1.1 GB    5 minutes ago
-    tinyllama:latest    2644915ede35    637 MB    8 minutes ago
+    llama3.2:3b         a80c4f17acd5    2.0 GB    About a minute ago
+    deepseek-r1:7b      755ced02ce7b    4.7 GB    3 minutes ago
+    deepseek-r1:1.5b    e0979632db5a    1.1 GB    3 minutes ago
+    codellama:latest    8fdf8f752f6e    3.8 GB    4 minutes ago
+    tinyllama:latest    2644915ede35    637 MB    27 minutes ago
 
 Recap
 -----

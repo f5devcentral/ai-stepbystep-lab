@@ -1,4 +1,6 @@
-.. code-block:: bash
+:orphan:
+
+.. code-block:: console
 
   # TELOS
 

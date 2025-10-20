@@ -1,3 +1,5 @@
+:orphan:
+
 Docker Cheat Sheet
 ==================
 
@@ -9,7 +11,7 @@ Creating Containers
 
 **From an image:**
 
-.. code-block:: bash
+.. code-block:: console
 
    # Create container without starting
    docker create [OPTIONS] IMAGE [COMMAND] [ARG...]
@@ -29,7 +31,7 @@ Creating Containers
 Starting Containers
 ^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Start stopped container
    docker start CONTAINER_ID_OR_NAME
@@ -43,7 +45,7 @@ Starting Containers
 Restarting Containers
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Restart container
    docker restart CONTAINER_ID_OR_NAME
@@ -54,7 +56,7 @@ Restarting Containers
 Stopping Containers
 ^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Stop container gracefully
    docker stop CONTAINER_ID_OR_NAME
@@ -71,7 +73,7 @@ Stopping Containers
 Destroying Containers
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Remove container (must be stopped first)
    docker rm CONTAINER_ID_OR_NAME
@@ -94,7 +96,7 @@ Port Mapping
 Basic Port Mapping
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Map container port to host port
    docker run -p HOST_PORT:CONTAINER_PORT IMAGE
@@ -111,7 +113,7 @@ Basic Port Mapping
 Advanced Port Options
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Map random host port
    docker run -P IMAGE
@@ -131,7 +133,7 @@ Volume Management
 Bind Mounts
 ^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Mount host directory to container
    docker run -v /host/path:/container/path IMAGE
@@ -145,7 +147,7 @@ Bind Mounts
 Named Volumes
 ^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Create named volume
    docker volume create my-volume
@@ -168,7 +170,7 @@ Named Volumes
 Temporary Filesystems
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Create tmpfs mount (in-memory)
    docker run --tmpfs /tmp IMAGE
@@ -182,7 +184,7 @@ Container Information
 Listing Containers
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # List running containers
    docker ps
@@ -199,7 +201,7 @@ Listing Containers
 Inspecting Containers
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Get detailed container information
    docker inspect CONTAINER_ID_OR_NAME
@@ -219,7 +221,7 @@ Inspecting Containers
 Executing Commands
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Execute command in running container
    docker exec CONTAINER_ID_OR_NAME COMMAND
@@ -236,7 +238,7 @@ Image Management
 Working with Images
 ^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Pull image from registry
    docker pull IMAGE:TAG
@@ -259,7 +261,7 @@ Docker Compose
 Basic Commands
 ^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Start services defined in docker-compose.yml
    docker-compose up
@@ -279,7 +281,7 @@ Basic Commands
 Service Management
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Start stopped services
    docker-compose start
@@ -299,7 +301,7 @@ Service Management
 Scaling and Building
 ^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Scale service to multiple instances
    docker-compose up --scale SERVICE_NAME=3
@@ -366,7 +368,7 @@ Networking
 Network Commands
 ^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # List networks
    docker network ls
@@ -386,12 +388,12 @@ Network Commands
 Network Types
 ^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Bridge network (default)
    docker run --network bridge IMAGE
 
-   # Host network (use host's network stack)
+   # Host network (use the host network stack)
    docker run --network host IMAGE
 
    # No network
@@ -406,7 +408,7 @@ Cleanup Commands
 System Cleanup
 ^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Remove unused containers, networks, images, and cache
    docker system prune
@@ -420,7 +422,7 @@ System Cleanup
 Specific Cleanup
 ^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Remove stopped containers
    docker container prune
@@ -440,7 +442,7 @@ Common Use Cases
 Development Environment
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Run with volume mount for live code editing
    docker run -it -v $(pwd):/app -w /app node:16 bash
@@ -451,7 +453,7 @@ Development Environment
 Database with Persistent Storage
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # PostgreSQL with named volume
    docker run -d \
@@ -464,7 +466,7 @@ Database with Persistent Storage
 Temporary Testing Container
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Auto-remove container when done
    docker run --rm -it ubuntu:latest bash
@@ -475,7 +477,7 @@ Environment Variables
 Setting Environment Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Single environment variable
    docker run -e VAR_NAME=value IMAGE
@@ -492,7 +494,7 @@ Useful Options
 Common Run Options
 ^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Complete example with common options
    docker run -d \
@@ -508,7 +510,7 @@ Common Run Options
 Resource Limits
 ^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Memory limit
    docker run --memory=512m IMAGE
@@ -522,7 +524,7 @@ Resource Limits
 Restart Policies
 ^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: console
 
    # Never restart
    docker run --restart=no IMAGE
