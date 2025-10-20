@@ -25,7 +25,7 @@ small models on any system with modest specifications.
 **Perform these steps from the LLM Server (Web Shell recommended for ease of use)**
 
 In your deployment, click on the **Components** tab, and under **Systems**, click **Access** on the
-LLM Server and select **WEB SHELL** as shown in the image below. This will launch the shell which
+**LLM Server** and select **WEB SHELL** as shown in the image below. This will launch the shell which
 you will use for the remainder of the labs in this module.
 
 .. image:: images/00_llmserver_webshell_interface.png
@@ -33,9 +33,9 @@ you will use for the remainder of the labs in this module.
 Install Ollama
 --------------
 
-The benefit of using Docker is the install aspect is a bit of a misnomer. Docker is the engine that
-is going to simply run the pre-configured install of Ollama in a container. That said, our Ollama
-server has an NVIDIA T4 GPU so we need to configure docker to use it before proceeding.
+Using Docker simplifies the installation process—or rather, eliminates it entirely. Docker runs a
+pre-configured Ollama container, so there's no traditional installation required. However, since our
+Ollama server has an NVIDIA T4 GPU, we need to configure Docker to access it before proceeding.
 
 1. Configure Docker for GPU use
 
@@ -94,7 +94,9 @@ The output should resemble this:
       llmserver-labnet:
         external: true
 
-Note the key details on what image, container name, ports, persistent data volumen, and networks are associated.
+Note the key details on what image, container name, ports, persistent data volume, and networks are associated.
+The environment variables in this case are there to keep the models loaded in memory and allow concurrent
+requests. This should improve the wait times in some of the later labs.
 
 4. Run the Ollama compose service.
 
@@ -146,7 +148,7 @@ The output should resemble this:
 
 .. code-block:: console
 
-    root@ip-10-1-1-5:/root# curl http://lcoalhost:11434
+    root@ip-10-1-1-5:/root# curl http://localhost:11434
     Ollama is running
 
 Recap
@@ -157,4 +159,4 @@ You now have the following:
 - A Docker container running the Ollama server
 - A Docker volume which is used as the file repository to store the models we'll install so they survive container restarts
 
-Next we'll install a couple models.
+Next we'll install some models.

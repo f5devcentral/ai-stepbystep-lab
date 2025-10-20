@@ -64,8 +64,6 @@ This should take a few minutes and resemble the output below.
 
 You'll notice you are now at the container shell prompt instead of at the App Server prompt.
 
-CONTINUE HERE AFTER LUNCH!!
-
 Configure Fabric
 ----------------
 
@@ -141,7 +139,7 @@ for the other two. Your output should resemble the following before being presen
 
     Specify HTTP timeout duration for Ollama requests (e.g. 30s, 5m, 1h) (leave empty for '20m' or type 'reset' to remove the value):
 
-3. Select the **Default AI Vendor and Model** Tool by number and hit **Enter**.  For now, choose llama3.2:3b.
+3. Select the **Default AI Vendor and Model** Tool by number and hit **Enter**.  For now, choose **llama3.2:3b**.
 In my instance, that is number 6 but that might be different for you. Skip the model context length. Your output should
 resemble the following before being presented again with the main screen:
 
@@ -375,6 +373,8 @@ Recap
 You now have the following:
 
 - A powerful command-line AI Assistant to optimize your data ingestion and note taking experiences.
+
+In the **web shell** exit the container by typing **exit**
 
 
 This completes Module 2. Click Next to move on to Module 3.

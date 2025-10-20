@@ -105,7 +105,7 @@ The output should resemble this:
 
     root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama ps
     NAME                ID              SIZE      PROCESSOR    CONTEXT    UNTIL
-    tinyllama:latest    2644915ede35    827 MB    100% CPU     4096       About a minute from now
+    tinyllama:latest    2644915ede35    827 MB    100% CPU     4096       Forever
 
 4. Let's run a quick test against the model! We'll do this three different ways, a one-shot prompt,
 an interactive shell, and with curl via the API.
@@ -176,7 +176,7 @@ We'll use curl in this lab to run a prompt against the Ollama API.
             "model": "tinyllama",
             "prompt": "Why is grass green?",
             "stream": false
-          }'
+          }' | jq .
 
 The output should resemble this (cleaned up for readability):
 
@@ -220,19 +220,19 @@ Field                      Description
 
 .. code-block:: console
 
-    docker exec ollama ollama pull codellama
-    docker exec ollama ollama pull deepseek-r1:1.5b
-    docker exec ollama ollama pull deepseek-r1:7b
-    docker exec ollama ollama pull llama3.2:3b
+    docker exec ollama ollama run codellama
+    docker exec ollama ollama run deepseek-r1:1.5b
+    docker exec ollama ollama run deepseek-r1:7b
+    docker exec ollama ollama run llama3.2:3b
 
 The output should resemble this:
 
 .. code-block:: console
 
-    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama pull codellama
-     docker exec ollama ollama pull deepseek-r1:1.5b
-     docker exec ollama ollama pull deepseek-r1:7b
-     docker exec ollama ollama pull llama3.2:3b
+    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama run codellama
+     docker exec ollama ollama run deepseek-r1:1.5b
+     docker exec ollama ollama run deepseek-r1:7b
+     docker exec ollama ollama run llama3.2:3b
     pulling manifest
     pulling 3a43f93b78ec: 100% ▕██████████████████▏ 3.8 GB
     pulling 8c17c2ebb0ea: 100% ▕██████████████████▏ 7.0 KB

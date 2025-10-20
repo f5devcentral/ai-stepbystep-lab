@@ -136,11 +136,25 @@ The output should resemble:
       -v /tmp/custom-models:/tmp/custom-models \
       alpine sh -c "cp -r /tmp/custom-models/* /root/.ollama/models/"
 
+The output should resemble the following:
+
+.. code-block:: console
+
+    root@ip-10-1-1-5:/root/ollama# docker run --rm \
+      -v ollama_model_data:/root/.ollama \
+      -v /tmp/custom-models:/tmp/custom-models \
+      alpine sh -c "cp -r /tmp/custom-models/* /root/.ollama/models/"
+    Unable to find image 'alpine:latest' locally
+    latest: Pulling from library/alpine
+    2d35ebdb57d9: Pull complete
+    Digest: sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412
+    Status: Downloaded newer image for alpine:latest
+
 4. Verify the modelfiles are now in your model_data docker volume
 
 .. code-block:: console
 
-    ls -als /var/lib/docker/volumes/model_data/_data/models
+    ls -als /var/lib/docker/volumes/ollama_model_data/_data/models
 
 The output should resemble:
 

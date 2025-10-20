@@ -9,11 +9,11 @@ verify we can access it via web UI. You will want to open the **WEB SHELL**.
 
 Installing n8n
 --------------
-1. Change directory into /root/n8n and start up your compose service.
+1. Change directory into /root/n8n (and review the compose file, right? RIGHT?!?) and start up your compose service.
 
 .. code-block:: console
 
-	cd /root/n8n
+    cd /root/n8n
     docker compose up -d
 
 You should see output similar to the following:
