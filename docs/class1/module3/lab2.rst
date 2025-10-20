@@ -1,19 +1,25 @@
 Lab 3.2 - n8n Hello World
 =========================
 
-This lab relies on the Ollama instance you built in Module 1, so please ensure that your Ollama container is running on 10.1.1.5 before continuing.
+This lab relies on the Ollama instance you built in Module 1, so please ensure that your Ollama container is running on the **LLM Server** before continuing.
 
-.. code-block:: bash
+.. code-block:: console
 
    docker ps
 
 You should see an output similar to this:
 
-.. code-block:: bash
+.. code-block:: console
 
    root@ip-10-1-1-5:/# docker ps
    CONTAINER ID   IMAGE           COMMAND               CREATED       STATUS       PORTS                                             NAMES
    e9d5e7367dab   ollama/ollama   "/bin/ollama serve"   7 hours ago   Up 7 hours   0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp   ollama
+
+.. note::
+
+    If you do not see ollama running, make sure you are in the web shell for the **LLM Server** and not the
+    **App Server**. If you are confirmed on the **LLM Server** and ollamam is not running, cd into /root/ollama
+    and type **docker compose up -d** and then check **docker ps** again.
 
 Goals
 ======
@@ -24,14 +30,15 @@ interface and your LLM served by Ollama, but it will clearly display the power t
 Steps
 =====
 
-#. Now, it's time to open your deployment's n8n Interface Access Method and create an owner account for the instance:
+#. Now, it's time to open your deployment's n8n Interface Access Method on the **App Server** and create an owner
+account for the instance:
 
-   .. image:: images/00_n8n_Interface.png
+   .. image:: images/00_appserver_n8n_Interface.png
 
 .. note::
 
-    If you get a 500 error that the target is unreachable, kill the container in the webshell and start it again
-    with the command in step 2 of the previous lab in this module.
+    If you get a 500 error that the target is unreachable, type **docker compose restart** in the /root/n8n directory,
+    wait a minute, and try again.
 
 #. Enter account details and click **Next**.
 
@@ -61,7 +68,11 @@ Steps
    .. image:: images/05_plan_screen.png
    .. image:: images/06_key_pasted.png
 
-#. Create a new workflow by clicking the + button in the top left of the screen and select Workflow from the drop-down:
+#. Exit settings.
+
+   .. image:: images/n8n_exit_settings.png
+
+#. Now create a new workflow by clicking the + button in the top left of the screen and select Workflow from the drop-down:
 
    .. image:: images/07_new_workflow.png
 
@@ -90,6 +101,8 @@ Steps
    .. image:: images/15_close_out.png
    .. image:: images/15b_model_select.png
 
+Now click Back to canvas.
+
 #. TEST IT OUT!! Click **Open chat**. Type "Hello World" in the chat box and watch in amazement as you proxy your first chat conversation through an agent:
 
    .. image:: images/16_open_chat.png
@@ -101,4 +114,11 @@ Steps
     This hello world is a drop replacement for what we did in Open WebUI--a graphical front-end for chatting with an
     LLM. But there is so much more to both tools to discover!
 
-#. Homework: Now that you've done the lab, explore the memory and tool options in your agent. The memory allows you to insert your chat data in any of a number of databases. The tools are connectors to various other resources and web utilities like ticketing services and chats. Check out the various triggers besides chat interface, as well. There are incredible ways to trigger these flows, too. Please imagine the possibilities for automating a million things in your workday with simple agentic flows.
+**Challenge**: Now that you've done the lab, explore the memory and tool options in your agent. The memory allows you to insert your chat data in any of a number of databases. The tools are connectors to various other resources and web utilities like ticketing services and chats. Check out the various triggers besides chat interface, as well. There are incredible ways to trigger these flows, too. Please imagine the possibilities for automating a million things in your workday with simple agentic flows.
+
+Recap
+-----
+
+You've now installed and configured n8n and are ready to start rocking out an automation strategy!
+
+Next we'll take a look at building a multi-agent workflow.

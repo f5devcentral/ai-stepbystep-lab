@@ -16,8 +16,11 @@ To run Ollama, you can do so on any modern system, but the more resources you ha
 Capable GPUs found on gaming PCs would be ideal for larger models, but you can work with
 small models on any system with modest specifications.
 
-.. note:: This OS in this lab is Ubuntu. All of this can be recreated with Mac or Windows with additional steps not covered here. Docker is already installed but the instructions are
-   below for your reference.
+.. note::
+
+    This OS in this lab is Ubuntu. All of this can be recreated with Mac or Windows with additional
+    steps not covered here. Docker is already installed and where compose files are used, they're already
+    on the system. It is encouraged to review them before you launch each service.
 
 **Perform these steps from the LLM Server (Web Shell recommended for ease of use)**
 
@@ -36,13 +39,13 @@ server has an NVIDIA T4 GPU so we need to configure docker to use it before proc
 
 1. Configure Docker for GPU use
 
-.. code-block:: bash
+.. code-block:: console
 
     nvidia-ctk runtime configure --runtime=docker
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
     root@ip-10-1-1-5:/# nvidia-ctk runtime configure --runtime=docker
     INFO[0000] Loading config from /etc/docker/daemon.json
@@ -51,69 +54,99 @@ The output should resemble this:
 
 2. Go ahead and restart docker
 
-.. code-block:: bash
+.. code-block:: console
 
     systemctl restart docker
 
-3. Create a local file resource for Docker so we don't have to re-load models when the container restarts
+3. Review the ollama compose file on the LLM Server in the web shell.
 
-.. code-block:: bash
+.. code-block:: console
 
-    docker volume create model_data
-
-The output should resemble this:
-
-.. code-block:: bash
-
-    root@ip-10-1-1-5:/# docker volume create model_data
-    model_data
-
-4. Run the Ollama container, making sure to reference the volume we created
-
-.. code-block:: bash
-
-    docker run -d -v model_data:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+    cd /root/ollama
+    cat compose.yaml
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: docker
 
-    root@ip-10-1-1-5:/root# docker run -d -v model_data:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
-    Unable to find image 'ollama/ollama:latest' locally
-    latest: Pulling from ollama/ollama
-    b08e2ff4391e: Pull complete
-    9d52186ca5a2: Pull complete
-    d0343d5f73e9: Pull complete
-    5343bc64fdab: Pull complete
-    Digest: sha256:f478761c18fea69b1624e095bce0f8aab06825d09ccabcd0f88828db0df185ce
-    Status: Downloaded newer image for ollama/ollama:latest
-    bf7f9f4c88acac99d7930d695768183f1a1f930960181c17b1a360508addcadb
+    root@ip-10-1-1-5:/# cd /root/ollama
+    root@ip-10-1-1-5:/root/ollama# cat compose.yaml
+    services:
+      ollama:
+        image: ollama/ollama
+        container_name: ollama
+        ports:
+          - "0.0.0.0:11434:11434"
+        volumes:
+          - model_data:/root/.ollama
+        environment:
+          - OLLAMA_KEEP_ALIVE=-1
+          - OLLAMA_MAX_LOADED_MODELS=5
+          - OLLAMA_NUM_PARALLEL=4
+        networks:
+          - llmserver-labnet
+        restart: unless-stopped
+
+    volumes:
+      model_data:
+
+    networks:
+      llmserver-labnet:
+        external: true
+
+Note the key details on what image, container name, ports, persistent data volumen, and networks are associated.
+
+4. Run the Ollama compose service.
+
+.. code-block:: console
+
+    docker compose up -d
+
+The output should resemble this:
+
+.. code-block:: console
+
+    root@ip-10-1-1-5:/root/ollama# docker compose up -d
+    [+] Running 5/5
+     ✔ ollama Pulled                                                                                                                                                                                                                       48.8s
+       ✔ 4b3ffd8ccb52 Pull complete                                                                                                                                                                                                         1.5s
+       ✔ 98bf6a5ec929 Pull complete                                                                                                                                                                                                         1.7s
+       ✔ 33494fde5d21 Pull complete                                                                                                                                                                                                         1.9s
+       ✔ 83ea82cf2566 Pull complete                                                                                                                                                                                                        47.5s
+    [+] Running 2/2
+     ✔ Volume "ollama_model_data"  Created                                                                                                                                                                                                  0.0s
+     ✔ Container ollama            Started
 
 5. Check to see if the container is running
 
-.. code-block:: bash
+.. code-block:: console
 
     docker ps
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
-    root@ip-10-1-1-5:/root# docker ps
-    CONTAINER ID   IMAGE           COMMAND               CREATED         STATUS         PORTS                                             NAMES
-    bf7f9f4c88ac   ollama/ollama   "/bin/ollama serve"   2 minutes ago   Up 2 minutes   0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp   ollama
+    root@ip-10-1-1-5:/root/ollama# docker ps
+    CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS          PORTS                                     NAMES
+    9343512ad63c   ollama/ollama            "/bin/ollama serve"      8 minutes ago   Up 8 minutes    0.0.0.0:11434->11434/tcp                  ollama
+    3cd5cfcd0dd1   docs-nginx-html-server   "/docker-entrypoint.…"   2 months ago    Up 28 minutes   0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   docs-nginx-html-server-1
+
+.. warning::
+
+    **Don't mess with that docs-nginx-html-server container...that's your lab guide!**
 
 6. Check to see if Ollama is available by using the curl command
 
-.. code-block:: bash
+.. code-block:: console
 
-    curl http://127.0.0.1:11434
+    curl http://localhost:11434
 
 The output should resemble this:
 
-.. code-block:: bash
+.. code-block:: console
 
-    root@ip-10-1-1-5:/root# curl http://127.0.0.1:11434
+    root@ip-10-1-1-5:/root# curl http://lcoalhost:11434
     Ollama is running
 
 Recap

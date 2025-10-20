@@ -4,5 +4,6 @@ recommonmark
 sphinx
 sphinx-copybutton
 sphinxcontrib-blockdiag
+sphinxcontrib-mermaid
 sphinxcontrib-nwdiag
 sphinxcontrib-serializinghtml
