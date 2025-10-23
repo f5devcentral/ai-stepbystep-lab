@@ -219,13 +219,13 @@ instructions, formatting requirements, and examples that guide the AI toward pro
 You can use the `extract_wisdom
 <https://github.com/danielmiessler/Fabric/blob/main/data/patterns/extract_wisdom/system.md>`_ pattern by
 piping text to fabric. (You can do this directly with the yt-dlp command if installed to automatically
-grab transcripts from YouTube, but that requires an API key.) Just copy the contents of `this youtube
-transcript <../resources/yt-transcript.html>`_ into your fabric container (I named mine yt-transcript.txt)
-and then pipe that to fabric like this:
+grab transcripts from YouTube, but that requires an API key.) The contents of `this youtube
+transcript <../resources/yt-transcript.html>`_ are already in your fabric container (named yt-transcript.txt).
+Run the following command:
 
 .. code-block:: console
 
-    echo yt-transcript.txt | fabric -sp extract_wisdom
+    fabric -sp extract_wisdom < yt-transcript.txt
 
 .. note::
 
@@ -320,12 +320,12 @@ engineer who is struggling adapting to modern tools and is facing anxiety on bei
 are several telos-based patterns that you can explore, but in this example, I used the `t_red_team_thinking
 pattern <https://github.com/danielmiessler/Fabric/blob/main/data/patterns/t_red_team_thinking/system.md>`_.
 
-This one took several minutes to run, so be patient! (I copied the mock telos from above into a file in the fabric
-container.)
+This one took several minutes to run, so be patient! (The file is already in the fabric
+container.). Run the following command:
 
 .. code-block:: console
 
-    cat telos | fabric -sp t_red_team_thinking --model deepseek-r1:7b
+    fabric -sp t_red_team_thinking --model deepseek-r1:7b < telos.txt
 
 The output should resemble this:
 

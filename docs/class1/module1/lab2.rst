@@ -216,63 +216,8 @@ Field                      Description
 **eval_duration**          Time spent generating the output tokens (in nanoseconds).
 ========================== =============================================================================================================================
 
-5. Let's pull a few more models before moving on that we'll use in later labs. Feel free to pull any other ones you want to look at, but keep them under 8b parameters.
-
-.. code-block:: console
-
-    docker exec ollama ollama run codellama
-    docker exec ollama ollama run deepseek-r1:1.5b
-    docker exec ollama ollama run deepseek-r1:7b
-    docker exec ollama ollama run llama3.2:3b
-
-The output should resemble this:
-
-.. code-block:: console
-
-    root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama run codellama
-     docker exec ollama ollama run deepseek-r1:1.5b
-     docker exec ollama ollama run deepseek-r1:7b
-     docker exec ollama ollama run llama3.2:3b
-    pulling manifest
-    pulling 3a43f93b78ec: 100% ▕██████████████████▏ 3.8 GB
-    pulling 8c17c2ebb0ea: 100% ▕██████████████████▏ 7.0 KB
-    pulling 590d74a5569b: 100% ▕██████████████████▏ 4.8 KB
-    pulling 2e0493f67d0c: 100% ▕██████████████████▏   59 B
-    pulling 7f6a57943a88: 100% ▕██████████████████▏  120 B
-    pulling 316526ac7323: 100% ▕██████████████████▏  529 B
-    verifying sha256 digest
-    writing manifest
-    success
-    pulling manifest
-    pulling aabd4debf0c8: 100% ▕██████████████████▏ 1.1 GB
-    pulling c5ad996bda6e: 100% ▕██████████████████▏  556 B
-    pulling 6e4c38e1172f: 100% ▕██████████████████▏ 1.1 KB
-    pulling f4d24e9138dd: 100% ▕██████████████████▏  148 B
-    pulling a85fe2a2e58e: 100% ▕██████████████████▏  487 B
-    verifying sha256 digest
-    writing manifest
-    success
-    pulling manifest
-    pulling 96c415656d37: 100% ▕██████████████████▏ 4.7 GB
-    pulling c5ad996bda6e: 100% ▕██████████████████▏  556 B
-    pulling 6e4c38e1172f: 100% ▕██████████████████▏ 1.1 KB
-    pulling f4d24e9138dd: 100% ▕██████████████████▏  148 B
-    pulling 40fb844194b2: 100% ▕██████████████████▏  487 B
-    verifying sha256 digest
-    writing manifest
-    success
-    pulling manifest
-    pulling dde5aa3fc5ff: 100% ▕██████████████████▏ 2.0 GB
-    pulling 966de95ca8a6: 100% ▕██████████████████▏ 1.4 KB
-    pulling fcc5a6bec9da: 100% ▕██████████████████▏ 7.7 KB
-    pulling a70ff7e570d9: 100% ▕██████████████████▏ 6.0 KB
-    pulling 56bb8bd477a5: 100% ▕██████████████████▏   96 B
-    pulling 34bb5ab01051: 100% ▕██████████████████▏  561 B
-    verifying sha256 digest
-    writing manifest
-    success
-
-5. Now let's verify our installed models
+5. We'll need a few more models that we'll use in later labs. Sometimes pulling the models can take quite a while,
+so they've been pre-loaded for you. To verify the installed models, run the following command.
 
 .. code-block:: console
 

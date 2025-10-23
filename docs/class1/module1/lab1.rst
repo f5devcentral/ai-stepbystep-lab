@@ -110,14 +110,13 @@ The output should resemble this:
 
     root@ip-10-1-1-5:/root/ollama# docker compose up -d
     [+] Running 5/5
-     ✔ ollama Pulled                                                                                                                                                                                                                       48.8s
-       ✔ 4b3ffd8ccb52 Pull complete                                                                                                                                                                                                         1.5s
-       ✔ 98bf6a5ec929 Pull complete                                                                                                                                                                                                         1.7s
-       ✔ 33494fde5d21 Pull complete                                                                                                                                                                                                         1.9s
-       ✔ 83ea82cf2566 Pull complete                                                                                                                                                                                                        47.5s
-    [+] Running 2/2
-     ✔ Volume "ollama_model_data"  Created                                                                                                                                                                                                  0.0s
-     ✔ Container ollama            Started
+     ✔ ollama Pulled                                                                                                                                                                                                                     41.0s
+       ✔ 4b3ffd8ccb52 Pull complete                                                                                                                                                                                                       1.4s
+       ✔ 98bf6a5ec929 Pull complete                                                                                                                                                                                                       1.5s
+       ✔ ebcb0a999d8e Pull complete                                                                                                                                                                                                       1.8s
+       ✔ 09bd5f2738f8 Pull complete                                                                                                                                                                                                      39.8s
+    [+] Running 1/1
+     ✔ Container ollama  Started
 
 5. Check to see if the container is running
 
