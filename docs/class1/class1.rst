@@ -22,11 +22,10 @@ or data inputs.
 By the end of this lab, you'll have hands-on experience building a complete AI-powered automation system that you can
 build out and customize in your own lab and extend for your specific needs.
 
-Resources
----------
+**Resources**
 
-- `Docker Cheatsheet <resources/docker-cheatsheet>`_
-- `Ollama Cheatsheet <resources/ollama-cheatsheet>`_
+- `Docker Cheatsheet <resources/docker-cheatsheet.html>`_
+- `Ollama Cheatsheet <resources/ollama-cheatsheet.html>`_
 
 Labs
 ----
