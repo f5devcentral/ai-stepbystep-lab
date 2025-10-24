@@ -19,7 +19,9 @@ Jumphost and select **WEB SHELL** as shown in the image below.
     cd /root/fabric
     docker compose run --rm fabric
 
-This should take a few minutes and resemble the output below.
+If doing for the first time it takes a few minutes and resemble the output below. In our case since we've
+pre-built the image and container, you'll just be dumped into the container's shell prompt (last line of
+this output.)
 
 .. code-block:: console
 

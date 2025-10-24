@@ -51,7 +51,15 @@ can do it in the GUI, but it saves a step.
 
     docker compose up -d
 
-The output should resemble this:
+The output should resemble this since we've already pre-built this:
+
+.. code-block:: console
+
+    root@ip-10-1-1-4:/root/open-webui# docker compose up -d
+    [+] Running 1/1
+     ✔ Container open-webui  Started
+
+If it were the first time, the output would look like this:
 
 .. code-block:: console
 
@@ -170,6 +178,13 @@ tool tip that it will unload in 292 years. I think you'll make it through the la
 Feel free to hang out here before moving on and test the different models with a similar prompt to see
 how effective they are at answering your queries. The smaller models tend to hallucinate a lot and to
 not follow prompt instructions very precisely, or at all.
+
+11. You will need to make changes to the Open WebUI compose file in the next lab. Shut it down for now.
+
+.. code-block:: console
+
+    cd /root/open-webui
+    docker compose down
 
 Recap
 -----

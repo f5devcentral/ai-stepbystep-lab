@@ -109,14 +109,14 @@ The output should resemble this:
 .. code-block:: console
 
     root@ip-10-1-1-5:/root/ollama# docker compose up -d
-    [+] Running 5/5
-     ✔ ollama Pulled                                                                                                                                                                                                                     41.0s
-       ✔ 4b3ffd8ccb52 Pull complete                                                                                                                                                                                                       1.4s
-       ✔ 98bf6a5ec929 Pull complete                                                                                                                                                                                                       1.5s
-       ✔ ebcb0a999d8e Pull complete                                                                                                                                                                                                       1.8s
-       ✔ 09bd5f2738f8 Pull complete                                                                                                                                                                                                      39.8s
     [+] Running 1/1
      ✔ Container ollama  Started
+
+.. note::
+
+    If this was the first time docker compose was run, the image would need to be pulled and/or built and
+    would take more time. In order to prevent network and registry issues with Docker and Ollama, the images
+    and models have already been managed.
 
 5. Check to see if the container is running
 

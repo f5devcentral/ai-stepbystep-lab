@@ -16,7 +16,15 @@ Installing n8n
     cd /root/n8n
     docker compose up -d
 
-You should see output similar to the following:
+You should see output similar to the following since we pre-loaded the images/containers:
+
+.. code-block:: console
+
+    root@ip-10-1-1-4:/root/n8n# docker compose up -d
+    [+] Running 1/1
+     ✔ Container n8n  Started
+
+If this were the first time, the output would be more similar to this:
 
 .. code-block:: console
 
