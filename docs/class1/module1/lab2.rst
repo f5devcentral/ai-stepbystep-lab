@@ -21,16 +21,15 @@ parameters and below. You can read up on the models on the `Ollama`_ website.
 
 .. _Ollama: https://ollama.com/models
 
-1. The first model we'll install is **tinyllama**. We'll use the ``docker exec`` command to first specify the container we want to run
-a command in and then issue the command, which is ``ollama run tinyllama``. This installs tinyllama in
-the container.
-
+1. The first model we'll install is **tinyllama**. We'll use the ``docker exec ollama`` command to first specify the container we want to run
+a command in and then issue the command, which is ``ollama run tinyllama``. This pulls the model from the registry and installs tinyllama in
+the container if it's not already installed.
 
 .. code-block:: console
 
     docker exec ollama ollama run tinyllama
 
-The output should resemble this:
+You won't see output with this command as we've already installed this on your behalf, but if we hadn't, it would look like this:
 
 .. code-block:: console
 
@@ -241,5 +240,18 @@ In this lab, you:
 
 - Installed and verified models
 - Ran some quick tests to the tinyllama model via the shell and the ollama API
+
+.. note::
+    All the subsequent modules will use a variety of the models we've already loaded. It is recommended that you
+    pre-load them now so they'll be ready to act on your prompts when you get things set up. Still in your
+    **LLM Server web shell**, run the remaining non-custom models with the commands below, which you can paste
+    together. You're fine to move on, just make sure to leave this web shell tab open until the models are done loading.
+
+.. code-block:: console
+
+    docker exec ollama ollama run llama3.2:3b
+    docker exec ollama ollama run deepseek-r1:1.5b
+    docker exec ollama ollama run deepseek-r1:7b
+    docker exec ollama ollama run codellama
 
 Next we'll customize a model. Time to get creative!

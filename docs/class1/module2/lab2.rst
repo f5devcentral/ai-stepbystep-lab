@@ -380,7 +380,7 @@ click **Access** on the **App Server** and select **WEB SHELL** as shown in the 
 
     cd /root/open-webui
     cp compose.yaml.tools compose.yaml
-    docker compose restart
+    docker compose up -d
 
 The output should resemble this:
 
@@ -388,8 +388,8 @@ The output should resemble this:
 
     root@ip-10-1-1-4:/# cd /root/open-webui
     root@ip-10-1-1-4:/root/open-webui# cp compose.yaml.tools compose.yaml
-    root@ip-10-1-1-4:/root/open-webui# docker compose restart
-    [+] Restarting 1/1
+    root@ip-10-1-1-4:/root/open-webui# docker compose up -d
+    [+] Running 1/1
      ✔ Container open-webui  Started
 
 3. Check the health of the open-webui container and make sure it's state is **healthy** before proceeding
@@ -408,7 +408,7 @@ in your chat block to reveal your tools and select the **F5 MCP Server** tool.
 
     For each model you select to work with, you'll need to reattach your tools. Also, if you don't see your tools
     yet, in the **web shell** in the **/root/open-webui** directory, do a **docker compose down** and then a
-    **docker compse up**, wait for it to be healthy by running **docker ps**, and then check the model tools again.
+    **docker compse up -d** again, wait for it to be healthy by running **docker ps**, and then check the model tools.
 
 5. Now prompt for the list of BIG-IP pools. I find on these smaller models I need to be more explicit and
 nudged as much as possible. Here's your chance to experiment on how you can get the model to a) actually use
