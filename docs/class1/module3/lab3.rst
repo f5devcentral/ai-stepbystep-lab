@@ -20,12 +20,12 @@ understanding which model they should use for which tasks.
 
     .. image:: images/n8n_multiagent_onchat.png
 
-#. Click back to canvas and then type a chat message, hit the send chat in the box, then double click the chat node and pin it.
+#. Click the x in the upper right of the dialog to close it and then type a chat message, hit the send chat in the box, then double click the chat node and pin it.
 
     .. image:: images/n8n_trigger_chat.png
     .. image:: images/n8n_trigger_chat_pin.png
 
-#. Click back to canvas and then click the **+** on the chat node, then search for **text**, then select the
+#. Click the x in the upper right of the dialog again and then click the **+** on the chat node, then search for **text**, then select the
    **Text Classifier** node.
 
     .. image:: images/n8n_add_classifier_node.png
@@ -81,7 +81,7 @@ understanding which model they should use for which tasks.
             output, classify as REASONING. If they ask to "write", "create", "implement", or "generate" code,
             classify as CODING.
 
-#. Next we'll tackle the classifier's settings. Click the **settings** tab, toggle **Retry on Fail** to enabled, then click **Back to canvas**
+#. Next we'll tackle the classifier's settings. Click the **settings** tab, toggle **Retry on Fail** to enabled, then click the x to close the dialog
 
     .. image:: images/n8n_classifier_settings.png
 
@@ -91,7 +91,7 @@ understanding which model they should use for which tasks.
 
 #. If you completed the previous n8n lab, use the Ollama account credential in the **Credential to connect with**
    field. If not go back to Lab 3.2 for instructions. Select the deepseek-r1:1.5b model, name the node deepseek-r1:1.5b,
-   then click **Back to canvas**.
+   then click the x to close the dialog.
 
     .. image:: images/n8n_tc_model_parameters.png
 
@@ -99,7 +99,7 @@ understanding which model they should use for which tasks.
 
     .. image:: images/n8n_add_reasoning.png
 
-#. Click the **settings** tab, enable the **Retry on Fail** toggle, rename the node to **Reasoning Agent**, then click **Back to canvas**
+#. Click the **settings** tab, enable the **Retry on Fail** toggle, rename the node to **Reasoning Agent**, then click the x to close the dialog.
 
     .. image:: images/n8n_reasoning_settings.png
 
@@ -149,10 +149,4 @@ You now have a functional multi-model workflow that:
 * Optimizes AI spend by using appropriately-sized models
 * Demonstrates intelligent prompt routing architecture
 
-This concludes today's AI Step-by-Step exploration of AI tools. We hope you enjoyed the journey and make sure to
-watch and star the two repos we're supporting for this effort:
-
-* `AI Step-by-Step <https://github.com/f5devcentral/AI-stepbystep/>`_ - Guidance for building out home-lab AI tools
-* `AI Step-by-Step Lab <https://github.com/f5devcentral/ai-stepbystep-lab/>`_ - The UDF lab guide
-
-If you have any feedback for how we can improve or extend this lab, please contact us at `devcentral@f5.com <mailto:devcentral@f5.com>`_.
+This completes Module 3. Click Next to move on to Module 4.

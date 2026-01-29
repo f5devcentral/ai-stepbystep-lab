@@ -79,73 +79,113 @@ That should resemble the following output:
 
 .. code-block:: console
 
-    b37603eed0c1:~# fabric --setup
+    b1b224ae5f77:~# fabric --setup
 
-    Available plugins (please configure all required plugins)::
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    🎉 Welcome to Fabric! Let's get you set up
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    AI Vendors [at least one, required]
+    📥 Step 1: Downloading patterns (required for Fabric to work)..
 
-            [1]     AIML
-            [2]     Anthropic
-            [3]     Azure
-            [4]     Cerebras
-            [5]     DeepSeek
-            [6]     Exolab
-            [7]     Gemini
-            [8]     GrokAI
-            [9]     Groq
-            [10]    Langdock
-            [11]    LiteLLM
-            [12]    LM Studio
-            [13]    Mistral
-            [14]    Ollama
-            [15]    OpenAI
-            [16]    OpenRouter
-            [17]    Perplexity
-            [18]    SiliconCloud
-            [19]    Together
-            [20]    Venice AI
+    [Patterns Loader]
 
-    Tools
+    Enter the default Git repository URL for the patterns (leave empty for 'https://github.com/danielmiessler/fabric.git' or type 'reset' to remove the value):
 
-            [21]    Custom Patterns - Set directory for your custom patterns (optional)
-            [22]    Default AI Vendor and Model [required]
-            [23]    Jina AI Service - to grab a webpage as clean, LLM-friendly text (configured)
-            [24]    Language - Default AI Vendor Output Language (configured)
-            [25]    Patterns - Downloads patterns [required]
-            [26]    Strategies - Downloads Prompting Strategies (like chain of thought) [required]
-            [27]    YouTube - to grab video transcripts (via yt-dlp) and comments/metadata (via YouTube API)
-
-    [Plugin Number] Enter the number of the plugin to setup (leave empty to skip):
-
-These numbers may change as the application is updated. The areas we need to focus on for changes are:
-
-* Under the AI Vendors list, just Ollama
-* Under the Tools list:
-    * Default AI Vendor and Model
-    * Patterns
-    * Strategies
-
-2. Select the **Ollama** AI Vendor by number and hit **Enter**. Set the Ollama URL to http://10.1.1.5:11434 and just hit return
-for the other two. Your output should resemble the following before being presented again with the main screen:
+Accept the default and press enter. This should then present the following:
 
 .. code-block:: console
+
+    Enter the default folder in the Git repository where patterns are stored (leave empty for 'data/patterns' or type 'reset' to remove the value):
+
+Accept the default again for the patterns and press enter. This should present the following:
+
+.. code-block:: console
+
+    Downloading patterns and Populating /root/.config/fabric/patterns...
+
+
+    Cloning repository https://github.com/danielmiessler/fabric.git (path: data/patterns)...
+    Downloaded 241 patterns to temporary directory
+    ✅ Successfully downloaded and installed patterns to /root/.config/fabric/patterns
+    📝 Created unique patterns file with 241 pattern
+
+    📥 Step 2: Downloading strategies (required for Fabric to work)..
+
+    [Prompt Strategies]
+
+    Enter the default Git repository URL for the strategies (leave empty for 'https://github.com/danielmiessler/fabric.git' or type 'reset' to remove the value):
+
+Accept the default again for the strategies and the repo and press enter. This should present the following:
+
+.. code-block:: console
+
+    Enter the default folder in the Git repository where strategies are stored (leave empty for 'data/strategies' or type 'reset' to remove the value):
+    Downloading strategies and Populating /root/.config/fabric/strategies...
+
+
+    Cloning repository https://github.com/danielmiessler/fabric.git (path: data/strategies)...
+    Downloaded 9 strategies
+    ✅ Successfully downloaded and installed strategies to /root/.config/fabric/strategies
+
+    🤖 Step 3: Configure an AI provide
+       Fabric needs at least one AI provider to work.
+       You'll be able to add more providers later with 'fabric --setup'
+
+
+    Available AI Providers::
+
+
+
+            [1]     Abacus
+            [2]     AIML
+            [3]     Anthropic
+            [4]     Azure
+            [5]     Cerebras
+            [6]     Copilot
+            [7]     DeepSeek
+            [8]     DigitalOcean
+            [9]     Exolab
+            [10]    Gemini
+            [11]    GitHub
+            [12]    GrokAI
+            [13]    Groq
+            [14]    Infermatic
+            [15]    Langdock
+            [16]    LiteLLM
+            [17]    LM Studio
+            [18]    Mammouth
+            [19]    MiniMax
+            [20]    Mistral
+            [21]    Novita AI
+            [22]    Ollama
+            [23]    OpenAI
+            [24]    OpenRouter
+            [25]    Perplexity
+            [26]    SiliconCloud
+            [27]    Together
+            [28]    Venice AI
+            [29]    VertexAI
+            [30]    Z AI
+
+    [AI Provider Number] Enter the number of the AI provider to configure (leave empty to skip):
+
+Choose the Ollama option (22 here, but might be different for you) and hit enter. Make sure to enter http://10.1.1.5:11434 and then skip the ollama key and the timeout.
+
+.. code-block: console
 
     [Ollama]
 
-    Enter your Ollama URL (as a reminder, it is usually http://localhost:11434') (leave empty for 'http://localhost:11434' or type 'reset' to remove the value):
-    http://10.1.1.5:11434
+    Enter your Ollama URL (as a reminder, it is usually http://localhost:11434') (leave empty for 'http://localhost:11434' or type 'reset' to remove the value):http://10.1.1.5:11434
 
     Enter your Ollama API KEY (leave empty to skip):
 
-
     Specify HTTP timeout duration for Ollama requests (e.g. 30s, 5m, 1h) (leave empty for '20m' or type 'reset' to remove the value):
 
-3. Select the **Default AI Vendor and Model** Tool by number and hit **Enter**.  For now, choose **llama3.2:3b**.
-In my instance, that is number 6 but that might be different for you. Skip the model context length. Your output should
-resemble the following before being presented again with the main screen:
+Now choose the model. I would recommend llama3.2:3b for this, which is number 6 for me, but you can experiment!
 
 .. code-block:: console
+
+    ⚙  Step 4: Setting default vendor and model...
 
     Available models:
 
@@ -157,55 +197,44 @@ resemble the following before being presented again with the main screen:
             [4]     deepseek-r1:1.5b
             [5]     deepseek-r1:7b
             [6]     llama3.2:3b
-            [7]     qwen3:4b
+            [7]     qwen2.5:7b-instruct
             [8]     tinyllama:latest
 
     [Default]
 
-    Enter the index the name of your default model (leave empty to skip):
-    6
+    Enter the index or the name of your default model (leave empty to skip):
+
+Finally, skip the context length.
+
+.. code-block:: console
 
     Enter model context length (leave empty to skip):
 
     DEFAULT_VENDOR: Ollama
     DEFAULT_MODEL: llama3.2:3b
 
-4. Select the **Patterns** Tool by number and hit **Enter**.  Accept the defaults and the Patterns should be
-cloned for you. Your output should resemble the following before being presented again with the main screen:
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    ✅ Setup complete! You can now use Fabric.
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-.. code-block:: console
-
-    [Patterns Loader]
-
-    Enter the default Git repository URL for the patterns (leave empty for 'https://github.com/danielmiessler/fabric.git' or type 'reset' to remove the value):
-
-
-    Enter the default folder in the Git repository where patterns are stored (leave empty for 'data/patterns' or type 'reset' to remove the value):
-
-    Downloading patterns and Populating /root/.config/fabric/patterns...
-
-    Cloning repository https://github.com/danielmiessler/fabric.git (path: data/patterns)...
-    Downloaded 227 patterns to temporary directory
-    ✅ Successfully downloaded and installed patterns to /root/.config/fabric/patterns
-    📝 Created unique patterns file with 227 pattern
-
-5. Back at the main screen, select the **Strategies** Tool by number and hit **Enter**. Accept the defaults. Your
-output should resemble the following before being presented again with the main screen:
-
-.. code-block:: console
-
-    [Prompt Strategies]
-
-    Enter the default Git repository URL for the strategies (leave empty for 'https://github.com/danielmiessler/fabric.git' or type 'reset' to remove the value):
+    Next steps:
+      • List available patterns: fabric -l
+      • Try a pattern: echo 'your text' | fabric --pattern summarize
+      • Configure more settings: fabric --setup
 
 
-    Enter the default folder in the Git repository where strategies are stored (leave empty for 'data/strategies' or type 'reset' to remove the value):
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Configuration Status:
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      ✓ AI Provider configured
+      ✓ Default vendor/model set: Ollama/llama3.2:3b
+      ✓ Patterns downloaded
+      ✓ Strategies downloaded
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    Downloading strategies and Populating /root/.config/fabric/strategies...
+    ✓ All required components configured!
 
-.. note:: I had to do this twice for it to show configured.
-
-6. Hit **Enter** with no plugin number to Exit setup. Fabric is now configured.
+Fabric is now configured!
 
 Fabric Patterns
 ---------------

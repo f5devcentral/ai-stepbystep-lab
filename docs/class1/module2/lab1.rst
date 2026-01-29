@@ -27,6 +27,7 @@ The output should resemble this:
           - "0.0.0.0:3000:8080"
         environment:
           - OLLAMA_BASE_URL=http://10.1.1.5:11434
+          - WEBUI_AUTH=False
         volumes:
           - openwebui_data:/app/backend/data
         networks:
@@ -42,7 +43,10 @@ The output should resemble this:
         external: true
         name: labnet
 
-Note the ollama URL is the IP of our LLM Server where the Ollama we installed and configured in Module 1 is located.
+Note the ollama URL is the IP of our LLM Server where the Ollama we installed and configured in Module 1 is located. Also
+note that we've disabled authentication to Open WebUI in this lab. Normally you'd want to keep that enabled so you can
+control access and set up profiles, but it's unnecessary here and requires interaction with one of your email accounts to
+get an activation key so we've disabled it.
 
 2. Run the Open WebUI compose service. It isn't necessary to set the ``OLLAMA_BASE_URL`` in the docker command as you
 can do it in the GUI, but it saves a step.
@@ -101,34 +105,20 @@ The output should resemble this.
 
 .. important::
 
-    Make sure you see healthy under the STATUS field and wait at least a minute before proceeding.
+    Make sure you see healthy under the STATUS field and wait at least a minute before proceeding. If it starts unhealthy,
+    do a **docker compose restart**.
 
 4. Now go to your deployment, click on the **Components** tab, and under **Systems**,
 click **Access** on the **App Server** and select **OPEN WEBUI** as shown in the image below.
 
 .. image:: images/01_openwebui_access.png
 
-5. You should be presented with a screen similar to this in your browser. Click
-**Get started** at the bottom.
-
-.. image:: images/02_openwebui_getstarted.png
-
-6. At this next screen, you will need to create an account. You can supply a fake
-properly-formatted email address.
-
-.. image:: images/03_openwebui_createaccount.png
-
-7. Read or ignore the release notes dialog box and either hit the **x** in the upper
-right corner or the **Okay, Let's Go!** button in the bottom right corner.
-
-.. image:: images/03_openwebui_releasenotes.png
-
-If your ollama container is still running on the LLM Server (and it should be),
+Click the "Ok, Let's Go!" on the welcome dialog. If your ollama container is still running on the LLM Server (and it should be),
 your browser screen should resemble this:
 
 .. image:: images/04_openwebui_chatbot_main.png
 
-8. Note the model dropdown in the upper left corner. This should feature all your models from
+5. Note the model dropdown in the upper left corner. This should feature all your models from
 Module 1.
 
 .. image:: images/04_openwebui_modellist.png
@@ -141,7 +131,7 @@ Module 1.
     the /root/open-webui directory and wait a minute until the status is healthy. Reach out to your lab asssistant
     if none of this helps.
     
-9. Select a model of your choice and run a quick test.
+6. Select a model of your choice and run a quick test.
 
 .. image:: images/04_openwebui_testprompt.png
 
@@ -152,7 +142,7 @@ Module 1.
     **Connections**, then click the "+" sign to the right of **Manage Direct Connections** and fill in
     the details.
 
-10. Ok, you tested a model interactively and via the API from curl in Module 1, now take them for a test
+7. Ok, you tested a model interactively and via the API from curl in Module 1, now take them for a test
 drive in a very ChatGPT-like experience! Feel free to pick the model, then prompt and go! Your session
 should resemble this one:
 
@@ -179,7 +169,7 @@ Feel free to hang out here before moving on and test the different models with a
 how effective they are at answering your queries. The smaller models tend to hallucinate a lot and to
 not follow prompt instructions very precisely, or at all.
 
-11. You will need to make changes to the Open WebUI compose file in the next lab. Shut it down for now.
+8. You will need to make changes to the Open WebUI compose file in the next lab. Shut it down for now.
 
 .. code-block:: console
 

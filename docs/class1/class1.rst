@@ -15,9 +15,13 @@ proxy, mcpo, into Open WebUI and work with a simple MCP server to deploy a basic
 of content through specialized "patterns" or prompts designed for specific tasks like summarizing
 documents, extracting insights, or generating reports.
 
-**Finally**, you'll dig into n8n, a visual workflow automation platform that connects different services
+**After that**, you'll dig into n8n, a visual workflow automation platform that connects different services
 and APIs, enabling you to create automated pipelines that can trigger AI processing based on various events
 or data inputs.
+
+**Finally**, you'll configure Open WebUI to route prompts and responses through the F5 Ai Guardrails API for
+policy enforcement and threat detection, enabling enterprise-grade safety controls without sacrificing the
+flexibility of self-hosted models.
 
 By the end of this lab, you'll have hands-on experience building a complete AI-powered automation system that you can
 build out and customize in your own lab and extend for your specific needs.
@@ -32,6 +36,8 @@ Labs
 
 .. toctree::
    :maxdepth: 1
+   :caption: Contents:
    :glob:
 
+   labinfo/labinfo*
    module*/module*

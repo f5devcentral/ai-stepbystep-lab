@@ -101,7 +101,7 @@ account for the instance:
    .. image:: images/15_close_out.png
    .. image:: images/15b_model_select.png
 
-Now click Back to canvas.
+Now click the x in the upper right corner of the dialog to close it.
 
 #. TEST IT OUT!! Click **Open chat**. Type "Hello World" in the chat box and watch in amazement as you proxy your first chat conversation through an agent:
 

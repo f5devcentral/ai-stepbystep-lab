@@ -227,12 +227,13 @@ The output should resemble this:
 .. code-block:: console
 
     root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama list
-    NAME                ID              SIZE      MODIFIED
-    llama3.2:3b         a80c4f17acd5    2.0 GB    About a minute ago
-    deepseek-r1:7b      755ced02ce7b    4.7 GB    3 minutes ago
-    deepseek-r1:1.5b    e0979632db5a    1.1 GB    3 minutes ago
-    codellama:latest    8fdf8f752f6e    3.8 GB    4 minutes ago
-    tinyllama:latest    2644915ede35    637 MB    27 minutes ago
+    NAME                   ID              SIZE      MODIFIED
+    qwen2.5:7b-instruct    845dbda0ea48    4.7 GB    6 hours ago
+    tinyllama:latest       2644915ede35    637 MB    3 months ago
+    deepseek-r1:7b         755ced02ce7b    4.7 GB    3 months ago
+    codellama:latest       8fdf8f752f6e    3.8 GB    3 months ago
+    llama3.2:3b            a80c4f17acd5    2.0 GB    3 months ago
+    deepseek-r1:1.5b       e0979632db5a    1.1 GB    3 months ago
 
 Recap
 -----
@@ -253,5 +254,6 @@ In this lab, you:
     docker exec ollama ollama run deepseek-r1:1.5b
     docker exec ollama ollama run deepseek-r1:7b
     docker exec ollama ollama run codellama
+    docker exec ollama ollama run qwen2.5:7b-instruct
 
 Next we'll customize a model. Time to get creative!

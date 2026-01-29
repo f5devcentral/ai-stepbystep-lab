@@ -41,6 +41,7 @@ Creating a Custom Model
 
 In this lab, we'll create a couple custom models. The first will format responses to your prompt in the form of dialogue
 between the comic strip characters Calvin & Hobbes. The second will provide a code review for the code you submit in your prompt.
+Go ahead and open a second webshell while you're models are loading in the original one.
 
 1. Create the Modelfiles in a temporary folder structure on your ollama host.
 

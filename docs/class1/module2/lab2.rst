@@ -309,13 +309,12 @@ the picture below.
 
 .. image:: images/f5mcp_try_it_out.png
 
-9. The box with the request body will now be editable. Remove the obj_name and the trailing comma on
-the obj_type line, then replace string with pool and hit the execute button. Your screen should look
-like this before you hit execute:
+9. The box with the request body will now be editable. Replace string with rule on the object type and just remove
+string from the object name and hit the execute button. Your screen should look like this before you hit execute:
 
 .. image:: images/f5mcp_test.png
 
-10. After hitting execute, you should see in the response body the list of your BIG-IP pool names.
+10. After hitting execute, you should see in the response body the list of your BIG-IP rule names.
 
 .. image:: images/f5mcp_test_result.png
 
@@ -372,7 +371,8 @@ environment variable in the compose.yaml. The tools definitions are in the code-
     ]
 
 1. Go to your deployment, click on the **Components** tab, and under **Systems**,
-click **Access** on the **App Server** and select **WEB SHELL** as shown in the image at the top of this page.
+click **Access** on the **App Server** and select **WEB SHELL** as shown in the image at the top of this page to open
+another shell since the first one has an active foreground process with mcpo and the mcp servers.
 
 2. Overwrite the compose.yaml with the version with the tools definition and restart.
 
@@ -399,10 +399,19 @@ The output should resemble this:
     root@ip-10-1-1-4:/root/open-webui# docker ps | grep open-webui$
     2fb45a840c35   ghcr.io/open-webui/open-webui:main   "bash start.sh"          4 hours ago    Up 19 minutes (healthy)   0.0.0.0:3000->8080/tcp                        open-webui
 
-4. Launch your Open WebUI tab again and login. Select the **llama3.2:3b** model, then click the diamond pattern
+4. Launch your Open WebUI tab again and login. Select the **qwen2.5:7b-instruct** model, then click the diamond pattern
 in your chat block to reveal your tools and select the **F5 MCP Server** tool.
 
 .. image:: images/f5mcp_tools_display.png
+
+If the tool is called, you should see some logs indicating that in the window where mcpo is running in the foreground. This is my log from that prompt:
+
+.. code-block:: console
+
+    mcpo     | 2026-01-28 20:00:50,277 - INFO - Calling endpoint: obj_list, with args: {'obj_type': 'rule', 'obj_name': ''}
+    f5mcp    | INFO:     172.18.0.4:35570 - "POST /mcp HTTP/1.1" 200 OK
+    mcpo     | 2026-01-28 20:00:50,289 - INFO - HTTP Request: POST http://f5mcp:8081/mcp "HTTP/1.1 200 OK"
+    mcpo     | INFO:     172.18.0.5:43998 - "POST /f5mcp/obj_list HTTP/1.1" 200 OK
 
 .. note::
 
@@ -410,18 +419,15 @@ in your chat block to reveal your tools and select the **F5 MCP Server** tool.
     yet, in the **web shell** in the **/root/open-webui** directory, do a **docker compose down** and then a
     **docker compse up -d** again, wait for it to be healthy by running **docker ps**, and then check the model tools.
 
-5. Now prompt for the list of BIG-IP pools. I find on these smaller models I need to be more explicit and
-nudged as much as possible. Here's your chance to experiment on how you can get the model to a) actually use
+5. Now prompt for the list of BIG-IP iRules. I find on these smaller models I need to be more explicit and
+nudge the model as much as possible. Here's your chance to experiment on how you can get the model to a) actually use
 the attached tool and b) get it to use the right keywords when passing data to the tool. My successful prompt
-is in the image below.
+is in the image below. (Note the model's interesting interpretation of the MCP acronym!)
 
 .. image:: images/f5mcp_tools_pool_result.png
 
-If you're having trouble, you can also install another model that's a little bit more forgiving of your prompts
-like qwen3:4b. Reference Lab1.2 for installing the models. Here's prompt and response from qwen3:4b, with the
-specific response in the dialog box when I clicked the red text above it.
-
-.. image:: images/f5mcp_tools_qwen_pool_result.png
+If you're having trouble, you can also install another model that's a little bit more forgiving of your prompts.
+Reference Lab1.2 for installing the models.
 
 Challenges
 ----------
