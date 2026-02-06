@@ -69,13 +69,11 @@ The output should resemble this:
 
 .. code-block:: docker
 
-    root@ip-10-1-1-5:/# cd /root/ollama
-    root@ip-10-1-1-5:/root/ollama# cat compose.yaml
-    services:
       ollama:
         image: ollama/ollama
         container_name: ollama
-        runtime: nvidia
+        gpus: all
+        shm_size: "8gb"
         ports:
           - "0.0.0.0:11434:11434"
         volumes:
@@ -83,9 +81,9 @@ The output should resemble this:
         environment:
           - OLLAMA_KEEP_ALIVE=-1
           - OLLAMA_MAX_LOADED_MODELS=5
-          - OLLAMA_NUM_PARALLEL=4
+          - OLLAMA_NUM_PARALLEL=1
           - OLLAMA_GPU_OVERHEAD=536870912
-          - OLLAMA_FLASH_ATTENTION=true
+          - OLLAMA_RUNNER_STARTUP_TIMEOUT=120
           - NVIDIA_VISIBLE_DEVICES=all
         networks:
           - llmserver-labnet
