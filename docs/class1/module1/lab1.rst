@@ -75,6 +75,7 @@ The output should resemble this:
       ollama:
         image: ollama/ollama
         container_name: ollama
+        runtime: nvidia
         ports:
           - "0.0.0.0:11434:11434"
         volumes:
@@ -83,6 +84,9 @@ The output should resemble this:
           - OLLAMA_KEEP_ALIVE=-1
           - OLLAMA_MAX_LOADED_MODELS=5
           - OLLAMA_NUM_PARALLEL=4
+          - OLLAMA_GPU_OVERHEAD=536870912
+          - OLLAMA_FLASH_ATTENTION=true
+          - NVIDIA_VISIBLE_DEVICES=all
         networks:
           - llmserver-labnet
         restart: unless-stopped
@@ -95,7 +99,7 @@ The output should resemble this:
         external: true
 
 Note the key details on what image, container name, ports, persistent data volume, and networks are associated.
-The environment variables in this case are there to keep the models loaded in memory and allow concurrent
+The environment variables in this case are there to take advantage of the GPU, keep the models loaded in memory and allow concurrent
 requests. This should improve the wait times in some of the later labs.
 
 4. Run the Ollama compose service.

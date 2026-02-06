@@ -104,7 +104,39 @@ The output should resemble this:
 
     root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama ps
     NAME                ID              SIZE      PROCESSOR    CONTEXT    UNTIL
-    tinyllama:latest    2644915ede35    827 MB    100% CPU     4096       Forever
+    tinyllama:latest    2644915ede35    1.4 GB    100% GPU     4096       Forever
+
+Notice the processor is 100% GPU. Good news! You can also take a look at the system GPU detail.
+
+.. code-block:: console
+
+    nvidia-smi
+
+The output should resemble this:
+
+.. code-block:: console
+
+    root@ip-10-1-1-5:/# nvidia-smi
+    Fri Feb  6 20:08:30 2026
+    +---------------------------------------------------------------------------------------+
+    | NVIDIA-SMI 535.161.08             Driver Version: 535.161.08   CUDA Version: 12.2     |
+    |-----------------------------------------+----------------------+----------------------+
+    | GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+    |                                         |                      |               MIG M. |
+    |=========================================+======================+======================|
+    |   0  Tesla T4                       On  | 00000000:00:1E.0 Off |                    0 |
+    | N/A   31C    P0              31W /  70W |   5116MiB / 15360MiB |      0%      Default |
+    |                                         |                      |                  N/A |
+    +-----------------------------------------+----------------------+----------------------+
+
+    +---------------------------------------------------------------------------------------+
+    | Processes:                                                                            |
+    |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+    |        ID   ID                                                             Usage      |
+    |=======================================================================================|
+    |    0   N/A  N/A      5600      C   /usr/bin/ollama                             972MiB |
+    +---------------------------------------------------------------------------------------+
 
 4. Let's run a quick test against the model! We'll do this three different ways, a one-shot prompt,
 an interactive shell, and with curl via the API.
