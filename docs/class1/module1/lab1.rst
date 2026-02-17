@@ -84,8 +84,8 @@ The output should resemble this:
           - OLLAMA_MAX_LOADED_MODELS=2
           - OLLAMA_NUM_PARALLEL=1
           - OLLAMA_GPU_OVERHEAD=2147483648
-          - OLLAMA_RUNNER_STARTUP_TIMEOUT=600
-          - OLLAMA_NUM_GPU=20
+          - OLLAMA_LOAD_TIMEOUT=10m
+          - OLLAMA_NUM_GPU=25
           - NVIDIA_VISIBLE_DEVICES=all
         networks:
           - llmserver-labnet
@@ -103,7 +103,7 @@ The output should resemble this:
           - OLLAMA_KEEP_ALIVE=-1
           - OLLAMA_MAX_LOADED_MODELS=4
           - OLLAMA_NUM_PARALLEL=1
-          - OLLAMA_RUNNER_STARTUP_TIMEOUT=180
+          - OLLAMA_LOAD_TIMEOUT=8m
         networks:
           - llmserver-labnet
         restart: unless-stopped
