@@ -404,15 +404,6 @@ in your chat block to reveal your tools and select the **F5 MCP Server** tool.
 
 .. image:: images/f5mcp_tools_display.png
 
-If the tool is called, you should see some logs indicating that in the window where mcpo is running in the foreground. This is my log from that prompt:
-
-.. code-block:: console
-
-    mcpo     | 2026-01-28 20:00:50,277 - INFO - Calling endpoint: obj_list, with args: {'obj_type': 'rule', 'obj_name': ''}
-    f5mcp    | INFO:     172.18.0.4:35570 - "POST /mcp HTTP/1.1" 200 OK
-    mcpo     | 2026-01-28 20:00:50,289 - INFO - HTTP Request: POST http://f5mcp:8081/mcp "HTTP/1.1 200 OK"
-    mcpo     | INFO:     172.18.0.5:43998 - "POST /f5mcp/obj_list HTTP/1.1" 200 OK
-
 .. note::
 
     For each model you select to work with, you'll need to reattach your tools. Also, if you don't see your tools
@@ -426,8 +417,14 @@ is in the image below. (Note the model's interesting interpretation of the MCP a
 
 .. image:: images/f5mcp_tools_pool_result.png
 
-If you're having trouble, you can also install another model that's a little bit more forgiving of your prompts.
-Reference Lab1.2 for installing the models.
+If the tool is called, you should see some logs indicating that in the window where mcpo is running in the foreground. This is my log from that prompt:
+
+.. code-block:: console
+
+    mcpo     | 2026-01-28 20:00:50,277 - INFO - Calling endpoint: obj_list, with args: {'obj_type': 'rule', 'obj_name': ''}
+    f5mcp    | INFO:     172.18.0.4:35570 - "POST /mcp HTTP/1.1" 200 OK
+    mcpo     | 2026-01-28 20:00:50,289 - INFO - HTTP Request: POST http://f5mcp:8081/mcp "HTTP/1.1 200 OK"
+    mcpo     | INFO:     172.18.0.5:43998 - "POST /f5mcp/obj_list HTTP/1.1" 200 OK
 
 Challenges
 ----------

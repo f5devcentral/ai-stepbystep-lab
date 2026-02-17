@@ -169,19 +169,19 @@ Accept the default again for the strategies and the repo and press enter. This s
 
     [AI Provider Number] Enter the number of the AI provider to configure (leave empty to skip):
 
-Choose the Ollama option (22 here, but might be different for you) and hit enter. Make sure to enter http://10.1.1.5:11434 and then skip the ollama key and the timeout.
+Choose the Ollama option (22 here, but might be different for you) and hit enter. Make sure to enter http://10.1.1.5:11435 and then skip the ollama key and the timeout.
 
 .. code-block: console
 
     [Ollama]
 
-    Enter your Ollama URL (as a reminder, it is usually http://localhost:11434') (leave empty for 'http://localhost:11434' or type 'reset' to remove the value):http://10.1.1.5:11434
+    Enter your Ollama URL (as a reminder, it is usually http://localhost:11434') (leave empty for 'http://localhost:11434' or type 'reset' to remove the value):http://10.1.1.5:11435
 
     Enter your Ollama API KEY (leave empty to skip):
 
     Specify HTTP timeout duration for Ollama requests (e.g. 30s, 5m, 1h) (leave empty for '20m' or type 'reset' to remove the value):
 
-Now choose the model. I would recommend llama3.2:3b for this, which is number 6 for me, but you can experiment!
+Now choose the qwen2.5:7b-instruct-q5_0 model for this, which is number 7 for me.
 
 .. code-block:: console
 
@@ -197,7 +197,7 @@ Now choose the model. I would recommend llama3.2:3b for this, which is number 6 
             [4]     deepseek-r1:1.5b
             [5]     deepseek-r1:7b
             [6]     llama3.2:3b
-            [7]     qwen2.5:7b-instruct
+            [7]     qwen2.5:7b-instruct-q5_0
             [8]     tinyllama:latest
 
     [Default]
@@ -211,7 +211,7 @@ Finally, skip the context length.
     Enter model context length (leave empty to skip):
 
     DEFAULT_VENDOR: Ollama
-    DEFAULT_MODEL: llama3.2:3b
+    DEFAULT_MODEL: qwen2.5:7b-instruct-q5_0
 
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     ✅ Setup complete! You can now use Fabric.
@@ -227,7 +227,7 @@ Finally, skip the context length.
     Configuration Status:
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       ✓ AI Provider configured
-      ✓ Default vendor/model set: Ollama/llama3.2:3b
+      ✓ Default vendor/model set: Ollama/qwen2.5:7b-instruct-q5_0
       ✓ Patterns downloaded
       ✓ Strategies downloaded
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -260,11 +260,11 @@ Run the following command:
 
 .. note::
 
-    We set the default model to llama3.2:3b, but if you want to test other models you can by appending **--model
+    We set the default model to qwen2.5:7b-instruct-q5_0, but if you want to test other models you can by appending **--model
     <model name>** to the fabric command shown above. Smaller models with tight context windows don't fair well
     with the fabric patterns, however, because the system prompts are quite large.
 
-I got the following output against the llama3.2:3b model in my environment (it took a few minutes). Your output should
+I got the following output against the qwen2.5:7b-instruct-q5_0 model in my environment (it took a few minutes). Your output should
 resemble the following, but won't match exactly.
 
 .. code-block:: console
@@ -356,45 +356,26 @@ container.). Run the following command:
 
 .. code-block:: console
 
-    fabric -sp t_red_team_thinking --model deepseek-r1:7b < telos.txt
+    fabric -sp t_red_team_thinking < telos.txt
 
 The output should resemble this:
 
 .. code-block:: console
 
-    <think>
-    Okay, so I need to help this person by analyzing their situation and providing some recommendations based on the TELOS file they provided. Let me try to break it down step by step.
+    def82b36d3d6:~# fabric -sp t_red_team_thinking < telos.txt
+    - Red-teaming identified that the Telos lacks a clear roadmap for addressing imposter syndrome and limited time for learning, despite these being significant challenges.
+    - The strategies outlined are fragmented and need consolidation; focusing on mutual mentorship while integrating cloud-native technologies could streamline progress.
+    - The narrative and missions do not directly address the anxiety management aspect, which is crucial for maintaining motivation and reducing burnout.
+    - The goals lack specific timelines and performance metrics for certain tasks, such as the Kubernetes networking course and service mesh evaluation.
+    - The log entries show a mix of successes and frustrations but lack structured reflection on how to balance traditional and modern skills effectively.
 
-    First, looking at the problems: P1 is about traditional network engineers being left behind by rapid cloud and AI transformation. That makes sense because as companies move to the cloud and adopt AI technologies, their network expertise needs are changing too. So, there's a gap between what they're learning now and what's required in the future.
+    ### Recommendations
 
-    Problem P2 talks about management creating anxiety through pressure for technical growth. I can see how that might happen—when people feel like they have to keep up with new stuff all the time, it can cause stress. It's important to create environments where engineers aren't just trying to grow but actually enjoy learning and don't feel overwhelmed.
-
-    Problem P3 is about technology fragmentation making it hard for engineers to choose relevant skills. With so many tools and technologies out there, it's tough to know which ones are worth investing time in. This can lead to confusion and wasted effort on things that aren't even necessary anymore.
-
-    Now looking at the missions: M1 aims to bridge traditional networking with modern cloud-native and AI-driven infrastructure. That seems like a good start because it directly addresses P1 by integrating their existing skills into newer technologies. M2 is about creating sustainable learning cultures without causing anxiety, which ties into P2. And M3 simplifies skill progression, helping tackle P3.
-
-    The narratives give different ways to understand the mission, so that's helpful for communication. The goals are specific and have clear metrics, which is great for tracking progress. Challenges like C1 and C2 are common in this situation—imposter syndrome and time constraints. Strategies S1 and S2 seem tailored to address these challenges.
-
-    The projects like PJT1 and PJT2 are practical steps toward the missions. They involve teaching networking fundamentals while learning new tools, which should help bridge the gap. The history shows a progression of skills over time, starting from basic automation with Python to more complex tasks involving Kubernetes and microservices.
-
-    Looking at the log entries, it seems like the person is making steady progress but also facing setbacks. For example, they struggled with some networking concepts initially but found success after persistence. They also had moments where imposter syndrome kicked in, especially when dealing with younger engineers who seemed to grasp things faster.
-
-    From this analysis, I can see that the key areas of focus should be on creating a structured learning path (as per M3), fostering mentorship and peer learning (M2), and bridging traditional skills with modern technologies (M1). The strategies like teaching fundamentals alongside new tools and gradually integrating new concepts into existing scripts seem effective.
-
-    I also notice that the person is actively trying to build projects, which is good for applying what they learn. However, time management issues might be a challenge, especially as they juggle work and personal life. Creating a sustainable culture around learning without burnout will require thoughtful approach—maybe through scheduled learning times, peer support, and clear milestones.
-
-    In terms of recommendations, I should focus on supporting consistent practice, creating safe spaces for experimentation without fear of failure, and gradually building complexity in their projects to avoid overwhelming them. Also, leveraging mentorship and peer learning can help distribute the pressure and make the transition smoother.
-    </think>
-
-    To address the challenges faced by the individual, here are strategic recommendations focusing on structured learning, fostering a positive environment, and gradual skill development:
-
-    1. **Structured Learning Path**: Implement a clear progression of skills that bridge traditional networking with modern technologies. This should include courses like Kubernetes networking and microservices communication, supported by practical projects.
-    2. **Mentorship and Peer Learning**: Establish a mentorship program to pair experienced engineers with those still learning, creating a supportive environment for knowledge exchange. Encourage peer-to-peer learning through lunch-and-learn sessions and collaborative projects.
-    3. **Sustainable Learning Culture**: Create a work environment that values continuous learning without causing anxiety. This can be achieved by setting realistic goals, providing resources, and recognizing progress to maintain motivation.
-    4. **Gradual Skill Integration**: Introduce new concepts into existing scripts incrementally to avoid overwhelming the learning process. This approach allows for gradual understanding and reduces the risk of burnout.
-    5. **Time Management Strategies**: Implement time management techniques such as scheduled learning blocks and flexible work arrangements to accommodate personal responsibilities without compromising professional growth.
-
-    By focusing on these areas, the individual can effectively navigate the transition to modern technologies while maintaining a healthy balance between professional and personal life.
+    1. Develop a detailed plan for addressing imposter syndrome through regular peer support sessions and clear communication with management about skill gaps.
+    2. Consolidate strategies into a cohesive roadmap that integrates mutual mentorship, gradual learning in production, and targeted training programs.
+    3. Enhance the narrative to emphasize how balanced skill development reduces anxiety and fosters a supportive environment for growth.
+    4. Add specific timelines and performance metrics to goals, such as completing the Kubernetes networking course by Q1 2026 and achieving a 90% success rate in service mesh evaluations.
+    5. Include structured reflections on each day's log entries to identify patterns and actionable steps for overcoming learning challenges.
 
 There are so many frameworks for hacking yourself these days and the ability to have your own AI coach/therapist
 is pretty intriguing. I'm still exploring all the patterns, and you can create your own as well.

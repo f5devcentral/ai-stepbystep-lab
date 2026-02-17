@@ -116,7 +116,8 @@ Notice the processor is 100% CPU. This is good for the smaller models.
 
 .. note::
 
-    The GPU models sometimes will error out on loading. You might have to try to run the model again.
+    The GPU models sometimes will error out on loading. You might have to try to run the model again. If it fails a
+    second time, move on for now to step 6. We'll circle back on getting all the models loaded at the end of this lab.
 
 5. Once that completes, check to make sure it's running.
 
@@ -158,7 +159,7 @@ The output should resemble this:
     |    0   N/A  N/A      5230      C   /usr/bin/ollama                            5412MiB |
     +---------------------------------------------------------------------------------------+
 
-4. Let's run a quick test against the models! We'll do this three different ways, a one-shot prompt,
+6. Let's run a quick test against the models! We'll do this three different ways, a one-shot prompt,
 an interactive shell, and with curl via the API.
 
 **The one-shot method**
@@ -234,7 +235,8 @@ Exit the interactive shell
 
 **The API**
 
-We'll use curl in this lab to run a prompt against the Ollama API.
+We'll use curl in this lab to run a prompt against the Ollama API. (If the qwen model hasn't loaded yet, you can change
+the port below to 11434 and the model to tinyllama)
 
 .. code-block:: console
 
@@ -285,7 +287,7 @@ Field                      Description
 **eval_duration**          Time spent generating the output tokens (in nanoseconds).
 ========================== =============================================================================================================================
 
-5. We'll need a few more models that we'll use in later labs. Sometimes pulling the models can take quite a while,
+7. We'll need a few more models that we'll use in later labs. Sometimes pulling the models can take quite a while,
 so they've been pre-loaded for you. To verify the installed models, run the following command.
 
 .. code-block:: console

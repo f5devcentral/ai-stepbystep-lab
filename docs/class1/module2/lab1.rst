@@ -26,7 +26,7 @@ The output should resemble this:
         ports:
           - "0.0.0.0:3000:8080"
         environment:
-          - OLLAMA_BASE_URL=http://10.1.1.5:11434
+          - OLLAMA_BASE_URL=http://10.1.1.5:11435
           - WEBUI_AUTH=False
         volumes:
           - openwebui_data:/app/backend/data
@@ -43,10 +43,10 @@ The output should resemble this:
         external: true
         name: labnet
 
-Note the ollama URL is the IP of our LLM Server where the Ollama we installed and configured in Module 1 is located. Also
-note that we've disabled authentication to Open WebUI in this lab. Normally you'd want to keep that enabled so you can
-control access and set up profiles, but it's unnecessary here and requires interaction with one of your email accounts to
-get an activation key so we've disabled it.
+Note the ollama URL uses our LLM server IP address and the port of our GPU Ollama instance. We'll need the GPU for the
+second lab in this module, so we'll load that one as the base here. Also note that we've disabled authentication to
+Open WebUI in this lab. Normally you'd want to keep that enabled so you can control access and set up profiles,
+but it's unnecessary here and requires interaction with one of your email accounts to get an activation key so we've disabled it.
 
 2. Run the Open WebUI compose service. It isn't necessary to set the ``OLLAMA_BASE_URL`` in the docker command as you
 can do it in the GUI, but it saves a step.
@@ -131,7 +131,7 @@ Module 1.
     the /root/open-webui directory and wait a minute until the status is healthy. Reach out to your lab asssistant
     if none of this helps.
     
-6. Select a model of your choice and run a quick test.
+6. Select either the qwen q5 instruct model or the codellama model and run a quick test.
 
 .. image:: images/04_openwebui_testprompt.png
 
@@ -165,9 +165,8 @@ tool tip that it will unload in 292 years. I think you'll make it through the la
     prompts. This makes for a great family tool for keeping costs down to shared API usage, but also for
     settings access and authorization permissions based on users and groups that you can define.
 
-Feel free to hang out here before moving on and test the different models with a similar prompt to see
-how effective they are at answering your queries. The smaller models tend to hallucinate a lot and to
-not follow prompt instructions very precisely, or at all.
+Feel free to hang out here before moving on and test the other GPU model (qwen q5 instruct or codellama, whichever you
+didn't test above.) Try to avoid loading the CPU models for now. We'll have a better option for that in a later module.
 
 8. You will need to make changes to the Open WebUI compose file in the next lab. Shut it down for now.
 
