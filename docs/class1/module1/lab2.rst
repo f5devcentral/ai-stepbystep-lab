@@ -104,9 +104,29 @@ The output should resemble this:
 
     root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama ps
     NAME                ID              SIZE      PROCESSOR    CONTEXT    UNTIL
-    tinyllama:latest    2644915ede35    1.4 GB    100% GPU     4096       Forever
+    tinyllama:latest    2644915ede35    645 MB    100% CPU     4096       Forever
 
-Notice the processor is 100% GPU. Good news! You can also take a look at the system GPU detail.
+Notice the processor is 100% CPU. This is good for the smaller models.
+
+4. Now let's do the same thing for one of our GPU models.
+
+.. code-block:: console
+
+    docker exec ollama-gpu ollama run qwen2.5:7b-instruct-q5_0
+
+.. note::
+
+    The GPU models sometimes will error out on loading. You might have to try to run the model again.
+
+5. Once that completes, check to make sure it's running.
+
+.. code-block:: console
+
+    root@ip-10-1-1-5:/root/ollama# docker exec ollama-gpu ollama ps
+    NAME                        ID              SIZE      PROCESSOR    CONTEXT    UNTIL
+    qwen2.5:7b-instruct-q5_0    16c4cf552635    5.5 GB    100% GPU     4096       Forever
+
+Good news! You can also take a look at the system GPU detail.
 
 .. code-block:: console
 
@@ -116,8 +136,8 @@ The output should resemble this:
 
 .. code-block:: console
 
-    root@ip-10-1-1-5:/# nvidia-smi
-    Fri Feb  6 20:08:30 2026
+    root@ip-10-1-1-5:/root/ollama# nvidia-smi
+    Thu Feb 12 16:23:56 2026
     +---------------------------------------------------------------------------------------+
     | NVIDIA-SMI 535.161.08             Driver Version: 535.161.08   CUDA Version: 12.2     |
     |-----------------------------------------+----------------------+----------------------+
@@ -126,7 +146,7 @@ The output should resemble this:
     |                                         |                      |               MIG M. |
     |=========================================+======================+======================|
     |   0  Tesla T4                       On  | 00000000:00:1E.0 Off |                    0 |
-    | N/A   31C    P0              31W /  70W |   5116MiB / 15360MiB |      0%      Default |
+    | N/A   31C    P0              33W /  70W |   5417MiB / 15360MiB |      0%      Default |
     |                                         |                      |                  N/A |
     +-----------------------------------------+----------------------+----------------------+
 
@@ -135,10 +155,10 @@ The output should resemble this:
     |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
     |        ID   ID                                                             Usage      |
     |=======================================================================================|
-    |    0   N/A  N/A      5600      C   /usr/bin/ollama                             972MiB |
+    |    0   N/A  N/A      5230      C   /usr/bin/ollama                            5412MiB |
     +---------------------------------------------------------------------------------------+
 
-4. Let's run a quick test against the model! We'll do this three different ways, a one-shot prompt,
+4. Let's run a quick test against the models! We'll do this three different ways, a one-shot prompt,
 an interactive shell, and with curl via the API.
 
 **The one-shot method**
@@ -152,20 +172,37 @@ output will not match, but should be generally close.
 
 .. code-block:: console
 
-    root@ip-10-1-1-5:/# echo "Explain post quantum cryptography, briefly, like I'm five" | docker exec -i ollama ollama run tinyllama
-    Post quantum cryptography is a new type of encryption technology that has emerged in recent
-    years to address the limitations and vulnerabilities of classical cryptographic algorithms.
-    This emerging method utilizes quantum computing technology to produce stronger cryptographic
-    keys, which are much harder to crack than classical algorithms like symmetric key encryption
-    (SKE) or public-key cryptography (PKC). Post quantum cryptography is based on the development
-    of quantum computers that can perform quantum computations efficiently, and it offers new
-    possibilities for creating secure and private communications. The concept of post quantum
-    cryptography is designed to address the limitations of classical cryptographic algorithms like
-    symmetric key encryption and public-key cryptography by exploiting the fact that quantum
-    computing technology could potentially enable faster and more efficient algorithms for
-    cryptographic key generation. Post quantum cryptography is an exciting new area of research,
-    and it offers several benefits, including improved security, increased efficiency in
-    cryptographic operations, and greater privacy for end users.
+    root@ip-10-1-1-5:/root/ollama# echo "Explain post quantum cryptography, briefly, like I'm five" | docker exec -i
+    ollama ollama run tinyllama
+
+    Post Quantum Cryptography (PQC) is a new generation of secure communication protocols that are designed to resist
+    advanced algorithms and attacks. PQC uses mathematical algorithms called "quantum-resistant" cryptosystems, which
+    are mathematically difficult but still practical for real-world applications.
+
+    The idea behind PQC is to create an encryption algorithm that's more secure than previous generations of ciphers
+    because it's less susceptible to attacks by quantum computers. Here's how it works: Instead of relying on the
+    classical, one-way properties of quantum physics for encryption, modern cryptosystems use mathematical algorithms
+    that are known as "quantum-resistant" because they can't be broken using classical computing methods.
+
+    The benefits of PQC compared to traditional symmetric key cryptography (S/K) are:
+
+    1. Greater Security: Quantum computers are designed to solve complex problems faster than classical computers,
+    which makes them more powerful for breaking cryptosystems.
+
+    2. Faster Communication: PQC can achieve higher communication rates because it's designed to use "quantum-resistant"
+    algorithms that can operate at higher levels of precision, speeding up the time it takes for messages to travel
+    across a secure channel.
+
+    3. Improved Data Security: Quantum attacks are more complex than classical ones and require more resources to crack.
+    PQC has been designed to be resistant to quantum attacks.
+
+    4. Scalable: PQC can be applied to a range of applications from financial transactions to military communications
+    systems, making it suitable for use in real-world scenarios.
+
+    In practice, PQC is still relatively new and researchers are continuing to develop the technology further to ensure
+    its security. As with any new technological development, there's ongoing debate about how secure PQC will be against
+    quantum attacks or other forms of cyber-attack, but for now it remains a promising approach to securing
+    communication channels in real-world situations.
 
 **The interactive shell**
 
@@ -201,22 +238,23 @@ We'll use curl in this lab to run a prompt against the Ollama API.
 
 .. code-block:: console
 
-    curl http://localhost:11434/api/generate \
+    curl http://localhost:11435/api/generate \
           -H "Content-Type: application/json" \
           -d '{
-            "model": "tinyllama",
+            "model": "qwen2.5:7b-instruct-q5_0",
             "prompt": "Why is grass green?",
             "stream": false
           }' | jq .
 
+Note I am using the ollama-gpu port of 11435 instead of the default 11434 that is bound to the ollama container.
 The output should resemble this (cleaned up for readability):
 
 .. code-block:: console
 
     {
-      "model": "tinyllama",
-      "created_at": "2025-10-15T15:43:19.841925387Z",
-      "response": "Grass is often seen as being green because of the photosynthesis process that occurs in its leaves...",
+      "model": "qwen2.5:7b-instruct-q5_0",
+      "created_at": "2026-02-12T16:28:50.052694871Z",
+      "response": "Grass appears green because of the way its chlorophyll molecules absorb and reflect...",
       "done": true,
       "done_reason": "stop",
       "context": [...],
@@ -233,7 +271,7 @@ Here's a breakdown of the response data fields:
 ========================== =============================================================================================================================
 Field                      Description
 ========================== =============================================================================================================================
-**model**                  The name of the model used for generation (e.g., ``tinyllama``).
+**model**                  The name of the model used for generation (e.g., ``qwen2.5:7b-instruct-q5_0``).
 **created_at**             Timestamp indicating when the response was generated (ISO 8601 format).
 **response**               The full generated text output from the model, based on the provided prompt.
 **done**                   A boolean that confirms the generation process is complete.
@@ -254,38 +292,109 @@ so they've been pre-loaded for you. To verify the installed models, run the foll
 
     docker exec ollama ollama list
 
-The output should resemble this:
+You could use ollama-gpu here as well, the list would be the same because all the models are in a shared volume. The
+output should resemble this:
 
 .. code-block:: console
 
     root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama list
-    NAME                   ID              SIZE      MODIFIED
-    qwen2.5:7b-instruct    845dbda0ea48    4.7 GB    6 hours ago
-    tinyllama:latest       2644915ede35    637 MB    3 months ago
-    deepseek-r1:7b         755ced02ce7b    4.7 GB    3 months ago
-    codellama:latest       8fdf8f752f6e    3.8 GB    3 months ago
-    llama3.2:3b            a80c4f17acd5    2.0 GB    3 months ago
-    deepseek-r1:1.5b       e0979632db5a    1.1 GB    3 months ago
+    NAME                        ID              SIZE      MODIFIED
+    qwen2.5:7b-instruct-q5_0    16c4cf552635    5.3 GB    14 minutes ago
+    qwen2.5:7b-instruct         845dbda0ea48    4.7 GB    2 weeks ago
+    tinyllama:latest            2644915ede35    637 MB    3 months ago
+    deepseek-r1:7b              755ced02ce7b    4.7 GB    3 months ago
+    codellama:latest            8fdf8f752f6e    3.8 GB    3 months ago
+    llama3.2:3b                 a80c4f17acd5    2.0 GB    3 months ago
+    deepseek-r1:1.5b            e0979632db5a    1.1 GB    3 months ago
 
 Recap
 -----
 In this lab, you:
 
 - Installed and verified models
-- Ran some quick tests to the tinyllama model via the shell and the ollama API
+- Ran some quick tests to the tinyllama and qwen2.5 models via the shell and the ollama API
 
 .. note::
     All the subsequent modules will use a variety of the models we've already loaded. It is recommended that you
     pre-load them now so they'll be ready to act on your prompts when you get things set up. Still in your
-    **LLM Server web shell**, run the remaining non-custom models with the commands below, which you can paste
-    together. You're fine to move on, just make sure to leave this web shell tab open until the models are done loading.
+    **LLM Server web shell**, run the following command in the /root/ollama folder and the remaining non-custom models
+    will load in your ollama and ollama-gpu containers while you move on to the next lab. **Do not close out the shell
+    while this script runs!**
 
 .. code-block:: console
 
-    docker exec ollama ollama run llama3.2:3b
-    docker exec ollama ollama run deepseek-r1:1.5b
-    docker exec ollama ollama run deepseek-r1:7b
-    docker exec ollama ollama run codellama
-    docker exec ollama ollama run qwen2.5:7b-instruct
+    ./launch_ollama_lab.sh
+
+This will look similar to the output below.
+
+.. code-block:: console
+
+    root@ip-10-1-1-5:/root/ollama# ./launch_ollama_lab.sh
+    [INFO] Checking Docker Compose services...
+    [INFO] Containers already running, skipping docker compose up
+
+    [INFO] =========================================
+    [INFO] Setting up CPU Container (62GB RAM)
+    [INFO] =========================================
+    [INFO] Waiting for ollama to be ready...
+    [INFO] ollama is running!
+    [INFO] Waiting for Ollama API at http://localhost:11434 to be responsive...
+    [INFO] ollama API is ready!
+    [INFO] Verifying and loading models for ollama...
+    [INFO] Checking model: tinyllama
+    [INFO] ✓ tinyllama is available
+    [INFO] ✓ tinyllama already loaded in memory, skipping
+    [INFO] Checking model: deepseek-r1:1.5b
+    [INFO] ✓ deepseek-r1:1.5b is available
+    [INFO] ✓ deepseek-r1:1.5b already loaded in memory, skipping
+    [INFO] Checking model: llama3.2:3b
+    [INFO] ✓ llama3.2:3b is available
+    [INFO] ✓ llama3.2:3b already loaded in memory, skipping
+    [INFO] Checking model: deepseek-r1:7b
+    [INFO] ✓ deepseek-r1:7b is available
+    [INFO] Loading deepseek-r1:7b into memory (this may take several minutes for large models)...
+    [INFO] ✓ deepseek-r1:7b loaded successfully (3m 18s)
+
+    [INFO] =========================================
+    [INFO] Setting up GPU Container (T4 - 16GB VRAM)
+    [INFO] =========================================
+    [INFO] Waiting for ollama-gpu to be ready...
+    [INFO] ollama-gpu is running!
+    [INFO] Waiting for Ollama API at http://localhost:11435 to be responsive...
+    [INFO] ollama-gpu API is ready!
+    [INFO] Verifying and loading models for ollama-gpu...
+    [INFO] Checking model: qwen2.5:7b-instruct-q5_0
+    [INFO] ✓ qwen2.5:7b-instruct-q5_0 is available
+    [INFO] ✓ qwen2.5:7b-instruct-q5_0 already loaded in memory, skipping
+    [INFO] Checking model: codellama
+    [INFO] ✓ codellama is available
+    [INFO] Loading codellama into memory (this may take several minutes for large models)...
+    [INFO] ✓ codellama loaded successfully (9m 3s)
+
+    [INFO] =========================================
+    [INFO] Final Verification
+    [INFO] =========================================
+
+    [INFO] CPU Container (ollama) - Models:
+    [INFO] Verifying models are loaded in ollama...
+      ✓ tinyllama (loaded)
+      ✓ deepseek-r1:1.5b (loaded)
+      ✓ llama3.2:3b (loaded)
+      ✓ deepseek-r1:7b (loaded)
+
+    [INFO] GPU Container (ollama-gpu) - Models:
+    [INFO] Verifying models are loaded in ollama-gpu...
+      ✓ qwen2.5:7b-instruct-q5_0 (loaded)
+      ✓ codellama (loaded)
+    [INFO] Debug: cpu_ok='true', gpu_ok='true'
+
+    [INFO] 🎉 All models loaded and verified successfully
+    [INFO]
+    [INFO] CPU Container: http://localhost:11434 (4 models, ~8.8GB RAM)
+    [INFO] GPU Container: http://localhost:11435 (2 models, ~11.7GB VRAM)
+    [INFO]
+    [INFO] Total runtime: 12m 22s
+    [INFO] Lab is ready to use
+
 
 Next we'll customize a model. Time to get creative!

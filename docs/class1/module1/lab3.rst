@@ -214,14 +214,16 @@ The output should resemble:
 .. code-block:: console
 
     root@ip-10-1-1-5:/root/ollama# docker exec ollama ollama list
-    NAME                    ID              SIZE      MODIFIED
-    calvin-hobbes:latest    a47058a44653    2.0 GB    About a minute ago
-    code-review:latest      53d211ad639b    2.0 GB    About a minute ago
-    llama3.2:3b             a80c4f17acd5    2.0 GB    About an hour ago
-    deepseek-r1:7b          755ced02ce7b    4.7 GB    About an hour ago
-    deepseek-r1:1.5b        e0979632db5a    1.1 GB    About an hour ago
-    codellama:latest        8fdf8f752f6e    3.8 GB    About an hour ago
-    tinyllama:latest        2644915ede35    637 MB    2 hours ago
+    NAME                        ID              SIZE      MODIFIED
+    calvin-hobbes:latest        a47058a44653    2.0 GB    9 seconds ago
+    code-review:latest          53d211ad639b    2.0 GB    9 seconds ago
+    qwen2.5:7b-instruct-q5_0    16c4cf552635    5.3 GB    3 days ago
+    qwen2.5:7b-instruct         845dbda0ea48    4.7 GB    2 weeks ago
+    tinyllama:latest            2644915ede35    637 MB    3 months ago
+    deepseek-r1:7b              755ced02ce7b    4.7 GB    3 months ago
+    codellama:latest            8fdf8f752f6e    3.8 GB    3 months ago
+    llama3.2:3b                 a80c4f17acd5    2.0 GB    3 months ago
+    deepseek-r1:1.5b            e0979632db5a    1.1 GB    3 months ago
 
 7. Give your custom models a test run
 
@@ -385,6 +387,6 @@ Recap
 -----
 In this lab, you:
 
-- Customized a couple models based on **llama3.2:3b** and **codellama** and ran simple tests against them
+- Customized a couple models based on **llama3.2:3b** and ran simple tests against them
 
 This completes Module 1 working directly with models. Click Next to move on to Module 2.

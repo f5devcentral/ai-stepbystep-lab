@@ -69,10 +69,31 @@ The output should resemble this:
 
 .. code-block:: docker
 
+    services:
+      ollama-gpu:
+        image: ollama/ollama
+        container_name: ollama-gpu
+        gpus: all
+        shm_size: "8gb"
+        ports:
+          - "0.0.0.0:11435:11434"
+        volumes:
+          - model_data:/root/.ollama
+        environment:
+          - OLLAMA_KEEP_ALIVE=-1
+          - OLLAMA_MAX_LOADED_MODELS=2
+          - OLLAMA_NUM_PARALLEL=1
+          - OLLAMA_GPU_OVERHEAD=2147483648
+          - OLLAMA_RUNNER_STARTUP_TIMEOUT=600
+          - OLLAMA_NUM_GPU=20
+          - NVIDIA_VISIBLE_DEVICES=all
+        networks:
+          - llmserver-labnet
+        restart: unless-stopped
+
       ollama:
         image: ollama/ollama
         container_name: ollama
-        gpus: all
         shm_size: "8gb"
         ports:
           - "0.0.0.0:11434:11434"
@@ -80,11 +101,9 @@ The output should resemble this:
           - model_data:/root/.ollama
         environment:
           - OLLAMA_KEEP_ALIVE=-1
-          - OLLAMA_MAX_LOADED_MODELS=5
+          - OLLAMA_MAX_LOADED_MODELS=4
           - OLLAMA_NUM_PARALLEL=1
-          - OLLAMA_GPU_OVERHEAD=536870912
-          - OLLAMA_RUNNER_STARTUP_TIMEOUT=120
-          - NVIDIA_VISIBLE_DEVICES=all
+          - OLLAMA_RUNNER_STARTUP_TIMEOUT=180
         networks:
           - llmserver-labnet
         restart: unless-stopped
@@ -96,9 +115,11 @@ The output should resemble this:
       llmserver-labnet:
         external: true
 
-Note the key details on what image, container name, ports, persistent data volume, and networks are associated.
-The environment variables in this case are there to take advantage of the GPU, keep the models loaded in memory and allow concurrent
-requests. This should improve the wait times in some of the later labs.
+Note the key details on what image, container name, ports, persistent data volume, and networks are associated. Also
+note that we are deploying Ollama in two containers, one that utilizes the GPU for the two largest models, and then
+another that will be CPU bound only for the other models. This compromise is in place due to the VRAM limitations on
+the Tesla T4 GPU. The environment variables in this case are there to take advantage of the GPU where appropriate, keep
+the models loaded in memory and allow concurrent requests. This should improve the wait times in some of the later labs.
 
 4. Run the Ollama compose service.
 
@@ -111,8 +132,9 @@ The output should resemble this:
 .. code-block:: console
 
     root@ip-10-1-1-5:/root/ollama# docker compose up -d
-    [+] Running 1/1
-     ✔ Container ollama  Started
+    [+] up 2/2
+     ✔ Container ollama Created                                                                                                                                                                                        0.1s
+     ✔ Container ollama-gpu Created
 
 .. note::
 
@@ -131,26 +153,31 @@ The output should resemble this:
 .. code-block:: console
 
     root@ip-10-1-1-5:/root/ollama# docker ps
-    CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS          PORTS                                     NAMES
-    9343512ad63c   ollama/ollama            "/bin/ollama serve"      8 minutes ago   Up 8 minutes    0.0.0.0:11434->11434/tcp                  ollama
-    3cd5cfcd0dd1   docs-nginx-html-server   "/docker-entrypoint.…"   2 months ago    Up 28 minutes   0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   docs-nginx-html-server-1
+    CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+    5e1e6b679b74   ollama/ollama            "/bin/ollama serve"      37 seconds ago   Up 37 seconds   0.0.0.0:11435->11434/tcp                  ollama-gpu
+    85e7672a57c8   ollama/ollama            "/bin/ollama serve"      37 seconds ago   Up 37 seconds   0.0.0.0:11434->11434/tcp                  ollama
+    3cd5cfcd0dd1   docs-nginx-html-server   "/docker-entrypoint.…"   6 months ago     Up 4 minutes    0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   docs-nginx-html-server-1
 
 .. warning::
 
     **Don't mess with that docs-nginx-html-server container...that's your lab guide!**
 
-6. Check to see if Ollama is available by using the curl command
+6. Check to see if your Ollama containers are available by using the curl command
 
 .. code-block:: console
 
     curl http://localhost:11434
+    curl http://localhost:11435
 
 The output should resemble this:
 
 .. code-block:: console
 
-    root@ip-10-1-1-5:/root# curl http://localhost:11434
-    Ollama is running
+    root@ip-10-1-1-5:/root/ollama#     curl http://localhost:11434
+        curl http://localhost:11435
+    Ollama is runningOllama is runningroot@ip-10-1-1-5:/root/ollama#
+
+Not the prettiest of outputs, but if you see two "Ollama is running" smashed together, you're good to go!
 
 Recap
 -----
