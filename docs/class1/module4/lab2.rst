@@ -13,8 +13,9 @@ both are in the following images.
 |
 .. image:: images/gr_custom.png
 |
-Now that you know what will be blocked in our lab, how good is your testing game? Feel free to write your own prompts,
-but here are few that I tested with results.
+Now that you know what will be blocked in our lab, how good is your testing game? Use either the qwen or codellama GPU
+models as they are loaded in memory at this ollama endpoint and feel free to write your own prompts, but here are few
+that I tested with llama3.2:3b during develoment with results.
 
 1. A sports test:
 

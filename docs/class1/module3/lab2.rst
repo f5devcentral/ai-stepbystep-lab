@@ -1,7 +1,7 @@
 Lab 3.2 - n8n Hello World
 =========================
 
-This lab relies on the Ollama instance you built in Module 1, so please ensure that your Ollama container is running on the **LLM Server** before continuing.
+This lab relies on the Ollama instance you built in Module 1, so please ensure that your Ollama containers are running on the **LLM Server** before continuing.
 
 .. code-block:: console
 
@@ -11,15 +11,18 @@ You should see an output similar to this:
 
 .. code-block:: console
 
-   root@ip-10-1-1-5:/# docker ps
-   CONTAINER ID   IMAGE           COMMAND               CREATED       STATUS       PORTS                                             NAMES
-   e9d5e7367dab   ollama/ollama   "/bin/ollama serve"   7 hours ago   Up 7 hours   0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp   ollama
+    root@ip-10-1-1-5:/# docker ps
+    CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+    6b2d77de163b   ollama/ollama            "/bin/ollama serve"      56 minutes ago   Up 21 minutes   0.0.0.0:11435->11434/tcp                  ollama-gpu
+    a7e7c94a205a   ollama/ollama            "/bin/ollama serve"      56 minutes ago   Up 21 minutes   0.0.0.0:11434->11434/tcp                  ollama
+    3cd5cfcd0dd1   docs-nginx-html-server   "/docker-entrypoint.…"   6 months ago     Up 21 minutes   0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   docs-nginx-html-server-1
 
 .. note::
 
-    If you do not see ollama running, make sure you are in the web shell for the **LLM Server** and not the
-    **App Server**. If you are confirmed on the **LLM Server** and ollamam is not running, cd into /root/ollama
-    and type **docker compose up -d** and then check **docker ps** again.
+    If you do not see ollama and ollama-gpu running, make sure you are in the web shell for the **LLM Server** and not the
+    **App Server**. If you are confirmed on the **LLM Server** and they are not running, cd into /root/ollama
+    and type **docker compose up -d** and then check **docker ps** again. If you have to do that again, all your models will
+    need to be reloaded with the ./launch_ollama_lab.sh script in the /root/ollama directory.
 
 Goals
 -----
@@ -93,7 +96,8 @@ account for the instance:
 
 #. Enable your agent with Ollama. Click the add chat model button, then select Ollama Chat Model from the side menu. When the Ollama definition screen comes up,
    click in the box and create new credentials. All you need to do for Ollama credentials is to set the actual IP of your host machine by replacing ``localhost`` with
-   ``10.1.1.5`` Once complete, close out of the definition screen, select ANY model in the available models list and return to canvas:
+   ``10.1.1.5`` and leave the default port of 11434 for our cpu models. Once complete, close out of the definition screen, select ANY model other than codellama or qwen
+   in the available models list and return to canvas:
 
    .. image:: images/12_connect_model.png
    .. image:: images/13_create_cred.png

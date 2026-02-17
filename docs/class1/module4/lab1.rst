@@ -93,11 +93,11 @@ in the python code below this next image and save the function.
 
             # Ollama Configuration
             ollama_api_base: str = Field(
-                default="http://10.1.1.5:11434/v1",  # Open WebUI is running in Docker but Ollama is not on my MacOS (for GPU access)
+                default="http://10.1.1.5:11435/v1",  # Open WebUI is running in Docker but Ollama is not on my MacOS (for GPU access)
                 description="Ollama API base URL (OpenAI-compatible endpoint)",
             )
             ollama_host: str = Field(
-                default="http://10.1.1.5:11434",  # Base URL for native Ollama API
+                default="http://10.1.1.5:11435",  # Base URL for native Ollama API
                 description="Ollama host URL (for listing models)",
             )
             ollama_api_key: str = Field(

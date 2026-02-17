@@ -109,18 +109,18 @@ understanding which model they should use for which tasks.
 
     .. image:: images/n8n_reasoning_model.png
 
-#. Now you'll repeat the previous three steps to add the Coding Agent and model. Everything should be the same except the node names and the model, which should be **codellama** in this case. After you add the two nodes, your canvas should look like this:
+#. Now you'll repeat the previous three steps to add the Coding Agent and model. Everything should be the same except you'll need a new ollama credential for the GPU container at http://10.1.1.5:11435, and then the node names and the model, which should be **codellama** in this case. After you add the two nodes, your canvas should look like this:
 
     .. image:: images/n8n_coding_model.png
 
-#. Now you'll again repeat the previous steps to add the Generalist Agent. Everything should be the same except the node names and the model, which should be **llama3.2:3b** in this case. After you add the two nodes, your canvas should look like this:
+#. Now you'll again repeat the previous steps to add the Generalist Agent. Everything should be the same except the node names and the model, which should be **llama3.2:3b** with the non GPU credential in this case. After you add the two nodes, your canvas should look like this:
 
     .. image:: images/n8n_generalist_model.png
 
 Test time!!
 -----------
 
-Given the prompts below, I was able to successfully transit each of the three classification path,
+You'll want to unpin your existing chat prompt and try new ones. Given the prompts below, I was able to successfully transit each of the three classification path,
 but please feel free to test your own and see how explicit you need to be to find success.
 
 * What is the capital of France?
